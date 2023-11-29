@@ -4,12 +4,12 @@ module preemphasis #(
 )(
     input clk,
     input rst_n,
-    input en_i, // what's this
+    // input en_i, // what's this
 
     input signed [I_BW-1:0] data_i, // signed?
     input valid_i,
 
-    oupput signed [O_BW-1:0] data_o,
+    output signed [O_BW-1:0] data_o,
     output valid_o
 );
     localparam MUL = 31;
@@ -17,7 +17,8 @@ module preemphasis #(
 
     reg signed [I_BW-1:0] data_q;
     always @(posedge clk) begin
-        if (!rst_n | en_i) begin
+        // if (!rst_n | en_i) begin
+		  if (!rst_n) begin
             data_q <= 'd0;
         end else begin
             if (valid_i) begin
@@ -29,6 +30,7 @@ module preemphasis #(
     end
     wire signed [O_BW-1:0] data_scaled = (data_q * MUL) >>> SHIFT; // signed?
 
-    assign valid_o = (en_i & valid_i);
+    // assign valid_o = (en_i & valid_i);
+	 assign valid_o = valid_i;
     assign data_o = data_i - data_scaled;
 endmodule
