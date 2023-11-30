@@ -1,16 +1,5 @@
-`timescale 1ns/10ps
-`include "fft_r22sdf_tfm.v"
-`include "fft_r22sdf_bf2.v"
-`include "fft_r22sdf_bf2i.v"
-`include "fft_r22sdf_bf2ii.v"
-`include "fft_r22sdf_rom_1024_s0.v"
-`include "fft_r22sdf_rom_1024_s1.v"
-`include "fft_r22sdf_rom_1024_s2.v"
-`include "fft_r22sdf_rom_1024_s3.v"
-// `include "system.vh"
-
-module fft_r22sdf #(
-    parameter                          N_LOG2    = 8,//10
+module fft #(
+    parameter                          N_LOG2    = 10
     parameter                          TF_WDTH   = 10,
     parameter                          DIN_WDTH  = 12,//32
     parameter                          META_WDTH = 11,
@@ -31,7 +20,9 @@ module fft_r22sdf #(
   );
 
   /* Define the FFT length. */
-  localparam  N = 2**N_LOG2;
+  // localparam  N = 2**N_LOG2;
+  // N_LOG2 = 10;
+  localparam N = 1024;
 
   /* Compute the number of radix-22 stages required. */
   localparam  NUM_BF2_STAGES = N_LOG2/2;
@@ -195,44 +186,6 @@ module fft_r22sdf #(
    * on the requested FFT length.
    */
   generate
-    case (N)
-      4:
-        begin
-          assign bf_out_nd   = bf0_z_nd;
-          assign bf_out_re   = bf0_z_re;
-          assign bf_out_im   = bf0_z_im;
-          assign bf_out_meta = bf0_m_out;
-          assign bf_out_cntr = bf0_c_out;
-        end
-
-      16:
-        begin
-          assign bf_out_nd   = bf1_z_nd;
-          assign bf_out_re   = bf1_z_re;
-          assign bf_out_im   = bf1_z_im;
-          assign bf_out_meta = bf1_m_out;
-          assign bf_out_cntr = bf1_c_out;
-        end
-
-      64:
-        begin
-          assign bf_out_nd   = bf2_z_nd;
-          assign bf_out_re   = bf2_z_re;
-          assign bf_out_im   = bf2_z_im;
-          assign bf_out_meta = bf2_m_out;
-          assign bf_out_cntr = bf2_c_out;
-        end
-
-      256:
-        begin
-          assign bf_out_nd   = bf3_z_nd;
-          assign bf_out_re   = bf3_z_re;
-          assign bf_out_im   = bf3_z_im;
-          assign bf_out_meta = bf3_m_out;
-          assign bf_out_cntr = bf3_c_out;
-        end
-
-      1024:
         begin
           assign bf_out_nd   = bf4_z_nd;
           assign bf_out_re   = bf4_z_re;
@@ -240,25 +193,6 @@ module fft_r22sdf #(
           assign bf_out_meta = bf4_m_out;
           assign bf_out_cntr = bf4_c_out;
         end
-
-      4096:
-        begin
-          assign bf_out_nd   = bf5_z_nd;
-          assign bf_out_re   = bf5_z_re;
-          assign bf_out_im   = bf5_z_im;
-          assign bf_out_meta = bf5_m_out;
-          assign bf_out_cntr = bf5_c_out;
-        end
-
-      default:
-        begin
-          assign bf_out_nd   = 1'b0;
-          assign bf_out_re   = {DOUT_WDTH{1'b0}};
-          assign bf_out_im   = {DOUT_WDTH{1'b0}};
-          assign bf_out_meta = {META_WDTH{1'b0}};
-          assign bf_out_cntr = {N_LOG2   {1'b0}};
-        end
-    endcase
   endgenerate
 
   /* Instantiate stage-0 butterflies. */
@@ -540,71 +474,6 @@ module fft_r22sdf #(
 
   /* Instantiate twiddle-factor ROMs for the requested FFT length. */
   generate
-    case (N)
-      16:
-        begin
-          fft_r22sdf_rom_16_s0 fft_r22sdf_rom_16_s0_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf0_c_out[3:0] - 4'd11),
-              .addr_vld (bf0_z_nd),
-              .tf_re    (tf0_re),
-              .tf_im    (tf0_im)
-            );
-        end
-
-      64:
-        begin
-          fft_r22sdf_rom_64_s0 fft_r22sdf_rom_64_s0_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf0_c_out[5:0] - 6'd47),
-              .addr_vld (bf0_z_nd),
-              .tf_re    (tf0_re),
-              .tf_im    (tf0_im)
-            );
-
-          fft_r22sdf_rom_64_s1 fft_r22sdf_rom_64_s1_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf1_c_out[3:0] - 4'd11),
-              .addr_vld (bf1_z_nd),
-              .tf_re    (tf1_re),
-              .tf_im    (tf1_im)
-            );
-        end
-
-      256:
-        begin
-          fft_r22sdf_rom_256_s0 fft_r22sdf_rom_256_s0_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf0_c_out[7:0] - 8'd191),
-              .addr_vld (bf0_z_nd),
-              .tf_re    (tf0_re),
-              .tf_im    (tf0_im)
-            );
-
-          fft_r22sdf_rom_256_s1 fft_r22sdf_rom_256_s1_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf1_c_out[5:0] - 6'd47),
-              .addr_vld (bf1_z_nd),
-              .tf_re    (tf1_re),
-              .tf_im    (tf1_im)
-            );
-
-          fft_r22sdf_rom_256_s2 fft_r22sdf_rom_256_s2_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf2_c_out[3:0] - 4'd11),
-              .addr_vld (bf2_z_nd),
-              .tf_re    (tf2_re),
-              .tf_im    (tf2_im)
-            );
-        end
-
-      1024:
         begin
           fft_r22sdf_rom_1024_s0 fft_r22sdf_rom_1024_s0_u1 (
               .clk      (clk),
@@ -642,61 +511,6 @@ module fft_r22sdf #(
               .tf_im    (tf3_im)
             );
         end
-
-      4096:
-        begin
-          fft_r22sdf_rom_4096_s0 fft_r22sdf_rom_4096_s0_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf0_c_out[11:0] - 12'd3071),
-              .addr_vld (bf0_z_nd),
-              .tf_re    (tf0_re),
-              .tf_im    (tf0_im)
-            );
-       
-          fft_r22sdf_rom_4096_s1 fft_r22sdf_rom_4096_s1_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf1_c_out[9:0] - 10'd767),
-              .addr_vld (bf1_z_nd),
-              .tf_re    (tf1_re),
-              .tf_im    (tf1_im)
-            );
-
-          fft_r22sdf_rom_4096_s2 fft_r22sdf_rom_4096_s2_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf2_c_out[7:0] - 8'd191),
-              .addr_vld (bf2_z_nd),
-              .tf_re    (tf2_re),
-              .tf_im    (tf2_im)
-            );
-
-          fft_r22sdf_rom_4096_s3 fft_r22sdf_rom_4096_s3_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf3_c_out[5:0] - 6'd47),
-              .addr_vld (bf3_z_nd),
-              .tf_re    (tf3_re),
-              .tf_im    (tf3_im)
-            );
-
-          fft_r22sdf_rom_4096_s4 fft_r22sdf_rom_4096_s4_u1 (
-              .clk      (clk),
-              .rst_n    (rst_n),
-              .addr     (bf4_c_out[3:0] - 4'd11),
-              .addr_vld (bf4_z_nd),
-              .tf_re    (tf4_re),
-              .tf_im    (tf4_im)
-            );
-        end
-
-      default:
-        begin
-          assign tf0_re = {TF_WDTH{1'b0}};
-          assign tf0_im = {TF_WDTH{1'b0}};
-        end
-    endcase
   endgenerate
 
   // initial
