@@ -1,45 +1,50 @@
-module t_fft;
+module t_FFT;
     reg clk, rst;
-    reg [11:0] din_meta;
-    reg [10:0] zero;
-    reg [10:0] meta;
-    reg [] out_ham; //
-    reg [] d_im; //
-    reg [] valid_ham; //
-    reg [] re_out; //
-    reg [] in_out; //
-    reg [] valid_fft; //
-    reg [] fft_out_num; //
+    // reg [13:0] out_han;
+    // reg [13:0] di_im;
+    reg valid_han;
+    reg valid_fft;
+    reg [13:0] re_out;
+    reg [13:0] im_out;
+    reg [9:0] out_num;
+    reg [9:0] counter;
 
-    initial
-        $readmemb("indata1.dat", data_i_mem); //
+    assign di_im = 0;
 
     initial begin
         clk = 0; forever #50 clk = !clk;
     end
 
-    initial
-        $monitor();
+    initial begin
+        rst = 1;
+        #10 rst = 0;
+        #20 rst = 1;
+    end
 
-    fft # (
-    .N_LOG2(10),
-    .TF_WDTH(10),
-    .DIN_WDTH(32),
-    .META_WDTH(11),
-    .DOUT_WDTH(40)
+    always @(negedge rst or posedge clk)
+        begin
+            if (rst == 0) counter <= 0;
+            else if (clk == 1) counter <= counter + 1;
+        end
+
+    initial
+        $monitor($stime, "rst = %b, clk = %b, valid_han = %b, out_han = %d, di_im = %d, valid_fft = %b, re_out = %d, im_out = %d, out_num = %b",
+            rst, clk, valid_han, out_han, di_im, valid_fft, re_out, im_out, out_num)
+
+
+
+    FFT # (
+        WIDTH = 14
     )
     fft_r22sdf(
-    .clk(clk),
-    .rst_n(rst),
-    .din_meta(zero),
-    .dout_meta(meta),
-    .din_re(out_ham),
-    .din_im(im),
-    .din_nd(valid_ham),
-    .dout_re(re_out),
-    .dout_im(im_out),
-    .dout_nd(valid_fft),
-    .out_num(fft_out_num)
+        .clock(clk),
+        .reset(rst),
+        .di_en(valid_han),
+        .di_re(out_han),
+        .di_im(di_im),
+        .do_en(valid_fft),
+        .do_re(re_out),
+        .do_im(im_out),
+        .out_num(out_num)
     )
-
 endmodule
