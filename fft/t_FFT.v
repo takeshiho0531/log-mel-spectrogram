@@ -29,12 +29,12 @@ module t_FFT;
 
     initial
         $monitor($stime, "rst = %b, clk = %b, valid_han = %b, out_han = %d, di_im = %d, valid_fft = %b, re_out = %d, im_out = %d, out_num = %b",
-            rst, clk, valid_han, out_han, di_im, valid_fft, re_out, im_out, out_num)
+            rst, clk, valid_han, out_han, di_im, valid_fft, re_out, im_out, out_num);
 
 
 
-    FFT # (
-        WIDTH = 14
+    FFT #(
+        .WIDTH(14)
     )
     fft_r22sdf(
         .clock(clk),
@@ -46,5 +46,5 @@ module t_FFT;
         .do_re(re_out),
         .do_im(im_out),
         .out_num(out_num)
-    )
+    );
 endmodule
