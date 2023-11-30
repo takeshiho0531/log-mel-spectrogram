@@ -37,6 +37,6 @@ module t_preemphasis;
 
     assign data_i = data_i_mem[counter];
 
-    preemphasis #(.I_BW(16), .O_BW(17)) preemphasis_test(.clk(clk), .rst_n(rst_n), .valid_i(valid_i), 
+    preemphasis #(.I_BW(16), .O_BW(17)) preemphasis_test(.clk(clk), .rst_n(rst_n), .valid_i(valid_i), .data_i(data_i),
 	.data_o(data_o), .valid_o(valid_o));
 endmodule
