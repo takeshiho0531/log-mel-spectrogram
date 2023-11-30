@@ -1,23 +1,104 @@
-# Compile of preemphasis.v was successful.
-# Compile of t_preemphasis.v was successful.
-# 2 compiles, 0 failed with no errors.
 vsim work.t_preemphasis
 # vsim work.t_preemphasis 
-# Start time: 22:47:45 on Nov 29,2023
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Start time: 10:21:17 on Nov 30,2023
+# ** Note: (vsim-8009) Loading existing optimized design _opt4
 # Loading work.t_preemphasis(fast)
-run
-#          0rst_n = 1, clk = 0, valid_i = x, counter =          0, data_i = 0000000000000000, valid_o = x, data_o =zxxxxxxxxxxxxxxxx
-#         10rst_n = 0, clk = 0, valid_i = 0, counter =          0, data_i = 0000000000000000, valid_o = 0, data_o =zxxxxxxxxxxxxxxxx
-#         30rst_n = 1, clk = 0, valid_i = 0, counter =          0, data_i = 0000000000000000, valid_o = 0, data_o =zxxxxxxxxxxxxxxxx
-#         40rst_n = 1, clk = 0, valid_i = 1, counter =          0, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
-#         50rst_n = 1, clk = 1, valid_i = 1, counter =          1, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
-run
-#        100rst_n = 1, clk = 0, valid_i = 1, counter =          1, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
-#        150rst_n = 1, clk = 1, valid_i = 1, counter =          2, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
-run
-#        200rst_n = 1, clk = 0, valid_i = 1, counter =          2, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
-#        250rst_n = 1, clk = 1, valid_i = 1, counter =          3, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
-run
-#        300rst_n = 1, clk = 0, valid_i = 1, counter =          3, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
-#        350rst_n = 1, clk = 1, valid_i = 1, counter =          4, data_i = 0000000000000000, valid_o = 1, data_o =zxxxxxxxxxxxxxxxx
+run -next
+run -all
+#          0rst_n = 1, clk = 0, valid_i = x, counter =          0, data_i = 0000000000000000, valid_o = x, data_o =xxxxxxxxxxxxxxxxx
+#         10rst_n = 0, clk = 0, valid_i = 0, counter =          0, data_i = 0000000000000000, valid_o = 0, data_o =xxxxxxxxxxxxxxxxx
+#         30rst_n = 1, clk = 0, valid_i = 0, counter =          0, data_i = 0000000000000000, valid_o = 0, data_o =xxxxxxxxxxxxxxxxx
+#         40rst_n = 1, clk = 0, valid_i = 1, counter =          0, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#         50rst_n = 1, clk = 1, valid_i = 1, counter =          1, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        100rst_n = 1, clk = 0, valid_i = 1, counter =          1, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        150rst_n = 1, clk = 1, valid_i = 1, counter =          2, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        200rst_n = 1, clk = 0, valid_i = 1, counter =          2, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        250rst_n = 1, clk = 1, valid_i = 1, counter =          3, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        300rst_n = 1, clk = 0, valid_i = 1, counter =          3, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        350rst_n = 1, clk = 1, valid_i = 1, counter =          4, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        400rst_n = 1, clk = 0, valid_i = 1, counter =          4, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        450rst_n = 1, clk = 1, valid_i = 1, counter =          5, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        500rst_n = 1, clk = 0, valid_i = 1, counter =          5, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        550rst_n = 1, clk = 1, valid_i = 1, counter =          6, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        600rst_n = 1, clk = 0, valid_i = 1, counter =          6, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        650rst_n = 1, clk = 1, valid_i = 1, counter =          7, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        700rst_n = 1, clk = 0, valid_i = 1, counter =          7, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        750rst_n = 1, clk = 1, valid_i = 1, counter =          8, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        800rst_n = 1, clk = 0, valid_i = 1, counter =          8, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        850rst_n = 1, clk = 1, valid_i = 1, counter =          9, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        900rst_n = 1, clk = 0, valid_i = 1, counter =          9, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#        950rst_n = 1, clk = 1, valid_i = 1, counter =         10, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1000rst_n = 1, clk = 0, valid_i = 1, counter =         10, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1050rst_n = 1, clk = 1, valid_i = 1, counter =         11, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1100rst_n = 1, clk = 0, valid_i = 1, counter =         11, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1150rst_n = 1, clk = 1, valid_i = 1, counter =         12, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1200rst_n = 1, clk = 0, valid_i = 1, counter =         12, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1250rst_n = 1, clk = 1, valid_i = 1, counter =         13, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1300rst_n = 1, clk = 0, valid_i = 1, counter =         13, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1350rst_n = 1, clk = 1, valid_i = 1, counter =         14, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1400rst_n = 1, clk = 0, valid_i = 1, counter =         14, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1450rst_n = 1, clk = 1, valid_i = 1, counter =         15, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1500rst_n = 1, clk = 0, valid_i = 1, counter =         15, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1550rst_n = 1, clk = 1, valid_i = 1, counter =         16, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1600rst_n = 1, clk = 0, valid_i = 1, counter =         16, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1650rst_n = 1, clk = 1, valid_i = 1, counter =         17, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1700rst_n = 1, clk = 0, valid_i = 1, counter =         17, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1750rst_n = 1, clk = 1, valid_i = 1, counter =         18, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1800rst_n = 1, clk = 0, valid_i = 1, counter =         18, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1850rst_n = 1, clk = 1, valid_i = 1, counter =         19, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1900rst_n = 1, clk = 0, valid_i = 1, counter =         19, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       1950rst_n = 1, clk = 1, valid_i = 1, counter =         20, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2000rst_n = 1, clk = 0, valid_i = 1, counter =         20, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2050rst_n = 1, clk = 1, valid_i = 1, counter =         21, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2100rst_n = 1, clk = 0, valid_i = 1, counter =         21, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2150rst_n = 1, clk = 1, valid_i = 1, counter =         22, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2200rst_n = 1, clk = 0, valid_i = 1, counter =         22, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2250rst_n = 1, clk = 1, valid_i = 1, counter =         23, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2300rst_n = 1, clk = 0, valid_i = 1, counter =         23, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2350rst_n = 1, clk = 1, valid_i = 1, counter =         24, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2400rst_n = 1, clk = 0, valid_i = 1, counter =         24, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2450rst_n = 1, clk = 1, valid_i = 1, counter =         25, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2500rst_n = 1, clk = 0, valid_i = 1, counter =         25, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2550rst_n = 1, clk = 1, valid_i = 1, counter =         26, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2600rst_n = 1, clk = 0, valid_i = 1, counter =         26, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2650rst_n = 1, clk = 1, valid_i = 1, counter =         27, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2700rst_n = 1, clk = 0, valid_i = 1, counter =         27, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2750rst_n = 1, clk = 1, valid_i = 1, counter =         28, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2800rst_n = 1, clk = 0, valid_i = 1, counter =         28, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2850rst_n = 1, clk = 1, valid_i = 1, counter =         29, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2900rst_n = 1, clk = 0, valid_i = 1, counter =         29, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       2950rst_n = 1, clk = 1, valid_i = 1, counter =         30, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3000rst_n = 1, clk = 0, valid_i = 1, counter =         30, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3050rst_n = 1, clk = 1, valid_i = 1, counter =         31, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3100rst_n = 1, clk = 0, valid_i = 1, counter =         31, data_i = 0000000000000000, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3150rst_n = 1, clk = 1, valid_i = 1, counter =         32, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3200rst_n = 1, clk = 0, valid_i = 1, counter =         32, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3250rst_n = 1, clk = 1, valid_i = 1, counter =         33, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3300rst_n = 1, clk = 0, valid_i = 1, counter =         33, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3350rst_n = 1, clk = 1, valid_i = 1, counter =         34, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3400rst_n = 1, clk = 0, valid_i = 1, counter =         34, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3450rst_n = 1, clk = 1, valid_i = 1, counter =         35, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3500rst_n = 1, clk = 0, valid_i = 1, counter =         35, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3550rst_n = 1, clk = 1, valid_i = 1, counter =         36, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3600rst_n = 1, clk = 0, valid_i = 1, counter =         36, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3650rst_n = 1, clk = 1, valid_i = 1, counter =         37, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3700rst_n = 1, clk = 0, valid_i = 1, counter =         37, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3750rst_n = 1, clk = 1, valid_i = 1, counter =         38, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3800rst_n = 1, clk = 0, valid_i = 1, counter =         38, data_i = 1111111111111111, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3850rst_n = 1, clk = 1, valid_i = 1, counter =         39, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3900rst_n = 1, clk = 0, valid_i = 1, counter =         39, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       3950rst_n = 1, clk = 1, valid_i = 1, counter =         40, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4000rst_n = 1, clk = 0, valid_i = 1, counter =         40, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4050rst_n = 1, clk = 1, valid_i = 1, counter =         41, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4100rst_n = 1, clk = 0, valid_i = 1, counter =         41, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4150rst_n = 1, clk = 1, valid_i = 1, counter =         42, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4200rst_n = 1, clk = 0, valid_i = 1, counter =         42, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4250rst_n = 1, clk = 1, valid_i = 1, counter =         43, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4300rst_n = 1, clk = 0, valid_i = 1, counter =         43, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4350rst_n = 1, clk = 1, valid_i = 1, counter =         44, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4400rst_n = 1, clk = 0, valid_i = 1, counter =         44, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+#       4450rst_n = 1, clk = 1, valid_i = 1, counter =         45, data_i = 1111111111111110, valid_o = 1, data_o =xxxxxxxxxxxxxxxxx
+
+
+# Break key hit
+# Simulation stop requested.
