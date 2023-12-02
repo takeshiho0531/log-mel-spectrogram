@@ -10,7 +10,6 @@ module framing # (
     // clock and reset
     input                                   clk_i,
     input                                   rst_n_i,
-    input                                   en_i,
 
     // streaming input
     input  signed [I_BW - 1 : 0]            data_i,
@@ -55,13 +54,13 @@ module framing # (
     wire skip = (skip_count >= FRAME_LEN);  // skip if already have FRAME_LEN
                                             // elements in the current period
 
-    wire fifo_enq = (en_i & valid_i & !skip);
+    wire fifo_enq = (valid_i & !skip);
 
     // =========================================================================
     // State Machine
     // =========================================================================
     always @(posedge clk_i) begin
-        if (!rst_n_i | !en_i) begin
+        if (!rst_n_i) begin
             frame_elem <= 'd0;
             state <= STATE_LOAD;
         end else begin
@@ -89,7 +88,7 @@ module framing # (
     // FIFO element tracking
     // =========================================================================
     always @(posedge clk_i) begin
-        if (!rst_n_i | !en_i) begin
+        if (!rst_n_i) begin
             fifo_count <= 'd0;
         end else begin
             if (fifo_enq & !fifo_deq) begin
@@ -108,7 +107,7 @@ module framing # (
     // Tracks the number of elements seen across one period, including
     // elements that are to be skipped
     always @(posedge clk_i) begin
-        if (!rst_n_i | !en_i) begin
+        if (!rst_n_i) begin
             skip_count <= 'd0;
         end else begin
             if (valid_i & (skip_count == FULL_PERIOD - 'd1)) begin
@@ -125,7 +124,7 @@ module framing # (
     // Cadence
     // =========================================================================
     always @(posedge clk_i) begin
-        if (!rst_n_i | !en_i) begin
+        if (!rst_n_i) begin
             cadence <= 'd0;
         end else begin
             if (next_elem) begin  // reset to 0
@@ -147,7 +146,7 @@ module framing # (
         .FIFO_DEPTH(FIFO_DEPTH)
     ) fifo_inst (
         .clk_i(clk_i),
-        .rst_n_i(rst_n_i & en_i),
+        .rst_n_i(rst_n_i),
 
         .enq_i(fifo_enq),
         .din_i(data_i),
@@ -162,22 +161,8 @@ module framing # (
     // =========================================================================
     // Output Assignment
     // =========================================================================
-    assign valid_o = (en_i & (state == STATE_UNLOAD));
+    assign valid_o = (state == STATE_UNLOAD);
     assign data_o = fifo_dout;
     assign last_o = (fifo_deq & last_elem);
-
-    // =========================================================================
-    // Simulation Only Waveform Dump (.vcd export)
-    // =========================================================================
-    `ifdef COCOTB_SIM
-    `ifndef SCANNED
-    `define SCANNED
-    initial begin
-        $dumpfile ("wave.vcd");
-        $dumpvars (0, framing);
-        #1;
-    end
-    `endif
-    `endif
 
 endmodule
