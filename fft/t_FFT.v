@@ -1,15 +1,20 @@
 module t_FFT;
     reg clk, rst;
-    // reg [13:0] out_han;
-    // reg [13:0] di_im;
+    wire [13:0] out_han;
+    wire [13:0] di_im;
     reg valid_han;
-    reg valid_fft;
-    reg [13:0] re_out;
-    reg [13:0] im_out;
-    reg [9:0] out_num;
+    wire valid_fft;
+    wire [13:0] re_out;
+    wire [13:0] im_out;
+    wire [9:0] out_num;
     reg [9:0] counter;
+    reg [13:0] data_i_mem[0:9];
 
     assign di_im = 0;
+    assign out_han = data_i_mem[counter];
+
+    initial
+        $readmemb("indata1.dat", data_i_mem);
 
     initial begin
         clk = 0; forever #50 clk = !clk;
@@ -17,8 +22,8 @@ module t_FFT;
 
     initial begin
         rst = 1;
-        #10 rst = 0;
-        #20 rst = 1;
+        #10 rst = 0; valid_han = 0;
+        #20 rst = 1; valid_han = 1;
     end
 
     always @(negedge rst or posedge clk)
@@ -27,9 +32,10 @@ module t_FFT;
             else if (clk == 1) counter <= counter + 1;
         end
 
+
     initial
-        $monitor($stime, "rst = %b, clk = %b, valid_han = %b, out_han = %d, di_im = %d, valid_fft = %b, re_out = %d, im_out = %d, out_num = %b",
-            rst, clk, valid_han, out_han, di_im, valid_fft, re_out, im_out, out_num);
+        $monitor($stime, "rst = %b, clk = %b, valid_han = %b, out_han = %d, di_im = %d, valid_fft = %b, re_out = %d, im_out = %d, out_num = %b, counter = %d",
+            rst, clk, valid_han, out_han, di_im, valid_fft, re_out, im_out, out_num, counter);
 
 
 
