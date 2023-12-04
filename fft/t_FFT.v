@@ -1,56 +1,102 @@
-module t_FFT;
-    reg clk, rst;
-    wire [13:0] out_han;
-    wire [13:0] di_im;
-    reg valid_han;
-    wire valid_fft;
-    wire [13:0] re_out;
-    wire [13:0] im_out;
-    wire [9:0] out_num;
-    reg [9:0] counter;
-    reg [13:0] data_i_mem[0:9];
+module t_FFT # ();
+    localparam = 1024;
+    localparam NN = 10; // log2(1024)
 
-    assign di_im = 0;
-    assign out_han = data_i_mem[counter];
+    reg clock;
+    reg reset;
+    reg di_en;
+    reg [13:0] di_re;
+    reg [13:0] di_re;
+    wire do_en;
+    wire [13:0] do_re;
+    wire [15:0] do_im;
 
-    initial
-        $readmemb("indata1.dat", data_i_mem);
+    reg [13:0] imem[0:19]
+    reg [13:0] omem[0:19]
 
-    initial begin
-        clk = 0; forever #50 clk = !clk;
+    // clock and reset
+    always begin
+        clock = 0; #10;
+        clock = 1; #10;
     end
 
     initial begin
-        rst = 1;
-        #10 rst = 0; valid_han = 0;
-        #20 rst = 1; valid_han = 1;
+        reset = 0; #20;
+        reset = 1; #100;
+        reset = 0;
     end
 
-    always @(negedge rst or posedge clk)
-        begin
-            if (rst == 0) counter <= 0;
-            else if (clk == 1) counter <= counter + 1;
+    // FUnctional Block
+    // Input control initialize
+    initial begin
+        wait (reset == 1);
+        di_en = 0;
+    end
+
+    // output data capture
+    initial begin
+        integer n;
+        forever begin
+            n = 0;
+            while (do_en !== 1) @(negedge clock);
+            while ((do_en == 1) && (n < N)) begin
+                omem[2*n] = do_en;
+                omem[2*n+1] = do_im;
+                n = n+1;
+                @(negedge clock);
+            end
         end
+    end
 
+    // task
+    task LoadInputData;
+        input [80*8:1] filename;
+        begin
+            $readmemh(filename, imem);
+        end
+    endtask
 
-    initial
-        $monitor($stime, "rst = %b, clk = %b, valid_han = %b, out_han = %d, di_im = %d, valid_fft = %b, re_out = %d, im_out = %d, out_num = %b, counter = %d",
-            rst, clk, valid_han, out_han, di_im, valid_fft, re_out, im_out, out_num, counter);
+    task GenerateInputWave;
+        integer n;
+        begin
+            di_en <= 1;
+            for (n =0; n<N; n = n+1) begin
+                di_re <= imem[2*n];
+                di_im <= imem[2*n+1];
+                @(posedge clock);
+            end
+            di_en <= 0;
+            di_re <= 'bx;
+            di_im <= 'bx;
+        end
+    endtask;
 
+    task SaveOutputData;
+        input [80*8:1] filename;
+        integer fp, n, m, i;
+        begin
+            fp = $fopen(filename);
+            m = 0;
+            for (n =0;n<N;n=n+1) begin
+                for (i=0; i < NN; i=i+1) m[NN-1-i] = n[i];
+                $fdisplay(fp, "%h  %h  // %d", omem[2*m], omem[2*m+1], n[NN-1:0]);
+            end
+            $fclose(fp);
+        end
+    endtask;
 
-
-    FFT #(
-        .WIDTH(14)
-    )
-    fft_r22sdf(
-        .clock(clk),
-        .reset(rst),
-        .di_en(valid_han),
-        .di_re(out_han),
-        .di_im(di_im),
-        .do_en(valid_fft),
-        .do_re(re_out),
-        .do_im(im_out),
-        .out_num(out_num)
+    FFT FFT (
+	.clock	(clock	),	//	i
+	.reset	(reset	),	//	i
+	.di_en	(di_en	),	//	i
+	.di_re	(di_re	),	//	i
+	.di_im	(di_im	),	//	i
+	.do_en	(do_en	),	//	o
+	.do_re	(do_re	),	//	o
+	.do_im	(do_im	)	//	o
     );
+
+    // include stimuli
+    `include "stim.v"
+
 endmodule
