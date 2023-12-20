@@ -11,8 +11,8 @@ module FFT #(
     input   [WIDTH-1:0] di_im,  //  Input Data (Imag)
     output              do_en,  //  Output Data Enable
     output  [WIDTH-1:0] do_re,  //  Output Data (Real)
-    output  [WIDTH-1:0] do_im,   //  Output Data (Imag)
-    output [9:0] out_num // 何番目の出力か
+    output  [WIDTH-1:0] do_im   //  Output Data (Imag)
+    // output [9:0] out_num // 何番目の出力か
 );
 //----------------------------------------------------------------------
 //  Data must be input consecutively in natural order.
@@ -32,21 +32,23 @@ wire            su4_do_en;
 wire[WIDTH-1:0] su4_do_re;
 wire[WIDTH-1:0] su4_do_im;
 
-integer i;
-reg [9:0] counter_r, counter_w;
-always @(*) begin
-    counter_w = (do_en)? counter_r+1: counter_r;
-end
-always @(posedge clock or negedge reset) begin
-    if (!reset) begin
-        counter_r<=0;
-    end
-    else begin
-        counter_r <= counter_w;
-    end
-end
+// integer i;
+//reg [9:0] counter_r, counter_w;
+//always @(*) begin
+  //  counter_w = (do_en)? counter_r+1: counter_r;
+    //$display("do_en = %b", do_en);
+//end
+//always @(posedge clock or negedge reset) begin
+  //  if (!reset) begin
+    //    counter_r<=0;
+  //  end
+    //else begin
+      //  counter_r <= counter_w;
+	//$display("counter_r = %b", counter_r);
+    //end
+//end
 
-assign out_num = {counter_r[0], counter_r[1], counter_r[3], counter_r[4], counter_r[5], counter_r[6], counter_r[7], counter_r[8], counter_r[9]};
+// assign out_num = {counter_r[0], counter_r[1], counter_r[3], counter_r[4], counter_r[5], counter_r[6], counter_r[7], counter_r[8], counter_r[9]};
 
 SdfUnit #(.N(1024),.M(1024),.WIDTH(WIDTH)) SU1 (
     .clock  (clock      ),  //  i
