@@ -1,3 +1,4 @@
+`timescale	1ns/1ns
 module log_mel_spectrogram #(
     parameter I_BW = 14,
     parameter O_BW = 14
@@ -157,13 +158,13 @@ module log_mel_spectrogram #(
         .clk(clk),
         .rst(rst),
         .di_en(fft_group0_do_en),
-        .di_re(fft_group0_do_re), // change
-        .di_im(fft_group0_do_im), // change
+        .di_re(fft_group0_do_re),
+        .di_im(fft_group0_do_im),
         .in_group_idx(), // FFT
         .in_group_num(), // FFT
         .do_en(select_buffer0_do_en),
-        .do_re(select_buffer0_do_re), // change
-        .do_im(select_buffer0_do_im), // change
+        .do_re(select_buffer0_do_re),
+        .do_im(select_buffer0_do_im),
         .out_group_idx(select_buffer0_out_group_idx),
         .out_group_num(select_buffer0_out_group_idx)
     );
@@ -175,13 +176,13 @@ module log_mel_spectrogram #(
         .clk(clk),
         .rst(rst),
         .di_en(fft_group1_do_en),
-        .di_re(fft_group1_do_re), // change
-        .di_im(fft_group1_do_im), // change
+        .di_re(fft_group1_do_re),
+        .di_im(fft_group1_do_im),
         .in_group_idx(), // FFT
         .in_group_num(), // FFT
         .do_en(select_buffer1_do_en),
-        .do_re(select_buffer1_do_re), // change
-        .do_im(select_buffer1_do_im), // change
+        .do_re(select_buffer1_do_re),
+        .do_im(select_buffer1_do_im),
         .out_group_idx(select_buffer1_out_group_idx),
         .out_group_num(select_buffer1_out_group_idx)
     );
@@ -193,18 +194,18 @@ module log_mel_spectrogram #(
         .clk(clk),
         .rst(rst),
         .di_en(fft_group2_do_en),
-        .di_re(fft_group2_do_re), // change
-        .di_im(fft_group2_do_im), // change
+        .di_re(fft_group2_do_re),
+        .di_im(fft_group2_do_im),
         .in_group_idx(), // FFT
         .in_group_num(), // FFT
         .do_en(select_buffer2_do_en),
-        .do_re(select_buffer2_do_re), // change
-        .do_im(select_buffer2_do_im), // change
+        .do_re(select_buffer2_do_re),
+        .do_im(select_buffer2_do_im),
         .out_group_idx(select_buffer2_out_group_idx),
         .out_group_num(select_buffer2_out_group_idx)
     );
 
-    localparam SQUARED_O_BW = 28; // really????
+    localparam SQUARED_O_BW = 27;
     wire signed [SQUARED_O_BW-1:0] out_squared0;
     wire signed [SQUARED_O_BW-1:0] out_squared1;
     wire signed [SQUARED_O_BW-1:0] out_squared2;
@@ -222,8 +223,8 @@ module log_mel_spectrogram #(
         .rst(rst),
         .in_group_idx(select_buffer0_out_group_idx), // 0-512
         .in_group_num(select_buffer0_out_group_num), // 0-88
-        .di_re(select_buffer0_do_re), // change
-        .di_im(select_buffer0_do_im), // change
+        .di_re(select_buffer0_do_re),
+        .di_im(select_buffer0_do_im),
         .di_en(select_buffer0_do_en),
         .is_first_in(is_first_in), // ????
         .is_last_in(is_last_in), // ????
@@ -241,8 +242,8 @@ module log_mel_spectrogram #(
         .rst(rst),
         .in_group_idx(select_buffer1_out_group_idx), // 0-512
         .in_group_num(select_buffer1_out_group_num), // 0-88
-        .di_re(select_buffer1_do_re), // change
-        .di_im(select_buffer1_do_im), // change
+        .di_re(select_buffer1_do_re),
+        .di_im(select_buffer1_do_im),
         .di_en(select_buffer1_do_en),
         .is_first_in(is_first_in), // ????
         .is_last_in(is_last_in), // ????
@@ -260,8 +261,8 @@ module log_mel_spectrogram #(
         .rst(rst),
         .in_group_idx(select_buffer2_out_group_idx), // 0-512
         .in_group_num(select_buffer2_out_group_num), // 0-88
-        .di_re(select_buffer2_do_re), // change
-        .di_im(select_buffer2_do_im), // change
+        .di_re(select_buffer2_do_re),
+        .di_im(select_buffer2_do_im),
         .di_en(select_buffer2_do_en),
         .is_first_in(is_first_in), // ????
         .is_last_in(is_last_in), // ????
@@ -332,8 +333,5 @@ module log_mel_spectrogram #(
         .do_en(mel2_do_en),
         .out_group_num(out_mel_group_num)
     );
-
-
-
 
 endmodule
