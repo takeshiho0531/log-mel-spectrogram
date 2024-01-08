@@ -34,6 +34,9 @@ module bit_reversal_count #(
         // $display("in_group_idx=%b, bit_reversal_count=%b", in_group_idx, bit_reversal_count);
         if (!rst) begin
             do_en <= 0;
+            data_o <= 0;
+            out_group_idx <= 0;
+            out_group_num <= 0;
         end
         else begin
             do_en <= di_en;
