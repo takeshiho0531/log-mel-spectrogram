@@ -1,6 +1,6 @@
 Time resolution is 1 ps
-di_en=0, in=    0, do_en=0, out=    x, num=16383
-di_en=1, in=    1, do_en=0, out=    x, num=16383
+di_en=0, in=    0, do_en=0, out=    0, num=16383
+di_en=1, in=    1, do_en=0, out=    0, num=16383
 di_en=1, in=    2, do_en=1, out=    1, num=    0
 di_en=1, in=    3, do_en=1, out=    2, num=    1
 di_en=1, in=    4, do_en=1, out=    3, num=    2
