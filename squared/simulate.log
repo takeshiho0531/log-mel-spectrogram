@@ -1,0 +1,27 @@
+Time resolution is 1 ps
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=x, out=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=x, is_first_out=x, is_last_out=x, data_o=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, out=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, is_first_out=x, is_last_out=x, data_o=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, out=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, is_first_out=x, is_last_out=x, data_o=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, out=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, is_first_out=x, is_last_out=x, data_o=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, out=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   x, do_en=0, is_first_out=x, is_last_out=x, data_o=xxxxxxxxxxxxxx
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, out=00000000000000
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, is_first_out=0, is_last_out=0, data_o=00000000000000
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, out=00000000000000
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, is_first_out=0, is_last_out=0, data_o=00000000000000
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, out=00000000000000
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, is_first_out=0, is_last_out=0, data_o=00000000000000
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, out=00000000000000
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, is_first_out=0, is_last_out=0, data_o=00000000000000
+in_group_idx=1023, di_en=0, in=xxxxxxxxxxxxxx, out_group_idx=   0, do_en=0, out=00000000000000
+in_group_idx=1023, di_en=0, is_first_in=0, is_last_in=0, data_i=00000010010000, out_group_idx=   0, do_en=0, is_first_out=0, is_last_out=0, data_o=00000000000000
+in_group_idx=   0, di_en=1, in=00000010010000, out_group_idx=   0, do_en=0, out=00000000000000
+in_group_idx=   0, di_en=1, is_first_in=0, is_last_in=0, data_i=00000000000010, out_group_idx=   0, do_en=0, is_first_out=0, is_last_out=0, data_o=00000000000000
+in_group_idx=   1, di_en=1, in=00000000000010, out_group_idx=   0, do_en=0, out=00000000000000
+in_group_idx=   1, di_en=1, is_first_in=0, is_last_in=0, data_i=11111110111001, out_group_idx=   0, do_en=0, is_first_out=0, is_last_out=0, data_o=00000000000000
+in_group_idx=   2, di_en=1, in=11111110111001, out_group_idx=   0, do_en=0, out=00000000000000
+$finish called at time : 250 ns : File "/home/kawada/squared/squared.srcs/sim_1/imports/squared/t_squared.v" Line 103
