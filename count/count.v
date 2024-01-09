@@ -26,6 +26,11 @@ module counter# (
             data_o <= data_i;
             count <= count+1;
             do_en <= 1;
-        end 
+        end
+        else begin
+            data_o <= data_i;
+            count <= count;
+            do_en <= 0;
+        end
     end
 endmodule
