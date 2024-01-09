@@ -134,6 +134,99 @@ module log_mel_spectrogram #(
         .do_im	(fft_group2_do_im)	//	o
     );
 
+    localparam COUNTER_O_BW;
+    wire counter0_do_en;
+    wire counter1_do_en;
+    wire counter2_do_en;
+    wire signed [COUNTER_O_BW-1:0] counter0_do_re;
+    wire signed [COUNTER_O_BW-1:0] counter0_do_im;
+    wire signed [COUNTER_O_BW-1:0] counter1_do_re;
+    wire signed [COUNTER_O_BW-1:0] counter1_do_im;
+    wire signed [COUNTER_O_BW-1:0] counter2_do_re;
+    wire signed [COUNTER_O_BW-1:0] counter2_do_im;
+    wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] count0;
+    wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] count1;
+    wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] count2;
+
+    counter #(
+        .I_BW(FFT_O_BW),
+        .O_BW(COUNTER_O_BW)
+    ) count0(
+        .clk(clk),
+        .rst(rst),
+        .di_en(fft_group0_do_en),
+        .di_re(fft_group0_do_re),
+        .di_im(fft_group0_do_im),
+        .do_en(counter0_do_en),
+        .do_re(counter0_do_re),
+        .do_im(counter0_do_im),
+        .num(count0)
+    );
+
+    counter #(
+        .I_BW(FFT_O_BW),
+        .O_BW(COUNTER_O_BW)
+    ) count1(
+        .clk(clk),
+        .rst(rst),
+        .di_en(fft_group1_do_en),
+        .di_re(fft_group1_do_re),
+        .di_im(fft_group1_do_im),
+        .do_en(counter1_do_en),
+        .do_re(counter1_do_re),
+        .do_im(counter1_do_im),
+        .num(count1)
+    );
+
+    counter #(
+        .I_BW(FFT_O_BW),
+        .O_BW(COUNTER_O_BW)
+    ) count2(
+        .clk(clk),
+        .rst(rst),
+        .di_en(fft_group2_do_en),
+        .di_re(fft_group2_do_re),
+        .di_im(fft_group2_do_im),
+        .do_en(counter2_do_en),
+        .do_re(counter2_do_re),
+        .do_im(counter_do_im),
+        .num(count2)
+    );
+
+    wire [6:0] bit_reversal_count0_group_num;
+    wire [9:0] bit_reversal_count0_in_group_idx;
+    wire [9:0] bit_reversal_count0_out_group_idx;
+    wire [6:0] bit_reversal_count1_group_num;
+    wire [9:0] bit_reversal_count1_in_group_idx;
+    wire [9:0] bit_reversal_count1_out_group_idx;
+    wire [6:0] bit_reversal_count2_group_num;
+    wire [9:0] bit_reversal_count2_in_group_idx;
+    wire [9:0] bit_reversal_count2_out_group_idx;
+
+
+    assign bit_reversal_count0_group_num = count0 / 1024;
+    assign bit_reversal_count0_in_group_idx = count0 % 1024;
+    assign bit_reversal_count1_group_num = count1 / 1024;
+    assign bit_reversal_count1_in_group_idx = count1 % 1024;
+    assign bit_reversal_count2_group_num = count2 / 1024;
+    assign bit_reversal_count2_in_group_idx = count2 % 1024;
+
+    bit_reversal_count reverse0(
+        .in_group_idx(bit_reversal_count0_in_group_idx),
+        .out_group_idx(bit_reversal_count0_out_group_idx)
+    );
+
+    bit_reversal_count reverse1(
+        .in_group_idx(bit_reversal_count1_in_group_idx),
+        .out_group_idx(bit_reversal_count1_out_group_idx)
+    );
+
+    bit_reversal_count reverse2(
+        .in_group_idx(bit_reversal_count2_in_group_idx),
+        .out_group_idx(bit_reversal_count2_out_group_idx)
+    );
+
+
     localparam SELECT_BUFFER_O_BW = 14;
     wire select_buffer0_do_en;
     wire select_buffer1_do_en;
@@ -157,11 +250,11 @@ module log_mel_spectrogram #(
     ) select_buffer0(
         .clk(clk),
         .rst(rst),
-        .di_en(fft_group0_do_en),
-        .di_re(fft_group0_do_re),
-        .di_im(fft_group0_do_im),
-        .in_group_idx(), // FFT
-        .in_group_num(), // FFT
+        .di_en(counter0_do_en),
+        .di_re(counter0_do_re),
+        .di_im(counter0_do_im),
+        .in_group_idx(bit_reversal_count0_in_group_idx),
+        .in_group_num(bit_reversal_count0_group_num),
         .do_en(select_buffer0_do_en),
         .do_re(select_buffer0_do_re),
         .do_im(select_buffer0_do_im),
@@ -175,11 +268,11 @@ module log_mel_spectrogram #(
     ) select_buffer1(
         .clk(clk),
         .rst(rst),
-        .di_en(fft_group1_do_en),
-        .di_re(fft_group1_do_re),
-        .di_im(fft_group1_do_im),
-        .in_group_idx(), // FFT
-        .in_group_num(), // FFT
+        .di_en(counter1_do_en),
+        .di_re(counter1_do_re),
+        .di_im(counter1_do_re),
+        .in_group_idx(bit_reversal_count1_in_group_idx),
+        .in_group_num(bit_reversal_count1_group_num),
         .do_en(select_buffer1_do_en),
         .do_re(select_buffer1_do_re),
         .do_im(select_buffer1_do_im),
@@ -193,11 +286,11 @@ module log_mel_spectrogram #(
     ) select_buffer2(
         .clk(clk),
         .rst(rst),
-        .di_en(fft_group2_do_en),
-        .di_re(fft_group2_do_re),
-        .di_im(fft_group2_do_im),
-        .in_group_idx(), // FFT
-        .in_group_num(), // FFT
+        .di_en(counter2_do_en),
+        .di_re(counter2_do_re),
+        .di_im(counter2_do_re),
+        .in_group_idx(bit_reversal_count2_in_group_idx),
+        .in_group_num(bit_reversal_count2_group_num),
         .do_en(select_buffer2_do_en),
         .do_re(select_buffer2_do_re),
         .do_im(select_buffer2_do_im),
@@ -209,8 +302,12 @@ module log_mel_spectrogram #(
     wire signed [SQUARED_O_BW-1:0] out_squared0;
     wire signed [SQUARED_O_BW-1:0] out_squared1;
     wire signed [SQUARED_O_BW-1:0] out_squared2;
-    wire [9:0] squared_out_group_idx;
-    wire [6:0] squared_out_group_um;
+    wire [9:0] squared0_out_group_idx;
+    wire [6:0] squared0_out_group_num;
+    wire [9:0] squared1_out_group_idx;
+    wire [6:0] squared1_out_group_num;
+    wire [9:0] squared2_out_group_idx;
+    wire [6:0] squared2_out_group_num;
     wire squared0_do_en;
     wire squared1_do_en;
     wire squared2_do_en;
@@ -226,12 +323,10 @@ module log_mel_spectrogram #(
         .di_re(select_buffer0_do_re),
         .di_im(select_buffer0_do_im),
         .di_en(select_buffer0_do_en),
-        .is_first_in(is_first_in), // ????
-        .is_last_in(is_last_in), // ????
         .data_o(out_squared0),
         .do_en(squared0_do_en),
-        .out_group_idx(squared_out_group_idx),
-        .out_group_num(squared_out_group_num)
+        .out_group_idx(squared0_out_group_idx),
+        .out_group_num(squared0_out_group_num)
     );
 
     squared #(
@@ -245,12 +340,10 @@ module log_mel_spectrogram #(
         .di_re(select_buffer1_do_re),
         .di_im(select_buffer1_do_im),
         .di_en(select_buffer1_do_en),
-        .is_first_in(is_first_in), // ????
-        .is_last_in(is_last_in), // ????
         .data_o(out_squared1),
         .do_en(squared1_do_en),
-        .out_group_idx(squared_out_group_idx),
-        .out_group_num(squared_out_group_num)
+        .out_group_idx(squared1_out_group_idx),
+        .out_group_num(squared1_out_group_num)
     );
 
     squared #(
@@ -264,12 +357,10 @@ module log_mel_spectrogram #(
         .di_re(select_buffer2_do_re),
         .di_im(select_buffer2_do_im),
         .di_en(select_buffer2_do_en),
-        .is_first_in(is_first_in), // ????
-        .is_last_in(is_last_in), // ????
         .data_o(out_squared2),
         .do_en(squared2_do_en),
-        .out_group_idx(squared_out_group_idx),
-        .out_group_num(squared_out_group_num)
+        .out_group_idx(squared2_out_group_idx),
+        .out_group_num(squared2_out_group_num)
     );
 
     localparam MEL_O_BW = 30;
@@ -277,11 +368,26 @@ module log_mel_spectrogram #(
     wire signed [MEL_O_BW-1:0] out_mel0;
     wire signed [MEL_O_BW-1:0] out_mel1;
     wire signed [MEL_O_BW-1:0] out_mel2;
-    wire [6:0] out_mel_group_num;  // 0-88
+    wire [6:0] out_mel0_group_num;  // 0-88
+    wire [6:0] out_mel1_group_num;  // 0-88
+    wire [6:0] out_mel2_group_num;  // 0-88
 
     wire mel0_do_en;
     wire mel1_do_en;
     wire mel2_do_en;
+    wire is_mel0_first_in;
+    wire is_mel0_last_in;
+    wire is_mel1_first_in;
+    wire is_mel1_last_in;
+    wire is_mel2_first_in;
+    wire is_mel2_last_in;
+
+    assign is_mel0_first_in = (squared0_out_group_idx % 513 == 0);
+    assign is_mel0_last_in = (squared0_out_group_idx % 513 == 512);
+    assign is_mel1_first_in = (squared1_out_group_idx % 513 == 0);
+    assign is_mel1_last_in = (squared1_out_group_idx % 513 == 512);
+    assign is_mel2_first_in = (squared2_out_group_idx % 513 == 0);
+    assign is_mel2_last_in = (squared2_out_group_idx % 513 == 512);
 
     mel_filter #(
        .I_BW(SQUARED_O_BW),
@@ -293,11 +399,11 @@ module log_mel_spectrogram #(
         .in_group_num(squared_out_group_num), // 0-88 //
         .data_i(out_squared0),
         .di_en(squared0_do_en),
-        .is_first_in(is_first_in), // squared
-        .is_last_in(is_last_in), // squared
+        .is_first_in(is_mel0_first_in), // squared
+        .is_last_in(is_mel0_last_in), // squared
         .data_o(out_mel0),
         .do_en(mel0_do_en),
-        .out_group_num(out_mel_group_num)
+        .out_group_num(out_mel0_group_num)
     );
 
     mel_filter #(
@@ -310,11 +416,11 @@ module log_mel_spectrogram #(
         .in_group_num(squared_out_group_num), // 0-88 //
         .data_i(out_squared1),
         .di_en(squared1_do_en),
-        .is_first_in(is_first_in), // squared
-        .is_last_in(is_last_in), // squared
+        .is_first_in(is_mel1_first_in), // squared
+        .is_last_in(is_mel1_last_in), // squared
         .data_o(out_mel1),
         .do_en(mel1_do_en),
-        .out_group_num(out_mel_group_num)
+        .out_group_num(out_mel1_group_num)
     );
 
     mel_filter #(
@@ -323,15 +429,15 @@ module log_mel_spectrogram #(
     ) mel2(
         .clk(clk),
         .rst(rst),
-        .in_group_idx(squared_out_group_idx), // 0-512 // 
+        .in_group_idx(squared_out_group_idx), // 0-512 //
         .in_group_num(squared_out_group_num), // 0-88 //
         .data_i(out_squared2),
         .di_en(squared2_do_en),
-        .is_first_in(is_first_in), // squared
-        .is_last_in(is_last_in), // squared
+        .is_first_in(is_mel2_first_in),
+        .is_last_in(is_mel2_first_in),
         .data_o(out_mel2),
         .do_en(mel2_do_en),
-        .out_group_num(out_mel_group_num)
+        .out_group_num(out_mel2_group_num)
     );
 
 endmodule
