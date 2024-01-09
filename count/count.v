@@ -7,9 +7,11 @@ module counter# (
     input clk,
     input rst,
     input di_en,
-    input [I_BW-1:0] data_i,
+    input [I_BW-1:0] di_re,
+    input [I_BW-1:0] di_im,
     output reg do_en,
-    output reg [O_BW-1:0] data_o,
+    output reg [O_BW-1:0] do_re,
+    output reg [O_BW-1:0] do_im,
     output [$clog2(TOTAL_DATA)-1:0] num
 );
 
@@ -20,15 +22,18 @@ module counter# (
         if (!rst) begin
             count <= 0;
             do_en <= 0;
-            data_o <= 0;
+            do_re <= 0;
+            do_im <= 0;
         end
         else if (di_en) begin
-            data_o <= data_i;
+            do_re <= di_re;
+            do_im <= di_im;
             count <= count+1;
             do_en <= 1;
         end
         else begin
-            data_o <= data_i;
+            do_re <= di_re;
+            do_im <= di_im;
             count <= count;
             do_en <= 0;
         end
