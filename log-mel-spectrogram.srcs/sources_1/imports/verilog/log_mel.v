@@ -407,4 +407,30 @@ module log_mel_spectrogram #(
         .out_group_num(out_mel2_group_num)
     );
 
+    localparam LOG_O_BW = 14;
+
+    log #(
+       .I_BW(MEL_O_BW),
+       .O_BW(LOG_O_BW)
+    ) log0(
+        .data_i(out_mel0),
+        .data_o(data_o)
+    );
+
+    log #(
+       .I_BW(MEL_O_BW),
+       .O_BW(LOG_O_BW)
+    ) log1(
+        .data_i(out_mel1),
+        .data_o(data_o)
+    );
+
+    log #(
+       .I_BW(MEL_O_BW),
+       .O_BW(LOG_O_BW)
+    ) log2(
+        .data_i(out_mel0),
+        .data_o(data_o)
+    );
+
 endmodule
