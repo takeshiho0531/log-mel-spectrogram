@@ -8,7 +8,7 @@ module log_mel_spectrogram #(
     input [1:0] di_en,
     input signed [I_BW-1:0] data_i,
     output reg do_en,
-    output signed [O_BW-1:0] data_o
+    output reg signed [O_BW*64-1:0] data_o
 );
     localparam INPUT_COUNTER_O_BW = 14;
     localparam FRAMING_O_BW = 14;
@@ -408,13 +408,16 @@ module log_mel_spectrogram #(
     );
 
     localparam LOG_O_BW = 14;
+    wire signed [LOG_O_BW*64-1:0] out_log0;
+    wire signed [LOG_O_BW*64-1:0] out_log1;
+    wire signed [LOG_O_BW*64-1:0] out_log2;
 
     log #(
        .I_BW(MEL_O_BW),
        .O_BW(LOG_O_BW)
     ) log0(
         .data_i(out_mel0),
-        .data_o(data_o)
+        .data_o(out_log0)
     );
 
     log #(
@@ -422,7 +425,7 @@ module log_mel_spectrogram #(
        .O_BW(LOG_O_BW)
     ) log1(
         .data_i(out_mel1),
-        .data_o(data_o)
+        .data_o(out_log1)
     );
 
     log #(
@@ -430,7 +433,31 @@ module log_mel_spectrogram #(
        .O_BW(LOG_O_BW)
     ) log2(
         .data_i(out_mel2),
-        .data_o(data_o)
+        .data_o(out_log2)
     );
+
+    always @(posedge clk or negedge rst) begin
+        if (!rst) begin
+            data_o <= 0;
+        end
+        else begin
+            if (mel0_do_en) begin
+                data_o <= out_log0;
+                do_en <= 1;
+            end
+            else if (mel1_do_en) begin
+                data_o <= out_log1;
+                do_en <= 1;        
+            end
+            else if (mel2_do_en) begin
+                data_o <= out_log2;
+                do_en <= 1;
+            end
+            else begin
+                do_en <= 0;
+                data_o <= 0;
+            end
+        end
+    end
 
 endmodule

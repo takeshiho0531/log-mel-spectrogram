@@ -37,6 +37,7 @@ Compiling module xil_defaultlib.select_buffer
 Compiling module xil_defaultlib.squared
 Compiling module xil_defaultlib.mel_filter_coef
 Compiling module xil_defaultlib.mel_filter
+Compiling module xil_defaultlib.log
 Compiling module xil_defaultlib.log_mel_spectrogram
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot log_mel_spectrogram_behav
