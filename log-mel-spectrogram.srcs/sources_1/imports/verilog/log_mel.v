@@ -429,7 +429,7 @@ module log_mel_spectrogram #(
        .I_BW(MEL_O_BW),
        .O_BW(LOG_O_BW)
     ) log2(
-        .data_i(out_mel0),
+        .data_i(out_mel2),
         .data_o(data_o)
     );
 
