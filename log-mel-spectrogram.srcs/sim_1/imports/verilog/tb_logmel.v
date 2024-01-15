@@ -3,8 +3,8 @@ module TB;
     localparam I_BW = 14;
     localparam O_BW = 14;
     localparam N = 1024;
-    localparam IN_N = ;
-    localparam OUT_N = ;
+    localparam IN_N = 1024; // 
+    localparam OUT_N = 1024; //
 
     reg clk;
     reg rst;
@@ -113,7 +113,7 @@ module TB;
     begin
         fp = $fopen(filename);
         for (n = 0; n < OUT_N; n = n + 1) begin
-            $fdisplay(fp, "%b // %d", omem[m], n);
+            $fdisplay(fp, "%b // %d", omem[n], n);
         end
         $fclose(fp);
     end
