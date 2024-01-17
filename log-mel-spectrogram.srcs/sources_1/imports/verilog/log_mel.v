@@ -365,7 +365,7 @@ module log_mel_spectrogram #(
         .in_group_idx(select_buffer0_out_group_idx), // 0-512 // 
         .in_group_num(select_buffer0_out_group_num), // 0-88 //
         .data_i(out_squared0),
-        .di_en(squared0_do_en),
+        .di_en(select_buffer0_do_en),
         .is_first_in(is_mel0_first_in), // squared
         .is_last_in(is_mel0_last_in), // squared
         .data_o(out_mel0),
@@ -382,7 +382,7 @@ module log_mel_spectrogram #(
         .in_group_idx(select_buffer1_out_group_idx), // 0-512 // 
         .in_group_num(select_buffer1_out_group_num), // 0-88 //
         .data_i(out_squared1),
-        .di_en(squared1_do_en),
+        .di_en(select_buffer1_do_en),
         .is_first_in(is_mel1_first_in), // squared
         .is_last_in(is_mel1_last_in), // squared
         .data_o(out_mel1),
@@ -399,7 +399,7 @@ module log_mel_spectrogram #(
         .in_group_idx(select_buffer2_out_group_idx), // 0-512 //
         .in_group_num(select_buffer2_out_group_num), // 0-88 //
         .data_i(out_squared2),
-        .di_en(squared2_do_en),
+        .di_en(select_buffer2_do_en),
         .is_first_in(is_mel2_first_in),
         .is_last_in(is_mel2_first_in),
         .data_o(out_mel2),
@@ -458,6 +458,14 @@ module log_mel_spectrogram #(
                 data_o <= 0;
             end
         end
+    end
+
+    always @(posedge clk) begin
+        // // $display("di_en=%d, input_counter_do_en=%d, framing_do_en=%d, hann_do_en=%d, fft_group0_do_en=%d, counter0_do_en=%d, select_buffer0_do_en=%d, mel0_do_en=%d, mel1_do_en=%d, mel2_do_en=%d, do_en=%d", 
+        // // di_en, input_counter_do_en, framing_do_en, hann_do_en, fft_group0_do_en, counter0_do_en, select_buffer0_do_en, mel0_do_en, mel1_do_en, mel2_do_en, do_en);
+        // $display("di_en=%d, input_counter_do_en=%d, framing_do_en=%d, hann_do_en=%d, out_hann_group_num=%d, is_fft_group1=%d, fft_group1_do_en=%d, counter1_do_en=%d, select_buffer1_do_en=%d, mel0_do_en=%d, mel1_do_en=%d, mel2_do_en=%d, do_en=%d", 
+        // di_en, input_counter_do_en, framing_do_en, hann_do_en, is_fft_group1, out_hann_group_num, fft_group1_do_en, counter1_do_en, select_buffer1_do_en, mel0_do_en, mel1_do_en, mel2_do_en, do_en);
+        // $display("mel0_do_en=%d, mel1_do_en=%d, mel2_do_en=%d, do_en=%d", mel0_do_en, mel1_do_en, mel2_do_en, do_en);
     end
 
 endmodule

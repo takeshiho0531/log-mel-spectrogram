@@ -3,18 +3,19 @@ module TB;
     localparam I_BW = 14;
     localparam O_BW = 14;
     localparam N = 1024;
-    localparam IN_N = 1024; // 
-    localparam OUT_N = 1024; //
+    localparam IN_N = 15104; // 88*160+1023*1
+    localparam OUT_N = 5696; // 64*89
+    localparam OUT_N_PAIR = OUT_N/64;
 
     reg clk;
     reg rst;
     reg [1:0] di_en;
     reg signed [I_BW-1:0] data_i;
-    wire signed [O_BW-1:0] data_o;
+    wire signed [O_BW*64-1:0] data_o;
     wire do_en;
 
     reg [I_BW-1:0]	imem[0:IN_N-1];
-    reg [O_BW-1:0]	omem[0:OUT_N-1];
+    reg [O_BW-1:0] omem[0:OUT_N-1];
 
     //----------------------------------------------------------------------
     //	Clock and Reset
@@ -42,13 +43,23 @@ module TB;
 
     //	Output Data Capture
     initial begin : OCAP
-        integer 	n;
+        integer n;
+        integer i;
+        integer j;
+        reg signed [O_BW-1:0] data_o_partial;
+        n <= 0;
         forever begin
-            n = 0;
             while (do_en !== 1) @(negedge clk);
-            while ((do_en == 1) && (n < OUT_N)) begin
-                omem[n] = data_o;
-                n = n+1;
+            while ((do_en == 1) && (n < OUT_N_PAIR)) begin
+                for (i=0; i<64; i=i+1) begin
+                    for (j=0; j<O_BW; j=j+1) begin
+                        data_o_partial[j] = data_o[n*64+i+j];
+                    end
+                    omem[n*64+i] = data_o_partial;
+                    $display("n=%d, data_o_partial", n, data_o_partial);
+                end
+                n <= n+1;
+                $display("-----");
                 @(negedge clk);
             end
         end
@@ -65,43 +76,42 @@ module TB;
     endtask
 
     task GenerateInputWave;
-        reg [31:0] n;
-        reg [31:0] t_clk;
+        integer n;
+        integer t_clk;
     begin
-        t_clk <= 0;
+        t_clk = 0;
         di_en <= 0;
-        // for (n = 0; n < IN_N; n = n + 1) begin
-        //     data_i <= imem[n];
-        //     @(posedge clk);
-        // end
 
-        n <= 0;
-        while (n<IN_N) begin
+        n = 0;
+        while (n < IN_N) begin  
+            // $display("n=%d", n); 
             if (t_clk < 1024) begin
                 di_en <= 1;
-                t_clk <= t_clk+1;
                 data_i <= imem[n];
-                n <= n+1;
+                t_clk = t_clk+1;
+                n = n+1;
             end
             else if ((t_clk % 1024) < 160) begin
                 di_en <= 1;
-                t_clk <= t_clk +1;
                 data_i <= imem[n];
-                n <= n+1;
+                t_clk = t_clk+1;
+                n = n+1;
             end
             else if ((t_clk % 1024) >= 160) begin
                 di_en <= 2;
-                t_clk <= t_clk+1;
                 data_i <= imem[n];
-                n <= n;
+                t_clk = t_clk+1;
+                n = n;
             end
             else begin
                 di_en <= 0;
-                t_clk <= t_clk + 1;
                 data_i <= imem[n];
-                n <= n;
+                t_clk = t_clk+1;
+                n = n;
             end
+            @(posedge clk);
         end
+
         di_en <= 0;
         data_i <= 'bx;
     end
@@ -135,6 +145,8 @@ module TB;
     //	Test Stimuli
     //----------------------------------------------------------------------
     initial begin : STIM
+        integer k;
+
         wait (rst == 0);
         wait (rst == 1);
         repeat(10) @(posedge clk);
@@ -147,7 +159,21 @@ module TB;
             end
             begin
                 wait (do_en == 1);
-                repeat(1024) @(posedge clk);
+                // repeat(OUT_N) @(posedge clk); //
+                k = 0;
+                while (k < OUT_N_PAIR) begin
+                    if (!rst) begin
+                        k = 0;
+                    end
+                    else if (do_en) begin
+                        k = k+1;
+                        $display("k=%d", k);
+                    end
+                    else begin
+                        k = k;
+                    end
+                    @(negedge clk);
+                end
                 SaveOutputData("output.txt");
             end
         join
@@ -156,9 +182,21 @@ module TB;
         $finish;
     end
     initial begin : TIMEOUT
-        repeat(10000) #20;	//  1000 Clock Cycle Time
+        repeat(1000000000) #20;	//  1000 Clock Cycle Time
         $display("[FAILED] Simulation timed out.");
         $finish;
+    end
+
+    reg [31:0] cnt;
+
+    always @(posedge clk or negedge rst) begin
+        if (!rst) begin
+            cnt <= 0;
+        end
+        else begin
+            cnt <= cnt +1;
+        end
+
     end
 
 endmodule
