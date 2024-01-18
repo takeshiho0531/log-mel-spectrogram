@@ -161,7 +161,8 @@ module TB;
                 wait (do_en == 1);
                 // repeat(OUT_N) @(posedge clk); //
                 k = 0;
-                while (k <= OUT_N_PAIR) begin
+                // while (k < OUT_N_PAIR) begin
+                while (k < OUT_N_PAIR+1) begin
                     if (!rst) begin
                         k = 0;
                     end
@@ -174,6 +175,7 @@ module TB;
                     end
                     @(negedge clk);
                 end
+                $display("done");
                 SaveOutputData("output.txt");
             end
         join

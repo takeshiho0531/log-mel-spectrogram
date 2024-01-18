@@ -407,7 +407,7 @@ module log_mel_spectrogram #(
         .data_i(out_squared2),
         .di_en(select_buffer2_do_en),
         .is_first_in(is_mel2_first_in),
-        .is_last_in(is_mel2_first_in),
+        .is_last_in(is_mel2_last_in),
         .data_o(out_mel2),
         .do_en(mel2_do_en),
         .out_group_num(out_mel2_group_num)
@@ -479,7 +479,7 @@ module log_mel_spectrogram #(
         // $display("di_en=%d, input_counter_do_en=%d, num=%d, framing_out_num=%d", di_en, input_counter_do_en, num,framing_out_num);
         // $display("bit_reversal_count0_group_num=%d, bit_reversal_count1_group_num=%d, bit_reversal_count2_group_num=%d", bit_reversal_count0_group_num, bit_reversal_count1_group_num, bit_reversal_count2_group_num);
         // $display("out_mel0_group_num=%d, mel0_do_en=%d, out_mel1_group_num=%d, mel1_do_en=%d, out_mel2_group_num=%d, mel2_do_en=%d,", out_mel0_group_num, mel0_do_en, out_mel1_group_num, mel1_do_en, out_mel2_group_num, mel2_do_en);
-        $display("out_mel0_group_num=%d, mel0_do_en=%d, select_buffer0_do_en=%d, select_buffer0_out_group_num=%d, select_buffer0_out_group_idx=%d", out_mel0_group_num, mel0_do_en, select_buffer0_do_en, select_buffer0_out_group_num, select_buffer0_out_group_idx);
+        // $display("out_mel0_group_num=%d, mel0_do_en=%d, select_buffer0_do_en=%d, select_buffer0_out_group_num=%d, select_buffer0_out_group_idx=%d", out_mel0_group_num, mel0_do_en, select_buffer0_do_en, select_buffer0_out_group_num, select_buffer0_out_group_idx);
         // $display("out_mel2_group_num=%d, mel2_do_en=%d, select_buffer2_do_en=%d, select_buffer2_out_group_num=%d, select_buffer2_out_group_idx=%d", out_mel2_group_num, mel2_do_en, select_buffer2_do_en, select_buffer2_out_group_num, select_buffer2_out_group_idx);
     end
 
