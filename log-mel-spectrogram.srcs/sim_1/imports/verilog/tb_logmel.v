@@ -84,7 +84,7 @@ module TB;
 
         n = 0;
         while (n <= IN_N) begin  
-            $display("t_clk=%d, n=%d", t_clk, n); 
+            // $display("t_clk=%d, n=%d", t_clk, n); 
             if (t_clk < 1024) begin
                 di_en <= 1;
                 data_i <= imem[n];
@@ -161,7 +161,7 @@ module TB;
                 wait (do_en == 1);
                 // repeat(OUT_N) @(posedge clk); //
                 k = 0;
-                while (k < OUT_N_PAIR) begin
+                while (k <= OUT_N_PAIR) begin
                     if (!rst) begin
                         k = 0;
                     end
