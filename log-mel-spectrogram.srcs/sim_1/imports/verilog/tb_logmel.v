@@ -56,10 +56,10 @@ module TB;
                         data_o_partial[j] = data_o[n*64+i+j];
                     end
                     omem[n*64+i] = data_o_partial;
-                    $display("n=%d, data_o_partial", n, data_o_partial);
+                    // $display("n=%d, data_o_partial", n, data_o_partial);
                 end
                 n <= n+1;
-                $display("-----");
+                // $display("-----");
                 @(negedge clk);
             end
         end
@@ -83,31 +83,31 @@ module TB;
         di_en <= 0;
 
         n = 0;
-        while (n < IN_N) begin  
-            // $display("n=%d", n); 
+        while (n <= IN_N) begin  
+            $display("t_clk=%d, n=%d", t_clk, n); 
             if (t_clk < 1024) begin
                 di_en <= 1;
                 data_i <= imem[n];
-                t_clk = t_clk+1;
-                n = n+1;
+                t_clk <= t_clk+1;
+                n <= n+1;
             end
             else if ((t_clk % 1024) < 160) begin
                 di_en <= 1;
                 data_i <= imem[n];
                 t_clk = t_clk+1;
-                n = n+1;
+                n <= n+1;
             end
             else if ((t_clk % 1024) >= 160) begin
                 di_en <= 2;
                 data_i <= imem[n];
                 t_clk = t_clk+1;
-                n = n;
+                n <= n;
             end
             else begin
                 di_en <= 0;
                 data_i <= imem[n];
                 t_clk = t_clk+1;
-                n = n;
+                n <= n;
             end
             @(posedge clk);
         end

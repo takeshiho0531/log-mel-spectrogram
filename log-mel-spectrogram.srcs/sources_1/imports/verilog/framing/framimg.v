@@ -11,7 +11,8 @@ module framing # (
     input rst,
     input [1:0] di_en, // 0:invalid, 1:ok, 2:input wait time
     input signed [I_BW - 1 : 0] data_i,
-    input [$clog2(TOTAL_DATA)-1:0] in_num,
+    // input [$clog2(TOTAL_DATA)-1:0] in_num,
+    input [$clog2(OUTPUT_TOTAL_DATA)-1:0] in_num,
     output reg do_en,
     output reg signed [O_BW - 1 : 0] data_o,
     output [($clog2(OUTPUT_TOTAL_DATA)-1):0] out_num

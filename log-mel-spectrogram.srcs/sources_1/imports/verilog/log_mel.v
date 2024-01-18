@@ -19,7 +19,7 @@ module log_mel_spectrogram #(
 
 
     wire signed [INPUT_COUNTER_O_BW-1:0] out_input_counter;
-    wire [$clog2(TOTAL_DATA)-1:0] num;
+    wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] num; // 
     wire [1:0] input_counter_do_en;
     wire [($clog2(OUT_FRAMING_TOTAL_DATA)-1):0] framing_out_num;
     wire framing_do_en;
@@ -44,6 +44,12 @@ module log_mel_spectrogram #(
         .num(num)
     );
 
+    reg [1:0] cushion_input_counter_do_en;
+
+    always @(posedge clk) begin
+        cushion_input_counter_do_en <= input_counter_do_en;
+    end
+
     framing #(
         .TOTAL_DATA(TOTAL_DATA),
         .I_BW(INPUT_COUNTER_O_BW),
@@ -52,7 +58,7 @@ module log_mel_spectrogram #(
     .clk(clk),
     .rst(rst),
     .data_i(out_input_counter),
-    .di_en(input_counter_do_en),
+    .di_en(input_counter_do_en), // TODO
     .in_num(num),
     .data_o(out_framing),
     .do_en(framing_do_en),
@@ -466,6 +472,9 @@ module log_mel_spectrogram #(
         // $display("di_en=%d, input_counter_do_en=%d, framing_do_en=%d, hann_do_en=%d, out_hann_group_num=%d, is_fft_group1=%d, fft_group1_do_en=%d, counter1_do_en=%d, select_buffer1_do_en=%d, mel0_do_en=%d, mel1_do_en=%d, mel2_do_en=%d, do_en=%d", 
         // di_en, input_counter_do_en, framing_do_en, hann_do_en, is_fft_group1, out_hann_group_num, fft_group1_do_en, counter1_do_en, select_buffer1_do_en, mel0_do_en, mel1_do_en, mel2_do_en, do_en);
         // $display("mel0_do_en=%d, mel1_do_en=%d, mel2_do_en=%d, do_en=%d", mel0_do_en, mel1_do_en, mel2_do_en, do_en);
+        // $display("out_hann_group_num", out_hann_group_num);
+        // $display("di_en=%d, input_counter_do_en=%d, num=%d, framing_out_num=%d", di_en, input_counter_do_en, num,framing_out_num);
     end
+
 
 endmodule

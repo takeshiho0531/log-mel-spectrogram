@@ -2,7 +2,8 @@
 module input_counter# (
     parameter I_BW         = 14,
     parameter O_BW         = 14,
-    parameter TOTAL_DATA   = 15104
+    // parameter TOTAL_DATA   = 15104
+    parameter TOTAL_DATA   = 91136
 )(
     input clk,
     input rst,
@@ -29,12 +30,12 @@ module input_counter# (
         end
         else if (di_en==2) begin
             data_o <= data_i;
-            count <= count;
+            count <= count+1 ; //
             do_en <= 2;
         end
         else begin
             do_en <= 0;
-            count <= count;
+            count <= count; //
             data_o <= 0;
         end 
     end
