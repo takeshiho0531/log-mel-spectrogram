@@ -449,14 +449,17 @@ module log_mel_spectrogram #(
         else begin
             if (mel0_do_en) begin
                 data_o <= out_log0;
+                // $display("out_mel0_group_num=%d, mel0_do_en=%d", out_mel0_group_num, mel0_do_en);
                 do_en <= 1;
             end
             else if (mel1_do_en) begin
                 data_o <= out_log1;
+                // $display("out_mel1_group_num=%d, mel1_do_en=%d", out_mel1_group_num, mel1_do_en);
                 do_en <= 1;        
             end
             else if (mel2_do_en) begin
                 data_o <= out_log2;
+                // $display("out_mel2_group_num=%d, mel2_do_en=%d", out_mel2_group_num, mel2_do_en);
                 do_en <= 1;
             end
             else begin
@@ -472,8 +475,12 @@ module log_mel_spectrogram #(
         // $display("di_en=%d, input_counter_do_en=%d, framing_do_en=%d, hann_do_en=%d, out_hann_group_num=%d, is_fft_group1=%d, fft_group1_do_en=%d, counter1_do_en=%d, select_buffer1_do_en=%d, mel0_do_en=%d, mel1_do_en=%d, mel2_do_en=%d, do_en=%d", 
         // di_en, input_counter_do_en, framing_do_en, hann_do_en, is_fft_group1, out_hann_group_num, fft_group1_do_en, counter1_do_en, select_buffer1_do_en, mel0_do_en, mel1_do_en, mel2_do_en, do_en);
         // $display("mel0_do_en=%d, mel1_do_en=%d, mel2_do_en=%d, do_en=%d", mel0_do_en, mel1_do_en, mel2_do_en, do_en);
-        $display("out_hann_group_num", out_hann_group_num);
+        // $display("out_hann_group_num", out_hann_group_num);
         // $display("di_en=%d, input_counter_do_en=%d, num=%d, framing_out_num=%d", di_en, input_counter_do_en, num,framing_out_num);
+        // $display("bit_reversal_count0_group_num=%d, bit_reversal_count1_group_num=%d, bit_reversal_count2_group_num=%d", bit_reversal_count0_group_num, bit_reversal_count1_group_num, bit_reversal_count2_group_num);
+        // $display("out_mel0_group_num=%d, mel0_do_en=%d, out_mel1_group_num=%d, mel1_do_en=%d, out_mel2_group_num=%d, mel2_do_en=%d,", out_mel0_group_num, mel0_do_en, out_mel1_group_num, mel1_do_en, out_mel2_group_num, mel2_do_en);
+        $display("out_mel0_group_num=%d, mel0_do_en=%d, select_buffer0_do_en=%d, select_buffer0_out_group_num=%d, select_buffer0_out_group_idx=%d", out_mel0_group_num, mel0_do_en, select_buffer0_do_en, select_buffer0_out_group_num, select_buffer0_out_group_idx);
+        // $display("out_mel2_group_num=%d, mel2_do_en=%d, select_buffer2_do_en=%d, select_buffer2_out_group_num=%d, select_buffer2_out_group_idx=%d", out_mel2_group_num, mel2_do_en, select_buffer2_do_en, select_buffer2_out_group_num, select_buffer2_out_group_idx);
     end
 
 

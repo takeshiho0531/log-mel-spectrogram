@@ -24,7 +24,7 @@ module select_buffer # (
             out_group_idx <= 0;
             out_group_num <= 0;
         end
-        else if (di_en & in_group_num <+ 512) begin
+        else if (di_en & in_group_idx <= 512) begin
             do_en <= di_en;
             do_re <= di_re;
             do_im <= di_im;
