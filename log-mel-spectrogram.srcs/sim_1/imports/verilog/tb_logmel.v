@@ -14,7 +14,7 @@ module TB;
     wire signed [O_BW*64-1:0] data_o;
     wire do_en;
 
-    reg [I_BW-1:0]	imem[0:IN_N-1];
+    reg [I_BW-1:0]	imem[0:IN_N]; // 0行目のデータが採用されない設計になってしまってる
     reg [O_BW-1:0] omem[0:OUT_N-1];
 
     //----------------------------------------------------------------------
@@ -84,8 +84,8 @@ module TB;
         di_en <= 0;
 
         n = 0;
-        while (n <= IN_N) begin  
-            // $display("t_clk=%d, n=%d", t_clk, n); 
+        while (n <= IN_N) begin  // 0行目のデータが採用されない設計になってしまってる
+            $display("t_clk=%d, n=%d", t_clk, n); 
             if (t_clk < 1024) begin
                 di_en <= 1;
                 data_i <= imem[n];
