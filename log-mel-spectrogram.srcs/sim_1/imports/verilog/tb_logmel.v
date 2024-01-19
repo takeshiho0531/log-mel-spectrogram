@@ -89,28 +89,28 @@ module TB;
             if (t_clk < 1024) begin
                 di_en <= 1;
                 data_i <= imem[n];
-                $display("t_clk=%d, n=%d, data_i=%d", t_clk, n, data_i); 
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk <= t_clk+1;
                 n <= n+1;
             end
             else if ((t_clk % 1024) < 160) begin
                 di_en <= 1;
                 data_i <= imem[n];
-                $display("t_clk=%d, n=%d, data_i=%d", t_clk, n, data_i); 
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk = t_clk+1;
                 n <= n+1;
             end
             else if ((t_clk % 1024) >= 160) begin
                 di_en <= 2;
                 data_i <= imem[n];
-                $display("t_clk=%d, n=%d, data_i=%d", t_clk, n, data_i); 
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk = t_clk+1;
                 n <= n;
             end
             else begin
                 di_en <= 0;
                 data_i <= imem[n];
-                $display("t_clk=%d, n=%d, data_i=%d", t_clk, n, data_i); 
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk = t_clk+1;
                 n <= n;
             end
@@ -167,13 +167,13 @@ module TB;
                 // repeat(OUT_N) @(posedge clk); //
                 k = 0;
                 // while (k < OUT_N_PAIR) begin
-                while (k < OUT_N_PAIR+1) begin
+                while (k < OUT_N_PAIR+1) begin // 初めのk=1が無効
                     if (!rst) begin
                         k = 0;
                     end
                     else if (do_en) begin
                         k = k+1;
-                        // $display("k=%d", k);
+                        $display("k=%d", k);
                     end
                     else begin
                         k = k;
