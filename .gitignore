@@ -1,0 +1,14 @@
+*.o
+*.pb
+*.dbg
+*.xdbg
+*.mem
+*.reloc
+*.rtti
+*.svtype
+*.type
+*.sdb
+*.wdb
+*.xpr
+*.lpr
+log-mel-spectrogram.cache/

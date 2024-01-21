@@ -1,0 +1,7 @@
+xsim.dir/
+*.sh
+*.v
+*.prj
+*.tcl
+*.ini
+xvlog.log
