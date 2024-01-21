@@ -1,7 +1,7 @@
 `timescale	1ns/1ns
 module t_mel_filter;
-    localparam I_BW = 14;
-    localparam O_BW = 14;
+    localparam I_BW = 28;
+    localparam O_BW = 30;
     localparam TOTAL_DATA = 32832;
 
     reg clk;
@@ -82,7 +82,7 @@ module t_mel_filter;
     end
 
     always @(posedge clk) begin
-        $display("in_group_num=%d, in_group_idx=%d, di_en=%b, is_last_in=%b, do_en=%b, out[895:882]=%d, out[881:868]=%d, out[13:0]=%d", in_group_num, in_group_idx, di_en, is_last_in, do_en, out[895:882], out[881:868], out[13:0]);
+        $display("in_group_num=%d, in_group_idx=%d, di_en=%b, is_last_in=%b, do_en=%b, out[O_BW*64-1: O_BW*63]=%d, out[O_BW*32-1: O_BW*31]=%d, out[O_BW*1-1: O_BW*0]=%d", in_group_num, in_group_idx, di_en, is_last_in, do_en, out[O_BW*64-1: O_BW*63], out[O_BW*32-1: O_BW*31], out[O_BW*1-1: O_BW*0]);
     end
 
     //----------------------------------------------------------------------

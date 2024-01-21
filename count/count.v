@@ -20,6 +20,7 @@ module counter# (
         if (!rst) begin
             count <= 0;
             do_en <= 0;
+            data_o <= 0;
         end
         else if (di_en) begin
             data_o <= data_i;

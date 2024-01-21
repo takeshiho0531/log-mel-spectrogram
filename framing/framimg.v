@@ -24,6 +24,7 @@ module framing # (
     integer enque_addr;
     integer deque_addr;
     reg [($clog2(OUTPUT_TOTAL_DATA)-1):0] out_num_tmp;
+    integer i;
 
     assign out_num = out_num_tmp -1;
     
@@ -33,6 +34,10 @@ module framing # (
             deque_addr <= 0;
             do_en <= 0;
             out_num_tmp <= 0;
+            data_o <= 0;
+            for (i=0; i<FIFO_DEPTH; i=i+1) begin
+                shift_reg[i] <= 0;
+            end
         end
         else if (in_num<160 & di_en==1) begin
             do_en <= di_en;
@@ -40,10 +45,16 @@ module framing # (
             enque_addr <= 0;
             deque_addr <= 0;
             out_num_tmp <= out_num_tmp+di_en;
+            for (i=0; i<FIFO_DEPTH; i=i+1) begin
+                shift_reg[i] <= shift_reg[i];
+            end
         end
         else if (in_num>=160 & in_num<1024 & di_en==1) begin
             do_en <= di_en;
             data_o <= data_i;
+            for (i=0; i<FIFO_DEPTH; i=i+1) begin
+                shift_reg[i] <= shift_reg[i];
+            end
             shift_reg[enque_addr] <= data_i;
             enque_addr <= enque_addr+1;
             deque_addr <= 0;
@@ -52,6 +63,9 @@ module framing # (
         else if (in_num>=1024 & in_num%1024<160 & di_en==1) begin
             do_en <= di_en;
             data_o <= shift_reg[deque_addr%FIFO_DEPTH];
+            for (i=0; i<FIFO_DEPTH; i=i+1) begin
+                shift_reg[i] <= shift_reg[i];
+            end
             shift_reg[enque_addr%FIFO_DEPTH] <= data_i;
             enque_addr <= enque_addr + 1;   
             deque_addr <= deque_addr + 1;
@@ -59,7 +73,10 @@ module framing # (
         end
         else if (in_num>=1024 & in_num%1024>=160 & di_en==2) begin
             do_en <= 1;
-            data_o <= shift_reg[deque_addr%FIFO_DEPTH]; 
+            data_o <= shift_reg[deque_addr%FIFO_DEPTH];
+            for (i=0; i<FIFO_DEPTH; i=i+1) begin
+                shift_reg[i] <= shift_reg[i];
+            end 
             enque_addr <= enque_addr; 
             deque_addr <= deque_addr+1;
             out_num_tmp <= out_num_tmp+1;
@@ -69,10 +86,13 @@ module framing # (
             enque_addr <= enque_addr;
             deque_addr <= deque_addr;
             out_num_tmp <= out_num_tmp;
+            for (i=0; i<FIFO_DEPTH; i=i+1) begin
+                shift_reg[i] <= shift_reg[i];
+            end
         end
     end
 
     always @(posedge clk) begin
         $display("di_en=%d, enque_addr=%d, deque_addr=%d, data_o=%d, out_num=%d", di_en, enque_addr, deque_addr, data_o, out_num);
     end    
-    endmodule
+endmodule

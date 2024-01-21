@@ -1,6 +1,6 @@
 Time resolution is 1 ps
-di_en=0, enque_addr=          0, deque_addr=          0, data_o=     x, out_num=131071
-di_en=1, enque_addr=          0, deque_addr=          0, data_o=     x, out_num=131071
+di_en=0, enque_addr=          0, deque_addr=          0, data_o=     0, out_num=131071
+di_en=1, enque_addr=          0, deque_addr=          0, data_o=     0, out_num=131071
 di_en=1, enque_addr=          0, deque_addr=          0, data_o=     0, out_num=     0
 di_en=1, enque_addr=          0, deque_addr=          0, data_o=     1, out_num=     1
 di_en=1, enque_addr=          0, deque_addr=          0, data_o=     2, out_num=     2

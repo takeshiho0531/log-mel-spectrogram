@@ -1,6 +1,4 @@
 module hann_window_rom (
-    input clk,
-    input rst,
     input [9:0] window_num,
     output [13:0] window_coef
   );

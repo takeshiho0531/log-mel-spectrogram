@@ -17,14 +17,20 @@ module select_buffer # (
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
             do_en <= 0;
+            data_o <= 0;
+            out_group_idx <= 0;
+            out_group_num <= 0;
         end
-        else if (di_en & in_group_num <= 512) begin
+        else if (di_en & in_group_num <+ 512) begin
             do_en <= di_en;
             data_o <= data_i;
             out_group_idx <= in_group_idx;
             out_group_num <= out_group_num;
         end else begin
             do_en <= 0;
+            data_o <= data_i;
+            out_group_idx <= in_group_idx;
+            out_group_num <= in_group_num;
         end
     end
 endmodule
