@@ -1,5 +1,6 @@
 # log-mel-spectrogram<!-- omit in toc -->
 
+※ FPGAボードのユーザーガイド: https://www.xilinx.com/support/documents/boards_and_kits/vcu118/ug1224-vcu118-eval-bd.pdf
 
 ** 簡単な説明[目次] **
 
