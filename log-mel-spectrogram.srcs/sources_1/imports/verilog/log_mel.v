@@ -44,12 +44,6 @@ module log_mel_spectrogram #(
         .num(num)
     );
 
-    reg [1:0] cushion_input_counter_do_en;
-
-    always @(posedge clk) begin
-        cushion_input_counter_do_en <= input_counter_do_en;
-    end
-
     framing #(
         .TOTAL_DATA(TOTAL_DATA),
         .I_BW(INPUT_COUNTER_O_BW),

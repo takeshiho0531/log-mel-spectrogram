@@ -3,8 +3,8 @@
 # SW Build 4029153 on Fri Oct 13 20:14:34 MDT 2023
 # IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
 # SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
-# Start of session at: Mon Jan 29 13:46:40 2024
-# Process ID: 10612
+# Start of session at: Mon Jan 29 14:25:06 2024
+# Process ID: 22336
 # Current directory: C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.runs/impl_1
 # Command line: vivado.exe -log log_mel_spectrogram.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source log_mel_spectrogram.tcl -notrace
 # Log file: C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.runs/impl_1/log_mel_spectrogram.vdi
@@ -12,12 +12,12 @@
 # Running On: DESKTOP-OV3I59K, OS: Windows, CPU Frequency: 2995 MHz, CPU Physical cores: 2, Host memory: 8273 MB
 #-----------------------------------------------------------
 source log_mel_spectrogram.tcl -notrace
-create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 471.359 ; gain = 184.379
+create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:10 . Memory (MB): peak = 469.703 ; gain = 182.605
 Command: link_design -top log_mel_spectrogram -part xc7z010clg400-1
 Design is defaulting to srcset: sources_1
 Design is defaulting to constrset: constrs_1
 INFO: [Device 21-403] Loading part xc7z010clg400-1
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:03 . Memory (MB): peak = 1360.457 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:03 . Memory (MB): peak = 1359.230 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 41369 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-479] Netlist was created with Vivado 2023.2
@@ -25,13 +25,13 @@ INFO: [Project 1-570] Preparing netlist for logic optimization
 Parsing XDC File [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/constrs_1/new/log_mel.xdc]
 Finished Parsing XDC File [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/constrs_1/new/log_mel.xdc]
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.149 . Memory (MB): peak = 1644.070 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.143 . Memory (MB): peak = 1640.367 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 7 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 link_design completed successfully
-link_design: Time (s): cpu = 00:00:35 ; elapsed = 00:01:10 . Memory (MB): peak = 1644.070 ; gain = 1172.711
+link_design: Time (s): cpu = 00:00:37 ; elapsed = 00:01:22 . Memory (MB): peak = 1640.367 ; gain = 1170.664
 Command: opt_design
 Attempting to get a license for feature 'Implementation' and/or device 'xc7z010'
 INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010'
@@ -42,111 +42,111 @@ INFO: [DRC 23-27] Running DRC with 2 threads
 INFO: [Project 1-461] DRC finished with 0 Errors
 INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
 
-Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1644.125 ; gain = 0.055
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1640.367 ; gain = 0.000
 
 Starting Cache Timing Information Task
 INFO: [Timing 38-35] Done setting XDC timing constraints.
-Ending Cache Timing Information Task | Checksum: 102a50f7b
+Ending Cache Timing Information Task | Checksum: dc487d0e
 
-Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 2527.027 ; gain = 882.902
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:26 . Memory (MB): peak = 2525.395 ; gain = 885.027
 
 Starting Logic Optimization Task
 
 Phase 1 Initialization
 
 Phase 1.1 Core Generation And Design Setup
-Phase 1.1 Core Generation And Design Setup | Checksum: 102a50f7b
+Phase 1.1 Core Generation And Design Setup | Checksum: dc487d0e
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.057 . Memory (MB): peak = 2895.641 ; gain = 0.000
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.082 . Memory (MB): peak = 2894.066 ; gain = 0.000
 
 Phase 1.2 Setup Constraints And Sort Netlist
-Phase 1.2 Setup Constraints And Sort Netlist | Checksum: 102a50f7b
+Phase 1.2 Setup Constraints And Sort Netlist | Checksum: dc487d0e
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.324 . Memory (MB): peak = 2895.641 ; gain = 0.000
-Phase 1 Initialization | Checksum: 102a50f7b
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.398 . Memory (MB): peak = 2894.066 ; gain = 0.000
+Phase 1 Initialization | Checksum: dc487d0e
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.396 . Memory (MB): peak = 2895.641 ; gain = 0.000
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.471 . Memory (MB): peak = 2894.066 ; gain = 0.000
 
 Phase 2 Timer Update And Timing Data Collection
 
 Phase 2.1 Timer Update
-Phase 2.1 Timer Update | Checksum: 102a50f7b
+Phase 2.1 Timer Update | Checksum: dc487d0e
 
-Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 3347.785 ; gain = 452.145
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 3343.234 ; gain = 449.168
 
 Phase 2.2 Timing Data Collection
-Phase 2.2 Timing Data Collection | Checksum: 102a50f7b
+Phase 2.2 Timing Data Collection | Checksum: dc487d0e
 
-Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 3347.785 ; gain = 452.145
-Phase 2 Timer Update And Timing Data Collection | Checksum: 102a50f7b
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 3343.234 ; gain = 449.168
+Phase 2 Timer Update And Timing Data Collection | Checksum: dc487d0e
 
-Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 3347.785 ; gain = 452.145
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 3343.234 ; gain = 449.168
 
 Phase 3 Retarget
 INFO: [Opt 31-1566] Pulled 98 inverters resulting in an inversion of 570 pins
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Opt 31-49] Retargeted 0 cell(s).
-Phase 3 Retarget | Checksum: a6dac5ef
+Phase 3 Retarget | Checksum: 125dab9a9
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:27 . Memory (MB): peak = 3347.785 ; gain = 452.145
-Retarget | Checksum: a6dac5ef
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:27 . Memory (MB): peak = 3343.234 ; gain = 449.168
+Retarget | Checksum: 125dab9a9
 INFO: [Opt 31-389] Phase Retarget created 2 cells and removed 100 cells
 
 Phase 4 Constant propagation
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Phase 4 Constant propagation | Checksum: 181193ba9
+Phase 4 Constant propagation | Checksum: 200192f63
 
-Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 3347.785 ; gain = 452.145
-Constant propagation | Checksum: 181193ba9
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:32 . Memory (MB): peak = 3343.234 ; gain = 449.168
+Constant propagation | Checksum: 200192f63
 INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
 
 Phase 5 Sweep
-Phase 5 Sweep | Checksum: 1028f35a2
+Phase 5 Sweep | Checksum: 1818f295c
 
-Time (s): cpu = 00:00:27 ; elapsed = 00:00:38 . Memory (MB): peak = 3347.785 ; gain = 452.145
-Sweep | Checksum: 1028f35a2
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:40 . Memory (MB): peak = 3343.234 ; gain = 449.168
+Sweep | Checksum: 1818f295c
 INFO: [Opt 31-389] Phase Sweep created 64 cells and removed 0 cells
 
 Phase 6 BUFG optimization
-Phase 6 BUFG optimization | Checksum: 1028f35a2
+Phase 6 BUFG optimization | Checksum: 1818f295c
 
-Time (s): cpu = 00:00:35 ; elapsed = 00:00:43 . Memory (MB): peak = 3347.785 ; gain = 452.145
-BUFG optimization | Checksum: 1028f35a2
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:46 . Memory (MB): peak = 3343.234 ; gain = 449.168
+BUFG optimization | Checksum: 1818f295c
 INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
 
 Phase 7 Shift Register Optimization
 INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
-Phase 7 Shift Register Optimization | Checksum: 185036b5f
+Phase 7 Shift Register Optimization | Checksum: 204035f19
 
-Time (s): cpu = 00:00:35 ; elapsed = 00:00:44 . Memory (MB): peak = 3347.785 ; gain = 452.145
-Shift Register Optimization | Checksum: 185036b5f
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:46 . Memory (MB): peak = 3343.234 ; gain = 449.168
+Shift Register Optimization | Checksum: 204035f19
 INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
 
 Phase 8 Post Processing Netlist
-Phase 8 Post Processing Netlist | Checksum: c1aa300c
+Phase 8 Post Processing Netlist | Checksum: 140aa23c6
 
-Time (s): cpu = 00:00:36 ; elapsed = 00:00:45 . Memory (MB): peak = 3347.785 ; gain = 452.145
-Post Processing Netlist | Checksum: c1aa300c
+Time (s): cpu = 00:00:38 ; elapsed = 00:00:47 . Memory (MB): peak = 3343.234 ; gain = 449.168
+Post Processing Netlist | Checksum: 140aa23c6
 INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
 
 Phase 9 Finalization
 
 Phase 9.1 Finalizing Design Cores and Updating Shapes
-Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 154538257
+Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 1f12df54e
 
-Time (s): cpu = 00:00:44 ; elapsed = 00:01:01 . Memory (MB): peak = 3347.785 ; gain = 452.145
+Time (s): cpu = 00:00:48 ; elapsed = 00:01:07 . Memory (MB): peak = 3343.234 ; gain = 449.168
 
 Phase 9.2 Verifying Netlist Connectivity
 
 Starting Connectivity Check Task
 
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 3347.785 ; gain = 0.000
-Phase 9.2 Verifying Netlist Connectivity | Checksum: 154538257
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 3343.234 ; gain = 0.000
+Phase 9.2 Verifying Netlist Connectivity | Checksum: 1f12df54e
 
-Time (s): cpu = 00:00:45 ; elapsed = 00:01:03 . Memory (MB): peak = 3347.785 ; gain = 452.145
-Phase 9 Finalization | Checksum: 154538257
+Time (s): cpu = 00:00:48 ; elapsed = 00:01:08 . Memory (MB): peak = 3343.234 ; gain = 449.168
+Phase 9 Finalization | Checksum: 1f12df54e
 
-Time (s): cpu = 00:00:45 ; elapsed = 00:01:03 . Memory (MB): peak = 3347.785 ; gain = 452.145
+Time (s): cpu = 00:00:48 ; elapsed = 00:01:08 . Memory (MB): peak = 3343.234 ; gain = 449.168
 Opt_design Change Summary
 =========================
 
@@ -163,32 +163,32 @@ Opt_design Change Summary
 -------------------------------------------------------------------------------------------------------------------------
 
 
-Ending Logic Optimization Task | Checksum: 154538257
+Ending Logic Optimization Task | Checksum: 1f12df54e
 
-Time (s): cpu = 00:00:45 ; elapsed = 00:01:03 . Memory (MB): peak = 3347.785 ; gain = 452.145
+Time (s): cpu = 00:00:48 ; elapsed = 00:01:08 . Memory (MB): peak = 3343.234 ; gain = 449.168
 INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
-Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.173 . Memory (MB): peak = 3347.785 ; gain = 0.000
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.186 . Memory (MB): peak = 3343.234 ; gain = 0.000
 
 Starting Power Optimization Task
 INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
-Ending Power Optimization Task | Checksum: 154538257
+Ending Power Optimization Task | Checksum: 1f12df54e
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.280 . Memory (MB): peak = 3347.785 ; gain = 0.000
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.296 . Memory (MB): peak = 3343.234 ; gain = 0.000
 
 Starting Final Cleanup Task
-Ending Final Cleanup Task | Checksum: 154538257
+Ending Final Cleanup Task | Checksum: 1f12df54e
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.064 . Memory (MB): peak = 3347.785 ; gain = 0.000
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.066 . Memory (MB): peak = 3343.234 ; gain = 0.000
 
 Starting Netlist Obfuscation Task
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.134 . Memory (MB): peak = 3347.785 ; gain = 0.000
-Ending Netlist Obfuscation Task | Checksum: 154538257
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.142 . Memory (MB): peak = 3343.234 ; gain = 0.000
+Ending Netlist Obfuscation Task | Checksum: 1f12df54e
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.188 . Memory (MB): peak = 3347.785 ; gain = 0.000
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.216 . Memory (MB): peak = 3343.234 ; gain = 0.000
 INFO: [Common 17-83] Releasing license: Implementation
 26 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 opt_design completed successfully
-opt_design: Time (s): cpu = 00:01:10 ; elapsed = 00:01:37 . Memory (MB): peak = 3347.785 ; gain = 1703.715
+opt_design: Time (s): cpu = 00:01:12 ; elapsed = 00:01:44 . Memory (MB): peak = 3343.234 ; gain = 1702.867
 INFO: [runtcl-4] Executing : report_drc -file log_mel_spectrogram_drc_opted.rpt -pb log_mel_spectrogram_drc_opted.pb -rpx log_mel_spectrogram_drc_opted.rpx
 Command: report_drc -file log_mel_spectrogram_drc_opted.rpt -pb log_mel_spectrogram_drc_opted.pb -rpx log_mel_spectrogram_drc_opted.rpx
 INFO: [IP_Flow 19-234] Refreshing IP repositories
@@ -197,20 +197,20 @@ INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2023.2/dat
 INFO: [DRC 23-27] Running DRC with 2 threads
 INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.runs/impl_1/log_mel_spectrogram_drc_opted.rpt.
 report_drc completed successfully
-report_drc: Time (s): cpu = 00:00:17 ; elapsed = 00:00:15 . Memory (MB): peak = 3347.785 ; gain = 0.000
+report_drc: Time (s): cpu = 00:00:17 ; elapsed = 00:00:16 . Memory (MB): peak = 3343.234 ; gain = 0.000
 INFO: [Timing 38-480] Writing timing data to binary archive.
-Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 3347.785 ; gain = 0.000
-Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 3347.785 ; gain = 0.000
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 3343.234 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 3343.234 ; gain = 0.000
 Writing XDEF routing.
 Writing XDEF routing logical nets.
 Writing XDEF routing special nets.
-Wrote RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.793 . Memory (MB): peak = 3347.785 ; gain = 0.000
-Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3347.785 ; gain = 0.000
-Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 3347.785 ; gain = 0.000
-Write Physdb Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 3347.785 ; gain = 0.000
-Write ShapeDB Complete: Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 3347.785 ; gain = 0.000
+Wrote RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.704 . Memory (MB): peak = 3343.234 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3343.234 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 3343.234 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.884 . Memory (MB): peak = 3343.234 ; gain = 0.000
+Write ShapeDB Complete: Time (s): cpu = 00:00:04 ; elapsed = 00:00:02 . Memory (MB): peak = 3343.234 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.runs/impl_1/log_mel_spectrogram_opt.dcp' has been generated.
-write_checkpoint: Time (s): cpu = 00:00:22 ; elapsed = 00:00:31 . Memory (MB): peak = 3347.785 ; gain = 0.000
+write_checkpoint: Time (s): cpu = 00:00:27 ; elapsed = 00:00:33 . Memory (MB): peak = 3343.234 ; gain = 0.000
 Command: place_design
 Attempting to get a license for feature 'Implementation' and/or device 'xc7z010'
 INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010'
@@ -221,18 +221,18 @@ INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more in
 Running DRC as a precondition to command place_design
 INFO: [DRC 23-27] Running DRC with 2 threads
 ERROR: [DRC UTLZ-1] Resource utilization: CARRY4 over-utilized in Top Level Design (This design requires more CARRY4 cells than are available in the target device. This design requires 35159 of such cell types but only 4400 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device.)
-ERROR: [DRC UTLZ-1] Resource utilization: LUT as Logic over-utilized in Top Level Design (This design requires more LUT as Logic cells than are available in the target device. This design requires 292788 of such cell types but only 17600 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device. Please set tcl parameter "drc.disableLUTOverUtilError" to 1 to change this error to warning.)
+ERROR: [DRC UTLZ-1] Resource utilization: LUT as Logic over-utilized in Top Level Design (This design requires more LUT as Logic cells than are available in the target device. This design requires 292069 of such cell types but only 17600 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device. Please set tcl parameter "drc.disableLUTOverUtilError" to 1 to change this error to warning.)
 ERROR: [DRC UTLZ-1] Resource utilization: LUT2 over-utilized in Top Level Design (This design requires more LUT2 cells than are available in the target device. This design requires 61320 of such cell types but only 35200 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device.)
 ERROR: [DRC UTLZ-1] Resource utilization: LUT4 over-utilized in Top Level Design (This design requires more LUT4 cells than are available in the target device. This design requires 100602 of such cell types but only 35200 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device.)
 ERROR: [DRC UTLZ-1] Resource utilization: LUT5 over-utilized in Top Level Design (This design requires more LUT5 cells than are available in the target device. This design requires 101240 of such cell types but only 35200 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device.)
 ERROR: [DRC UTLZ-1] Resource utilization: LUT6 over-utilized in Top Level Design (This design requires more LUT6 cells than are available in the target device. This design requires 100130 of such cell types but only 17600 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device.)
-ERROR: [DRC UTLZ-1] Resource utilization: Slice LUTs over-utilized in Top Level Design (This design requires more Slice LUTs cells than are available in the target device. This design requires 295644 of such cell types but only 17600 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device. Please set tcl parameter "drc.disableLUTOverUtilError" to 1 to change this error to warning.)
+ERROR: [DRC UTLZ-1] Resource utilization: Slice LUTs over-utilized in Top Level Design (This design requires more Slice LUTs cells than are available in the target device. This design requires 294925 of such cell types but only 17600 compatible sites are available in the target device. Please analyze your synthesis results and constraints to ensure the design is mapped to Xilinx primitives as expected. If so, please consider targeting a larger device. Please set tcl parameter "drc.disableLUTOverUtilError" to 1 to change this error to warning.)
 INFO: [Vivado_Tcl 4-198] DRC finished with 7 Errors
 INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
 ERROR: [Vivado_Tcl 4-23] Error(s) found during DRC. Placer not run.
 42 Infos, 0 Warnings, 0 Critical Warnings and 8 Errors encountered.
 place_design failed
-place_design: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 3347.785 ; gain = 0.000
+place_design: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 3343.234 ; gain = 0.000
 ERROR: [Common 17-39] 'place_design' failed due to earlier errors.
 
-INFO: [Common 17-206] Exiting Vivado at Mon Jan 29 13:50:36 2024...
+INFO: [Common 17-206] Exiting Vivado at Mon Jan 29 14:29:26 2024...

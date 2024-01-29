@@ -14,11 +14,11 @@ ECHO is off.
     ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source log_mel_spectrogram.tcl -notrace
-create_project: Time (s): cpu = 00:00:09 ; elapsed = 00:00:22 . Memory (MB): peak = 470.574 ; gain = 184.789
+create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:10 . Memory (MB): peak = 469.758 ; gain = 183.734
 Command: read_checkpoint -auto_incremental -incremental C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/utils_1/imports/synth_1/log_mel_spectrogram.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/utils_1/imports/synth_1/log_mel_spectrogram.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
-read_checkpoint: Time (s): cpu = 00:00:01 ; elapsed = 00:00:13 . Memory (MB): peak = 479.668 ; gain = 9.094
+read_checkpoint: Time (s): cpu = 00:00:01 ; elapsed = 00:00:07 . Memory (MB): peak = 479.211 ; gain = 9.453
 Command: synth_design -top log_mel_spectrogram -part xc7z010clg400-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z010'
@@ -26,9 +26,9 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010
 INFO: [Device 21-403] Loading part xc7z010clg400-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 4328
+INFO: [Synth 8-7075] Helper process launched with PID 2608
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:11 . Memory (MB): peak = 1310.875 ; gain = 439.062
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:09 . Memory (MB): peak = 1312.414 ; gain = 439.168
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'log_mel_spectrogram' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/log_mel.v:2]
 INFO: [Synth 8-6157] synthesizing module 'input_counter' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/input_counter/input_counter.v:2]
@@ -157,20 +157,19 @@ WARNING: [Synth 8-6014] Unused sequential element mu_do_re_reg was removed.  [C:
 WARNING: [Synth 8-6014] Unused sequential element mu_do_im_reg was removed.  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/fft/SdfUnit.v:265]
 WARNING: [Synth 8-6014] Unused sequential element mu_do_en_reg was removed.  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/fft/SdfUnit.v:271]
 WARNING: [Synth 8-6014] Unused sequential element mu_en_reg was removed.  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/fft/SdfUnit.v:248]
-WARNING: [Synth 8-6014] Unused sequential element cushion_input_counter_do_en_reg was removed.  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/log_mel.v:50]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:28 . Memory (MB): peak = 1892.711 ; gain = 1020.898
+Finished RTL Elaboration : Time (s): cpu = 00:00:14 ; elapsed = 00:00:29 . Memory (MB): peak = 1893.457 ; gain = 1020.211
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:13 ; elapsed = 00:00:30 . Memory (MB): peak = 1892.711 ; gain = 1020.898
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:14 ; elapsed = 00:00:31 . Memory (MB): peak = 1893.457 ; gain = 1020.211
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:30 . Memory (MB): peak = 1892.711 ; gain = 1020.898
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:31 . Memory (MB): peak = 1893.457 ; gain = 1020.211
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1944.566 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 1964.977 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -181,14 +180,14 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/log_mel_spectrogram_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.041 . Memory (MB): peak = 2603.117 ; gain = 0.672
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.056 . Memory (MB): peak = 2604.309 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 The system cannot find the path specified.
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.890 . Memory (MB): peak = 2603.117 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.921 . Memory (MB): peak = 2604.309 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:51 ; elapsed = 00:01:41 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+Finished Constraint Validation : Time (s): cpu = 00:00:59 ; elapsed = 00:01:47 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
@@ -197,94 +196,102 @@ Loading part: xc7z010clg400-1
 ---------------------------------------------------------------------------------
 Start Preparing Guide Design
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-6702] IncrSynth : Design change found in an area of the design that prevents previous synthesis information being used, Reverting to default synthesis
 ---------------------------------------------------------------------------------
-Finished Doing Graph Differ : Time (s): cpu = 00:00:59 ; elapsed = 00:01:55 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+Finished Doing Graph Differ : Time (s): cpu = 00:01:09 ; elapsed = 00:02:05 . Memory (MB): peak = 2607.453 ; gain = 1734.207
+---------------------------------------------------------------------------------
+log__GBM21log__GBM17log__GBM12log__GBM18log__GBM15mel_filter__GBM0log__GBM19log__GBM10FFT__GBM1log__GBM22log__GBM16log__GBM8log__GBM3log__GBM6log__GBM4framing__GB1log__GBM14framing__GB5framing__GB2log__GBM9framing__GB0mel_filter__GBM1log_mel_spectrogram__GC0log__GBM2SdfUnitlog__GBM1framing__GB4log__GBM20log__GBM13log__GBM11log__GBM7framing__GB3log__GBM5log__GBM0---------------------------------------------------------------------------------
+Finished Preparing Guide Design : Time (s): cpu = 00:01:13 ; elapsed = 00:02:13 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Preparing Guide Design : Time (s): cpu = 00:00:59 ; elapsed = 00:01:55 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:16 ; elapsed = 00:02:18 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:24 ; elapsed = 00:02:52 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+Start Mimic Skeleton from Reference
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Mimic Skeleton from Reference : Time (s): cpu = 00:01:19 ; elapsed = 00:02:25 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 
 
 Incremental Synthesis Report Summary:
 
-1. Incremental synthesis run: no
+1. Incremental synthesis run: yes
 
-   Reason for not running incremental synthesis : Design change found in an area of the design that prevents previous synthesis information being used
+   Stitch points used : changed
 
 
-INFO: [Synth 8-7130] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+2. Change Summary
+
+Report Incremental Modules: 
++-+----------------+------------+----------+----------+
+| |Changed Modules |Replication |Instances |Changed % |
++-+----------------+------------+----------+----------+
++-+----------------+------------+----------+----------+
+
+
+   Full Design Size (number of cells) : 1672515
+   Resynthesis Design Size (number of cells) : 0
+   Resynth % : 0.0000,  Reuse % : 100.0000
+
+3. Reference Checkpoint Information
+
++-------------------------------------------------------------------------------------------------------------------------------+
+| DCP Location:  | C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/utils_1/imports/synth_1/log_mel_spectrogram.dcp |
++-------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+------------------------------+
+|         DCP Information        |             Value            |
++--------------------------------+------------------------------+
+| Vivado Version                 |                    v2023.2 |
+| DCP State                      |                              |
++--------------------------------+------------------------------+
+
+
+
+Report RTL Partitions: 
++------+---------------------------------+------------+----------+
+|      |RTL Partition                    |Replication |Instances |
++------+---------------------------------+------------+----------+
+|1     |framing__GB0_#REUSE#             |           1|         0|
+|2     |framing__GB1_#REUSE#             |           1|         0|
+|3     |framing__GB2_#REUSE#             |           1|         0|
+|4     |framing__GB3_#REUSE#             |           1|         0|
+|5     |framing__GB4_#REUSE#             |           1|         0|
+|6     |framing__GB5_#REUSE#             |           1|         0|
+|7     |SdfUnit_#REUSE#                  |           1|         0|
+|8     |FFT__GBM1_#REUSE#                |           1|         0|
+|9     |mel_filter__GBM0_#REUSE#         |           1|         0|
+|10    |mel_filter__GBM1_#REUSE#         |           1|         0|
+|11    |log__GBM0_#REUSE#                |           1|         0|
+|12    |log__GBM1_#REUSE#                |           1|         0|
+|13    |log__GBM2_#REUSE#                |           1|         0|
+|14    |log__GBM3_#REUSE#                |           1|         0|
+|15    |log__GBM4_#REUSE#                |           1|         0|
+|16    |log__GBM5_#REUSE#                |           1|         0|
+|17    |log__GBM6_#REUSE#                |           1|         0|
+|18    |log__GBM7_#REUSE#                |           1|         0|
+|19    |log__GBM8_#REUSE#                |           1|         0|
+|20    |log__GBM9_#REUSE#                |           1|         0|
+|21    |log__GBM10_#REUSE#               |           1|         0|
+|22    |log__GBM11_#REUSE#               |           1|         0|
+|23    |log__GBM12_#REUSE#               |           1|         0|
+|24    |log__GBM13_#REUSE#               |           1|         0|
+|25    |log__GBM14_#REUSE#               |           1|         0|
+|26    |log__GBM15_#REUSE#               |           1|         0|
+|27    |log__GBM16_#REUSE#               |           1|         0|
+|28    |log__GBM17_#REUSE#               |           1|         0|
+|29    |log__GBM18_#REUSE#               |           1|         0|
+|30    |log__GBM19_#REUSE#               |           1|         0|
+|31    |log__GBM20_#REUSE#               |           1|         0|
+|32    |log__GBM21_#REUSE#               |           1|         0|
+|33    |log__GBM22_#REUSE#               |           1|         0|
+|34    |log_mel_spectrogram__GC0_#REUSE# |           1|         0|
++------+---------------------------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
-+---Adders : 
-	   2 Input   52 Bit       Adders := 6     
-	   2 Input   32 Bit       Adders := 64    
-	   2 Input   30 Bit       Adders := 6     
-	   2 Input   17 Bit       Adders := 5     
-	   2 Input   15 Bit       Adders := 60    
-	   3 Input   15 Bit       Adders := 60    
-	   3 Input   14 Bit       Adders := 15    
-	   2 Input   14 Bit       Adders := 30    
-	   2 Input   10 Bit       Adders := 46    
-	   2 Input    6 Bit       Adders := 2880  
-	   2 Input    5 Bit       Adders := 1536  
-	   2 Input    4 Bit       Adders := 768   
-	   2 Input    3 Bit       Adders := 384   
-+---Registers : 
-	              896 Bit    Registers := 1     
-	               32 Bit    Registers := 1     
-	               30 Bit    Registers := 192   
-	               14 Bit    Registers := 7131  
-	               10 Bit    Registers := 49    
-	                8 Bit    Registers := 1     
-	                7 Bit    Registers := 6     
-	                2 Bit    Registers := 1     
-	                1 Bit    Registers := 111   
-+---ROMs : 
-	                    ROMs := 30    
-+---Muxes : 
-	   2 Input  896 Bit        Muxes := 3     
-	   2 Input   32 Bit        Muxes := 5765  
-	   2 Input   31 Bit        Muxes := 192   
-	   2 Input   30 Bit        Muxes := 978   
-	   4 Input   30 Bit        Muxes := 192   
-	   2 Input   29 Bit        Muxes := 192   
-	   2 Input   28 Bit        Muxes := 192   
-	   2 Input   27 Bit        Muxes := 192   
-	   2 Input   26 Bit        Muxes := 192   
-	   2 Input   25 Bit        Muxes := 192   
-	   2 Input   24 Bit        Muxes := 192   
-	   2 Input   23 Bit        Muxes := 192   
-	   2 Input   22 Bit        Muxes := 192   
-	   2 Input   21 Bit        Muxes := 192   
-	   2 Input   20 Bit        Muxes := 192   
-	   2 Input   19 Bit        Muxes := 192   
-	   2 Input   18 Bit        Muxes := 192   
-	   4 Input   17 Bit        Muxes := 1     
-	   2 Input   17 Bit        Muxes := 192   
-	   2 Input   16 Bit        Muxes := 192   
-	   2 Input   15 Bit        Muxes := 192   
-	   2 Input   14 Bit        Muxes := 368   
-	   3 Input   14 Bit        Muxes := 1     
-	   2 Input   13 Bit        Muxes := 192   
-	   2 Input   12 Bit        Muxes := 192   
-	   2 Input   11 Bit        Muxes := 192   
-	   2 Input   10 Bit        Muxes := 238   
-	   2 Input    9 Bit        Muxes := 192   
-	   2 Input    8 Bit        Muxes := 192   
-	   2 Input    7 Bit        Muxes := 192   
-	   2 Input    6 Bit        Muxes := 192   
-	   2 Input    5 Bit        Muxes := 192   
-	   2 Input    4 Bit        Muxes := 192   
-	   3 Input    2 Bit        Muxes := 1     
-	   3 Input    1 Bit        Muxes := 865   
-	   2 Input    1 Bit        Muxes := 821   
-	   4 Input    1 Bit        Muxes := 195   
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -300,224 +307,42 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-DSP Report: Generating DSP multiplied2, operation Mode is: A*B.
-DSP Report: operator multiplied2 is absorbed into DSP multiplied2.
-DSP Report: operator multiplied2 is absorbed into DSP multiplied2.
-DSP Report: Generating DSP multiplied2, operation Mode is: A*B.
-DSP Report: operator multiplied2 is absorbed into DSP multiplied2.
-DSP Report: operator multiplied2 is absorbed into DSP multiplied2.
-DSP Report: Generating DSP multiplied2, operation Mode is: (PCIN>>17)+A*B.
-DSP Report: operator multiplied2 is absorbed into DSP multiplied2.
-DSP Report: operator multiplied2 is absorbed into DSP multiplied2.
-DSP Report: Generating DSP multiplied1, operation Mode is: A*B.
-DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
-DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
-DSP Report: Generating DSP multiplied1, operation Mode is: A*B.
-DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
-DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
-DSP Report: Generating DSP multiplied1, operation Mode is: (PCIN>>17)+A*B.
-DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
-DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
-DSP Report: Generating DSP windowed, operation Mode is: A*B.
-DSP Report: operator windowed is absorbed into DSP windowed.
-DSP Debug: swapped A/B pins for adder 000002DDD084AC10
-DSP Debug: swapped A/B pins for adder 000002DDD0850850
-DSP Report: Generating DSP power0/data_o0, operation Mode is: A*B.
-DSP Report: operator power0/data_o0 is absorbed into DSP power0/data_o0.
-DSP Report: Generating DSP power0/data_o, operation Mode is: C+A*B.
-DSP Report: operator power0/data_o is absorbed into DSP power0/data_o.
-DSP Report: operator power0/data_o0 is absorbed into DSP power0/data_o.
-DSP Report: Generating DSP power1/data_o0, operation Mode is: A*B.
-DSP Report: operator power1/data_o0 is absorbed into DSP power1/data_o0.
-DSP Report: Generating DSP power1/data_o, operation Mode is: C+A*B.
-DSP Report: operator power1/data_o is absorbed into DSP power1/data_o.
-DSP Report: operator power1/data_o0 is absorbed into DSP power1/data_o.
-DSP Report: Generating DSP power2/data_o0, operation Mode is: A*B.
-DSP Report: operator power2/data_o0 is absorbed into DSP power2/data_o0.
-DSP Report: Generating DSP power2/data_o, operation Mode is: C+A*B.
-DSP Report: operator power2/data_o is absorbed into DSP power2/data_o.
-DSP Report: operator power2/data_o0 is absorbed into DSP power2/data_o.
-DSP Report: Generating DSP MU/arbr, operation Mode is: A2*B2.
-DSP Report: register TW/ff_re_reg is absorbed into DSP MU/arbr.
-DSP Report: register bf2_do_re_reg is absorbed into DSP MU/arbr.
-DSP Report: operator MU/arbr is absorbed into DSP MU/arbr.
-DSP Report: Generating DSP MU/aibi, operation Mode is: A2*B2.
-DSP Report: register TW/ff_im_reg is absorbed into DSP MU/aibi.
-DSP Report: register bf2_do_im_reg is absorbed into DSP MU/aibi.
-DSP Report: operator MU/aibi is absorbed into DSP MU/aibi.
-DSP Report: Generating DSP MU/arbi, operation Mode is: A2*B2.
-DSP Report: register TW/ff_im_reg is absorbed into DSP MU/arbi.
-DSP Report: register bf2_do_re_reg is absorbed into DSP MU/arbi.
-DSP Report: operator MU/arbi is absorbed into DSP MU/arbi.
-DSP Report: Generating DSP MU/aibr, operation Mode is: A2*B2.
-DSP Report: register TW/ff_re_reg is absorbed into DSP MU/aibr.
-DSP Report: register bf2_do_im_reg is absorbed into DSP MU/aibr.
-DSP Report: operator MU/aibr is absorbed into DSP MU/aibr.
-DSP Report: Generating DSP SU2/MU/arbr, operation Mode is: A2*B2.
-DSP Report: register SU2/TW/ff_re_reg is absorbed into DSP SU2/MU/arbr.
-DSP Report: register SU2/bf2_do_re_reg is absorbed into DSP SU2/MU/arbr.
-DSP Report: operator SU2/MU/arbr is absorbed into DSP SU2/MU/arbr.
-DSP Report: Generating DSP SU2/MU/aibi, operation Mode is: A2*B2.
-DSP Report: register SU2/TW/ff_im_reg is absorbed into DSP SU2/MU/aibi.
-DSP Report: register SU2/bf2_do_im_reg is absorbed into DSP SU2/MU/aibi.
-DSP Report: operator SU2/MU/aibi is absorbed into DSP SU2/MU/aibi.
-DSP Report: Generating DSP SU2/MU/arbi, operation Mode is: A2*B2.
-DSP Report: register SU2/TW/ff_im_reg is absorbed into DSP SU2/MU/arbi.
-DSP Report: register SU2/bf2_do_re_reg is absorbed into DSP SU2/MU/arbi.
-DSP Report: operator SU2/MU/arbi is absorbed into DSP SU2/MU/arbi.
-DSP Report: Generating DSP SU2/MU/aibr, operation Mode is: A2*B2.
-DSP Report: register SU2/TW/ff_re_reg is absorbed into DSP SU2/MU/aibr.
-DSP Report: register SU2/bf2_do_im_reg is absorbed into DSP SU2/MU/aibr.
-DSP Report: operator SU2/MU/aibr is absorbed into DSP SU2/MU/aibr.
-DSP Report: Generating DSP SU3/MU/arbr, operation Mode is: A2*B2.
-DSP Report: register SU3/TW/ff_re_reg is absorbed into DSP SU3/MU/arbr.
-DSP Report: register SU3/bf2_do_re_reg is absorbed into DSP SU3/MU/arbr.
-DSP Report: operator SU3/MU/arbr is absorbed into DSP SU3/MU/arbr.
-DSP Report: Generating DSP SU3/MU/aibi, operation Mode is: A2*B2.
-DSP Report: register SU3/TW/ff_im_reg is absorbed into DSP SU3/MU/aibi.
-DSP Report: register SU3/bf2_do_im_reg is absorbed into DSP SU3/MU/aibi.
-DSP Report: operator SU3/MU/aibi is absorbed into DSP SU3/MU/aibi.
-DSP Report: Generating DSP SU3/MU/arbi, operation Mode is: A2*B2.
-DSP Report: register SU3/TW/ff_im_reg is absorbed into DSP SU3/MU/arbi.
-DSP Report: register SU3/bf2_do_re_reg is absorbed into DSP SU3/MU/arbi.
-DSP Report: operator SU3/MU/arbi is absorbed into DSP SU3/MU/arbi.
-DSP Report: Generating DSP SU3/MU/aibr, operation Mode is: A2*B2.
-DSP Report: register SU3/TW/ff_re_reg is absorbed into DSP SU3/MU/aibr.
-DSP Report: register SU3/bf2_do_im_reg is absorbed into DSP SU3/MU/aibr.
-DSP Report: operator SU3/MU/aibr is absorbed into DSP SU3/MU/aibr.
-DSP Report: Generating DSP SU4/MU/arbr, operation Mode is: A2*B2.
-DSP Report: register SU4/TW/ff_re_reg is absorbed into DSP SU4/MU/arbr.
-DSP Report: register SU4/bf2_do_re_reg is absorbed into DSP SU4/MU/arbr.
-DSP Report: operator SU4/MU/arbr is absorbed into DSP SU4/MU/arbr.
-DSP Report: Generating DSP SU4/MU/aibi, operation Mode is: A2*B2.
-DSP Report: register SU4/TW/ff_im_reg is absorbed into DSP SU4/MU/aibi.
-DSP Report: register SU4/bf2_do_im_reg is absorbed into DSP SU4/MU/aibi.
-DSP Report: operator SU4/MU/aibi is absorbed into DSP SU4/MU/aibi.
-DSP Report: Generating DSP SU4/MU/arbi, operation Mode is: A2*B2.
-DSP Report: register SU4/TW/ff_im_reg is absorbed into DSP SU4/MU/arbi.
-DSP Report: register SU4/bf2_do_re_reg is absorbed into DSP SU4/MU/arbi.
-DSP Report: operator SU4/MU/arbi is absorbed into DSP SU4/MU/arbi.
-DSP Report: Generating DSP SU4/MU/aibr, operation Mode is: A2*B2.
-DSP Report: register SU4/TW/ff_re_reg is absorbed into DSP SU4/MU/aibr.
-DSP Report: register SU4/bf2_do_im_reg is absorbed into DSP SU4/MU/aibr.
-DSP Report: operator SU4/MU/aibr is absorbed into DSP SU4/MU/aibr.
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7077] IncrSyn: subsequent runs will still be incremental as the reference run was parallel and that data is reused
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:03:55 ; elapsed = 00:06:45 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:27 ; elapsed = 00:02:43 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
- Sort Area is mel_filter__GBM1 multiplied1_5 : 0 0 : 2701 3995 : Used 3 time 0
- Sort Area is mel_filter__GBM1 multiplied1_5 : 0 1 : 1294 3995 : Used 3 time 0
- Sort Area is mel_filter__GBM1 multiplied2_0 : 0 0 : 2701 3995 : Used 3 time 0
- Sort Area is mel_filter__GBM1 multiplied2_0 : 0 1 : 1294 3995 : Used 3 time 0
- Sort Area is log_mel_spectrogram__GC0 power0/data_o_a : 0 0 : 1574 1574 : Used 1 time 0
- Sort Area is log_mel_spectrogram__GC0 power1/data_o_d : 0 0 : 1574 1574 : Used 1 time 0
- Sort Area is log_mel_spectrogram__GC0 power2/data_o_f : 0 0 : 1574 1574 : Used 1 time 0
- Sort Area is SdfUnit MU/aibi_0 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is SdfUnit MU/aibr_3 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is SdfUnit MU/arbi_4 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is SdfUnit MU/arbr_2 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU2/MU/aibi_3 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU2/MU/aibr_0 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU2/MU/arbi_2 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU2/MU/arbr_4 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU3/MU/aibi_7 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU3/MU/aibr_5 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU3/MU/arbi_6 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU3/MU/arbr_8 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU4/MU/aibi_9 : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU4/MU/aibr_b : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU4/MU/arbi_c : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is FFT__GBM1 SU4/MU/arbr_a : 0 0 : 1522 1522 : Used 3 time 0
- Sort Area is log_mel_spectrogram__GC0 power0/data_o0_9 : 0 0 : 1494 1494 : Used 1 time 0
- Sort Area is log_mel_spectrogram__GC0 power1/data_o0_c : 0 0 : 1494 1494 : Used 1 time 0
- Sort Area is log_mel_spectrogram__GC0 power2/data_o0_e : 0 0 : 1494 1494 : Used 1 time 0
- Sort Area is log_mel_spectrogram__GC0 windowed_7 : 0 0 : 1494 1494 : Used 1 time 0
- Sort Area is mel_filter__GBM1 multiplied1_6 : 0 0 : 1330 1330 : Used 3 time 0
- Sort Area is mel_filter__GBM1 multiplied2_3 : 0 0 : 1330 1330 : Used 3 time 0
 ---------------------------------------------------------------------------------
-Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+Start Stitch Unchanged AreaOpt Partitions
 ---------------------------------------------------------------------------------
-
-ROM: Preliminary Mapping Report
-+----------------+-------------------+---------------+----------------+
-|Module Name     | RTL Object        | Depth x Width | Implemented As | 
-+----------------+-------------------+---------------+----------------+
-|hann_window_rom | window_rom        | 1024x14       | LUT            | 
-|mel_filter_coef | non_zero_info_rom | 1024x57       | LUT            | 
-|mel_filter_coef | non_zero_info_rom | 1024x57       | LUT            | 
-|hann_window     | h0/window_rom     | 1024x14       | LUT            | 
-+----------------+-------------------+---------------+----------------+
-
-
-DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
-+------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|Module Name | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
-+------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|mel_filter  | A*B            | 18     | 10     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|mel_filter  | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|mel_filter  | (PCIN>>17)+A*B | 18     | 10     | -      | -      | 35     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|mel_filter  | A*B            | 18     | 10     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|mel_filter  | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|mel_filter  | (PCIN>>17)+A*B | 18     | 10     | -      | -      | 35     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|hann_window | A*B            | 14     | 14     | -      | -      | 28     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|squared     | A*B            | 14     | 14     | -      | -      | 28     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|squared     | C+A*B          | 14     | 14     | 27     | -      | 27     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
-|squared     | A*B            | 14     | 14     | -      | -      | 28     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|squared     | C+A*B          | 14     | 14     | 27     | -      | 27     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
-|squared     | A*B            | 14     | 14     | -      | -      | 28     | 0    | 0    | -    | -    | -     | 0    | 0    | 
-|squared     | C+A*B          | 14     | 14     | 27     | -      | 27     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
-|SdfUnit     | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|SdfUnit     | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|SdfUnit     | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|SdfUnit     | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-|FFT__GBM1   | A2*B2          | 14     | 14     | -      | -      | 28     | 1    | 1    | -    | -    | -     | 0    | 0    | 
-+------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-
-Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
 ---------------------------------------------------------------------------------
-Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+Finished Stitch Unchanged AreaOpt Partitions : Time (s): cpu = 00:01:28 ; elapsed = 00:02:47 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:04:09 ; elapsed = 00:07:15 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:40 ; elapsed = 00:03:12 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
-info: optimization accepted worst group hill climbing move (-94371.0/oG. 22601.0ps)
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:06:08 ; elapsed = 00:10:45 . Memory (MB): peak = 2986.520 ; gain = 2114.707
+Finished Timing Optimization : Time (s): cpu = 00:01:40 ; elapsed = 00:03:14 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/hann_window/hann_window.v:39]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:23]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:23]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
-INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7077] IncrSyn: subsequent runs will still be incremental as the reference run was parallel and that data is reused
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:07:53 ; elapsed = 00:13:14 . Memory (MB): peak = 2986.520 ; gain = 2114.707
+Finished Technology Mapping : Time (s): cpu = 00:01:41 ; elapsed = 00:03:14 . Memory (MB): peak = 2607.453 ; gain = 1734.207
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Stitch Unchanged Partitions
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Stitch Unchanged Partitions : Time (s): cpu = 00:01:42 ; elapsed = 00:03:19 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -535,37 +360,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:08:25 ; elapsed = 00:14:14 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Finished IO Insertion : Time (s): cpu = 00:02:14 ; elapsed = 00:04:30 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:08:26 ; elapsed = 00:14:18 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:16 ; elapsed = 00:04:34 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:08:56 ; elapsed = 00:15:21 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:24 ; elapsed = 00:04:51 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:08:56 ; elapsed = 00:15:22 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:25 ; elapsed = 00:04:52 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:09:03 ; elapsed = 00:15:36 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:31 ; elapsed = 00:05:07 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:09:03 ; elapsed = 00:15:37 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:32 ; elapsed = 00:05:08 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -725,45 +550,45 @@ Report Cell Usage:
 |1     |BUFG    |      1|
 |2     |CARRY4  |  35159|
 |3     |DSP48E1 |     73|
-|7     |LUT1    |   1632|
-|8     |LUT2    |  61320|
-|9     |LUT3    |  12612|
-|10    |LUT4    | 100602|
-|11    |LUT5    | 101238|
-|12    |LUT6    | 100132|
-|13    |MUXF7   |   4213|
-|14    |MUXF8   |   1924|
-|15    |SRL16E  |    252|
-|16    |SRLC32E |   2604|
-|17    |FDCE    |  19779|
-|18    |FDRE    |   2100|
-|19    |IBUF    |     18|
-|20    |OBUF    |    897|
+|4     |LUT1    |   1632|
+|5     |LUT2    |  61320|
+|6     |LUT3    |  12612|
+|7     |LUT4    | 100602|
+|8     |LUT5    | 101238|
+|9     |LUT6    | 100132|
+|10    |MUXF7   |   4213|
+|11    |MUXF8   |   1924|
+|12    |SRL16E  |    252|
+|13    |SRLC32E |   2604|
+|14    |FDCE    |  19779|
+|15    |FDRE    |   2100|
+|16    |IBUF    |     18|
+|17    |OBUF    |    897|
 +------+--------+-------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:09:04 ; elapsed = 00:15:38 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:32 ; elapsed = 00:05:09 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:08:19 ; elapsed = 00:14:46 . Memory (MB): peak = 3043.336 ; gain = 1457.445
-Synthesis Optimization Complete : Time (s): cpu = 00:09:04 ; elapsed = 00:15:44 . Memory (MB): peak = 3043.336 ; gain = 2171.523
+Synthesis finished with 0 errors, 0 critical warnings and 4 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:39 ; elapsed = 00:04:08 . Memory (MB): peak = 2607.453 ; gain = 1020.211
+Synthesis Optimization Complete : Time (s): cpu = 00:02:32 ; elapsed = 00:05:11 . Memory (MB): peak = 2607.453 ; gain = 1734.207
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 3043.336 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 2607.453 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 41369 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.152 . Memory (MB): peak = 3070.273 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.180 . Memory (MB): peak = 2706.316 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 The system cannot find the path specified.
 Synth Design complete | Checksum: 18427507
 INFO: [Common 17-83] Releasing license: Synthesis
-95 Infos, 6 Warnings, 0 Critical Warnings and 0 Errors encountered.
+81 Infos, 8 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:09:51 ; elapsed = 00:17:30 . Memory (MB): peak = 3070.273 ; gain = 2590.605
-Write ShapeDB Complete: Time (s): cpu = 00:00:04 ; elapsed = 00:00:02 . Memory (MB): peak = 3070.273 ; gain = 0.000
+synth_design: Time (s): cpu = 00:03:21 ; elapsed = 00:06:56 . Memory (MB): peak = 2706.316 ; gain = 2227.105
+Write ShapeDB Complete: Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2706.980 ; gain = 0.664
 INFO: [Common 17-1381] The checkpoint 'C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.runs/synth_1/log_mel_spectrogram.dcp' has been generated.
-write_checkpoint: Time (s): cpu = 00:00:32 ; elapsed = 00:00:49 . Memory (MB): peak = 3070.273 ; gain = 0.000
+write_checkpoint: Time (s): cpu = 00:00:35 ; elapsed = 00:00:55 . Memory (MB): peak = 2724.074 ; gain = 17.758
 INFO: [runtcl-4] Executing : report_utilization -file log_mel_spectrogram_utilization_synth.rpt -pb log_mel_spectrogram_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Mon Jan 29 13:46:28 2024...
+INFO: [Common 17-206] Exiting Vivado at Mon Jan 29 14:24:54 2024...
