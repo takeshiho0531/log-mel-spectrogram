@@ -445,6 +445,7 @@ module log_mel_spectrogram #(
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
             data_o <= 0;
+            do_en <= 0;
         end
         else begin
             if (mel0_do_en) begin
