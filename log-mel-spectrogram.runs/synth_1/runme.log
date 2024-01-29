@@ -14,16 +14,21 @@ ECHO is off.
     ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source log_mel_spectrogram.tcl -notrace
-create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:11 . Memory (MB): peak = 471.098 ; gain = 176.910
+create_project: Time (s): cpu = 00:00:09 ; elapsed = 00:00:22 . Memory (MB): peak = 470.574 ; gain = 184.789
+Command: read_checkpoint -auto_incremental -incremental C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/utils_1/imports/synth_1/log_mel_spectrogram.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/utils_1/imports/synth_1/log_mel_spectrogram.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+read_checkpoint: Time (s): cpu = 00:00:01 ; elapsed = 00:00:13 . Memory (MB): peak = 479.668 ; gain = 9.094
 Command: synth_design -top log_mel_spectrogram -part xc7z010clg400-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z010'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: [Device 21-403] Loading part xc7z010clg400-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 6652
+INFO: [Synth 8-7075] Helper process launched with PID 4328
 ---------------------------------------------------------------------------------
-Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 921.602 ; gain = 441.152
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:11 . Memory (MB): peak = 1310.875 ; gain = 439.062
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'log_mel_spectrogram' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/log_mel.v:2]
 INFO: [Synth 8-6157] synthesizing module 'input_counter' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/input_counter/input_counter.v:2]
@@ -153,21 +158,65 @@ WARNING: [Synth 8-6014] Unused sequential element mu_do_im_reg was removed.  [C:
 WARNING: [Synth 8-6014] Unused sequential element mu_do_en_reg was removed.  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/fft/SdfUnit.v:271]
 WARNING: [Synth 8-6014] Unused sequential element mu_en_reg was removed.  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/fft/SdfUnit.v:248]
 WARNING: [Synth 8-6014] Unused sequential element cushion_input_counter_do_en_reg was removed.  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/log_mel.v:50]
-WARNING: [Synth 8-7137] Register do_en_reg in module log_mel_spectrogram has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/log_mel.v:453]
 ---------------------------------------------------------------------------------
-Finished Synthesize : Time (s): cpu = 00:00:13 ; elapsed = 00:00:32 . Memory (MB): peak = 1502.750 ; gain = 1022.301
+Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:28 . Memory (MB): peak = 1892.711 ; gain = 1020.898
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:15 ; elapsed = 00:00:36 . Memory (MB): peak = 1502.750 ; gain = 1022.301
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:13 ; elapsed = 00:00:30 . Memory (MB): peak = 1892.711 ; gain = 1020.898
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:30 . Memory (MB): peak = 1892.711 ; gain = 1020.898
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1944.566 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/constrs_1/new/log_mel.xdc]
+Finished Parsing XDC File [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/constrs_1/new/log_mel.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/constrs_1/new/log_mel.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/log_mel_spectrogram_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/log_mel_spectrogram_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.041 . Memory (MB): peak = 2603.117 ; gain = 0.672
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+The system cannot find the path specified.
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.890 . Memory (MB): peak = 2603.117 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:51 ; elapsed = 00:01:41 . Memory (MB): peak = 2606.789 ; gain = 1734.977
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z010clg400-1
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:10 ; elapsed = 00:01:57 . Memory (MB): peak = 1738.422 ; gain = 1257.973
+Start Preparing Guide Design
 ---------------------------------------------------------------------------------
-No constraint files found.
+WARNING: [Synth 8-6702] IncrSynth : Design change found in an area of the design that prevents previous synthesis information being used, Reverting to default synthesis
+---------------------------------------------------------------------------------
+Finished Doing Graph Differ : Time (s): cpu = 00:00:59 ; elapsed = 00:01:55 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Preparing Guide Design : Time (s): cpu = 00:00:59 ; elapsed = 00:01:55 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:24 ; elapsed = 00:02:52 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+---------------------------------------------------------------------------------
+
+
+Incremental Synthesis Report Summary:
+
+1. Incremental synthesis run: no
+
+   Reason for not running incremental synthesis : Design change found in an area of the design that prevents previous synthesis information being used
+
+
+INFO: [Synth 8-7130] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -248,7 +297,6 @@ BRAMs: 120 (col length: RAMB18 40 RAMB36 20)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
-No constraint files found.
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
@@ -272,8 +320,8 @@ DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
 DSP Report: operator multiplied1 is absorbed into DSP multiplied1.
 DSP Report: Generating DSP windowed, operation Mode is: A*B.
 DSP Report: operator windowed is absorbed into DSP windowed.
-DSP Debug: swapped A/B pins for adder 000001C169F7CE70
-DSP Debug: swapped A/B pins for adder 000001C169F81F70
+DSP Debug: swapped A/B pins for adder 000002DDD084AC10
+DSP Debug: swapped A/B pins for adder 000002DDD0850850
 DSP Report: Generating DSP power0/data_o0, operation Mode is: A*B.
 DSP Report: operator power0/data_o0 is absorbed into DSP power0/data_o0.
 DSP Report: Generating DSP power0/data_o, operation Mode is: C+A*B.
@@ -354,7 +402,7 @@ DSP Report: register SU4/TW/ff_re_reg is absorbed into DSP SU4/MU/aibr.
 DSP Report: register SU4/bf2_do_im_reg is absorbed into DSP SU4/MU/aibr.
 DSP Report: operator SU4/MU/aibr is absorbed into DSP SU4/MU/aibr.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:15:45 ; elapsed = 00:20:34 . Memory (MB): peak = 1768.336 ; gain = 1287.887
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:03:55 ; elapsed = 00:06:45 . Memory (MB): peak = 2606.789 ; gain = 1734.977
 ---------------------------------------------------------------------------------
  Sort Area is mel_filter__GBM1 multiplied1_5 : 0 0 : 2701 3995 : Used 3 time 0
  Sort Area is mel_filter__GBM1 multiplied1_5 : 0 1 : 1294 3995 : Used 3 time 0
@@ -439,18 +487,37 @@ Note: The table above is a preliminary report that shows the DSPs inferred at th
 ---------------------------------------------------------------------------------
 Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
-No constraint files found.
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:04:09 ; elapsed = 00:07:15 . Memory (MB): peak = 2606.789 ; gain = 1734.977
+---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
+info: optimization accepted worst group hill climbing move (-94371.0/oG. 22601.0ps)
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:15:59 ; elapsed = 00:21:03 . Memory (MB): peak = 1768.336 ; gain = 1287.887
+Finished Timing Optimization : Time (s): cpu = 00:06:08 ; elapsed = 00:10:45 . Memory (MB): peak = 2986.520 ; gain = 2114.707
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/hann_window/hann_window.v:39]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:23]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:23]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/select_buffer/select_buffer.v:22]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:17:34 ; elapsed = 00:33:28 . Memory (MB): peak = 1768.336 ; gain = 1287.887
+Finished Technology Mapping : Time (s): cpu = 00:07:53 ; elapsed = 00:13:14 . Memory (MB): peak = 2986.520 ; gain = 2114.707
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -468,37 +535,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:18:30 ; elapsed = 00:35:29 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Finished IO Insertion : Time (s): cpu = 00:08:25 ; elapsed = 00:14:14 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:18:35 ; elapsed = 00:35:38 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Finished Renaming Generated Instances : Time (s): cpu = 00:08:26 ; elapsed = 00:14:18 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:18:55 ; elapsed = 00:36:17 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:08:56 ; elapsed = 00:15:21 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:18:56 ; elapsed = 00:36:19 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Finished Renaming Generated Ports : Time (s): cpu = 00:08:56 ; elapsed = 00:15:22 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:19:19 ; elapsed = 00:37:01 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Finished Handling Custom Attributes : Time (s): cpu = 00:09:03 ; elapsed = 00:15:36 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:19:21 ; elapsed = 00:37:04 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Finished Renaming Generated Nets : Time (s): cpu = 00:09:03 ; elapsed = 00:15:37 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -658,171 +725,45 @@ Report Cell Usage:
 |1     |BUFG    |      1|
 |2     |CARRY4  |  35159|
 |3     |DSP48E1 |     73|
-|4     |LUT1    |   1700|
-|5     |LUT2    |  89585|
-|6     |LUT3    |  12314|
-|7     |LUT4    | 100322|
-|8     |LUT5    | 102138|
-|9     |LUT6    |  74690|
-|10    |MUXF7   |   4487|
-|11    |MUXF8   |   2070|
-|12    |SRL16E  |    252|
-|13    |SRLC32E |   2604|
-|14    |FDCE    |  19782|
-|15    |FDRE    |   2101|
-|16    |IBUF    |     18|
-|17    |OBUF    |    897|
+|7     |LUT1    |   1632|
+|8     |LUT2    |  61320|
+|9     |LUT3    |  12612|
+|10    |LUT4    | 100602|
+|11    |LUT5    | 101238|
+|12    |LUT6    | 100132|
+|13    |MUXF7   |   4213|
+|14    |MUXF8   |   1924|
+|15    |SRL16E  |    252|
+|16    |SRLC32E |   2604|
+|17    |FDCE    |  19779|
+|18    |FDRE    |   2100|
+|19    |IBUF    |     18|
+|20    |OBUF    |    897|
 +------+--------+-------+
-
-Report Instance Areas: 
-+------+-----------------+-------------------------------+-------+
-|      |Instance         |Module                         |Cells  |
-+------+-----------------+-------------------------------+-------+
-|1     |top              |                               | 448193|
-|2     |  FFT0           |FFT                            |   5037|
-|3     |    SU1          |SdfUnit_57                     |   1894|
-|4     |      BF2        |Butterfly__parameterized0_85   |     80|
-|5     |      BF1        |Butterfly_84                   |     27|
-|6     |      DB1        |DelayBuffer_86                 |    536|
-|7     |      DB2        |DelayBuffer__parameterized0_87 |    260|
-|8     |      MU         |Multiply_88                    |    147|
-|9     |      TW         |Twiddle_89                     |    325|
-|10    |    SU2          |SdfUnit__parameterized0_58     |    991|
-|11    |      BF2        |Butterfly__parameterized0_79   |     32|
-|12    |      BF1        |Butterfly_78                   |     38|
-|13    |      DB1        |DelayBuffer__parameterized1_80 |    250|
-|14    |      DB2        |DelayBuffer__parameterized2_81 |    142|
-|15    |      MU         |Multiply_82                    |    205|
-|16    |      TW         |Twiddle_83                     |     91|
-|17    |    SU3          |SdfUnit__parameterized1_59     |    762|
-|18    |      BF2        |Butterfly__parameterized0_73   |     32|
-|19    |      BF1        |Butterfly_72                   |     38|
-|20    |      DB1        |DelayBuffer__parameterized3_74 |    166|
-|21    |      DB2        |DelayBuffer__parameterized4_75 |    114|
-|22    |      MU         |Multiply_76                    |     97|
-|23    |      TW         |Twiddle_77                     |     89|
-|24    |    SU4          |SdfUnit__parameterized2_60     |    661|
-|25    |      BF2        |Butterfly__parameterized0_67   |     32|
-|26    |      BF1        |Butterfly_66                   |     38|
-|27    |      DB1        |DelayBuffer__parameterized5_68 |    166|
-|28    |      DB2        |DelayBuffer__parameterized6_69 |    114|
-|29    |      MU         |Multiply_70                    |     68|
-|30    |      TW         |Twiddle_71                     |     19|
-|31    |    SU5          |SdfUnit__parameterized3_61     |    514|
-|32    |      BF2        |Butterfly__parameterized0_63   |     32|
-|33    |      BF1        |Butterfly_62                   |     38|
-|34    |      DB1        |DelayBuffer__parameterized7_64 |    166|
-|35    |      DB2        |DelayBuffer__parameterized8_65 |     86|
-|36    |  FFT1           |FFT_0                          |   4871|
-|37    |    SU1          |SdfUnit_24                     |   1894|
-|38    |      BF2        |Butterfly__parameterized0_52   |     80|
-|39    |      BF1        |Butterfly_51                   |     27|
-|40    |      DB1        |DelayBuffer_53                 |    536|
-|41    |      DB2        |DelayBuffer__parameterized0_54 |    260|
-|42    |      MU         |Multiply_55                    |    147|
-|43    |      TW         |Twiddle_56                     |    325|
-|44    |    SU2          |SdfUnit__parameterized0_25     |    991|
-|45    |      BF2        |Butterfly__parameterized0_46   |     32|
-|46    |      BF1        |Butterfly_45                   |     38|
-|47    |      DB1        |DelayBuffer__parameterized1_47 |    250|
-|48    |      DB2        |DelayBuffer__parameterized2_48 |    142|
-|49    |      MU         |Multiply_49                    |    205|
-|50    |      TW         |Twiddle_50                     |     91|
-|51    |    SU3          |SdfUnit__parameterized1_26     |    762|
-|52    |      BF2        |Butterfly__parameterized0_40   |     32|
-|53    |      BF1        |Butterfly_39                   |     38|
-|54    |      DB1        |DelayBuffer__parameterized3_41 |    166|
-|55    |      DB2        |DelayBuffer__parameterized4_42 |    114|
-|56    |      MU         |Multiply_43                    |     97|
-|57    |      TW         |Twiddle_44                     |     89|
-|58    |    SU4          |SdfUnit__parameterized2_27     |    661|
-|59    |      BF2        |Butterfly__parameterized0_34   |     32|
-|60    |      BF1        |Butterfly_33                   |     38|
-|61    |      DB1        |DelayBuffer__parameterized5_35 |    166|
-|62    |      DB2        |DelayBuffer__parameterized6_36 |    114|
-|63    |      MU         |Multiply_37                    |     68|
-|64    |      TW         |Twiddle_38                     |     19|
-|65    |    SU5          |SdfUnit__parameterized3_28     |    348|
-|66    |      BF2        |Butterfly__parameterized0_30   |     16|
-|67    |      BF1        |Butterfly_29                   |     34|
-|68    |      DB1        |DelayBuffer__parameterized7_31 |    119|
-|69    |      DB2        |DelayBuffer__parameterized8_32 |     43|
-|70    |  FFT2           |FFT_1                          |   4871|
-|71    |    SU1          |SdfUnit                        |   1894|
-|72    |      BF2        |Butterfly__parameterized0_21   |     80|
-|73    |      BF1        |Butterfly_20                   |     27|
-|74    |      DB1        |DelayBuffer                    |    536|
-|75    |      DB2        |DelayBuffer__parameterized0    |    260|
-|76    |      MU         |Multiply_22                    |    147|
-|77    |      TW         |Twiddle_23                     |    325|
-|78    |    SU2          |SdfUnit__parameterized0        |    991|
-|79    |      BF2        |Butterfly__parameterized0_17   |     32|
-|80    |      BF1        |Butterfly_16                   |     38|
-|81    |      DB1        |DelayBuffer__parameterized1    |    250|
-|82    |      DB2        |DelayBuffer__parameterized2    |    142|
-|83    |      MU         |Multiply_18                    |    205|
-|84    |      TW         |Twiddle_19                     |     91|
-|85    |    SU3          |SdfUnit__parameterized1        |    762|
-|86    |      BF2        |Butterfly__parameterized0_13   |     32|
-|87    |      BF1        |Butterfly_12                   |     38|
-|88    |      DB1        |DelayBuffer__parameterized3    |    166|
-|89    |      DB2        |DelayBuffer__parameterized4    |    114|
-|90    |      MU         |Multiply_14                    |     97|
-|91    |      TW         |Twiddle_15                     |     89|
-|92    |    SU4          |SdfUnit__parameterized2        |    661|
-|93    |      BF2        |Butterfly__parameterized0_11   |     32|
-|94    |      BF1        |Butterfly_10                   |     38|
-|95    |      DB1        |DelayBuffer__parameterized5    |    166|
-|96    |      DB2        |DelayBuffer__parameterized6    |    114|
-|97    |      MU         |Multiply                       |     68|
-|98    |      TW         |Twiddle                        |     19|
-|99    |    SU5          |SdfUnit__parameterized3        |    348|
-|100   |      BF2        |Butterfly__parameterized0      |     16|
-|101   |      BF1        |Butterfly                      |     34|
-|102   |      DB1        |DelayBuffer__parameterized7    |    119|
-|103   |      DB2        |DelayBuffer__parameterized8    |     43|
-|104   |  count          |input_counter                  |    594|
-|105   |  counter0       |counter                        |     60|
-|106   |  counter1       |counter_2                      |     46|
-|107   |  counter2       |counter_3                      |     46|
-|108   |  frame          |framing                        |  20590|
-|109   |  mel0           |mel_filter                     | 128583|
-|110   |  mel1           |mel_filter_4                   | 127750|
-|111   |  mel2           |mel_filter_5                   | 127750|
-|112   |  power0         |squared                        |    135|
-|113   |  power1         |squared_6                      |    135|
-|114   |  power2         |squared_7                      |    135|
-|115   |  select_buffer0 |select_buffer                  |   8493|
-|116   |  select_buffer1 |select_buffer_8                |   8483|
-|117   |  select_buffer2 |select_buffer_9                |   8483|
-|118   |  window         |hann_window                    |    381|
-|119   |    h0           |hann_window_rom                |    313|
-+------+-----------------+-------------------------------+-------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:19:22 ; elapsed = 00:37:07 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Finished Writing Synthesis Report : Time (s): cpu = 00:09:04 ; elapsed = 00:15:38 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 6 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:19:22 ; elapsed = 00:37:13 . Memory (MB): peak = 2139.867 ; gain = 1659.418
-Synthesis Optimization Complete : Time (s): cpu = 00:19:22 ; elapsed = 00:37:13 . Memory (MB): peak = 2139.867 ; gain = 1659.418
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:08:19 ; elapsed = 00:14:46 . Memory (MB): peak = 3043.336 ; gain = 1457.445
+Synthesis Optimization Complete : Time (s): cpu = 00:09:04 ; elapsed = 00:15:44 . Memory (MB): peak = 3043.336 ; gain = 2171.523
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:08 ; elapsed = 00:00:13 . Memory (MB): peak = 2221.320 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 41789 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 2 CPU seconds
+Netlist sorting complete. Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 3043.336 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 41369 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.419 . Memory (MB): peak = 2395.098 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.152 . Memory (MB): peak = 3070.273 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 The system cannot find the path specified.
-Synth Design complete | Checksum: f9141e35
+Synth Design complete | Checksum: 18427507
 INFO: [Common 17-83] Releasing license: Synthesis
-76 Infos, 6 Warnings, 0 Critical Warnings and 0 Errors encountered.
+95 Infos, 6 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:21:36 ; elapsed = 00:41:08 . Memory (MB): peak = 2395.098 ; gain = 1924.000
-Write ShapeDB Complete: Time (s): cpu = 00:00:08 ; elapsed = 00:00:04 . Memory (MB): peak = 2395.098 ; gain = 0.000
+synth_design: Time (s): cpu = 00:09:51 ; elapsed = 00:17:30 . Memory (MB): peak = 3070.273 ; gain = 2590.605
+Write ShapeDB Complete: Time (s): cpu = 00:00:04 ; elapsed = 00:00:02 . Memory (MB): peak = 3070.273 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.runs/synth_1/log_mel_spectrogram.dcp' has been generated.
-write_checkpoint: Time (s): cpu = 00:01:26 ; elapsed = 00:02:05 . Memory (MB): peak = 2395.098 ; gain = 0.000
+write_checkpoint: Time (s): cpu = 00:00:32 ; elapsed = 00:00:49 . Memory (MB): peak = 3070.273 ; gain = 0.000
 INFO: [runtcl-4] Executing : report_utilization -file log_mel_spectrogram_utilization_synth.rpt -pb log_mel_spectrogram_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 2395.098 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Mon Jan 29 12:39:54 2024...
+INFO: [Common 17-206] Exiting Vivado at Mon Jan 29 13:46:28 2024...

@@ -30,9 +30,11 @@
 *.json
 *.shape
 *.dcp
+*.rpx
 log-mel-spectrogram.runs/synth_1/.Xli/
 log-mel-spectrogram.runs/synth_1/__synthesis_is_complete__
 log-mel-spectrogram.cache/
 log-mel-spectrogram.runs/synth_1/__synthesis_is_running__
 log-mel-spectrogram.runs/synth_1/htr.txt
 log-mel-spectrogram.runs/synth_1/vivado.jou
+log-mel-spectrogram.runs/impl_1/htr.txt
