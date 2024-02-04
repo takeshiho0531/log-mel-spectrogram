@@ -165,8 +165,10 @@ always @(posedge spi_clk or negedge rst_n)    // Positive Edge
    if (!rst_n)
       addr <= {ap{1'b0}};
    else if (transfer_enable_flag == 1'b0) begin
-      if ((count < al) && ~spi_cs && (num_bytes <= 3'b001))
+      if ((count < al) && ~spi_cs && (num_bytes <= 3'b001)) begin
          addr <= {addr[ap-2:0],spi_mosi};
+         $display("spi_if spi_mosi=%d", spi_mosi);
+      end
       else
          addr <= addr;
    end

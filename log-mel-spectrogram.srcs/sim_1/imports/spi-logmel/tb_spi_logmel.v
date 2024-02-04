@@ -626,6 +626,7 @@ module TB_SPI;
             for (i = 39; i >= 0; i = i - 1) begin
                 @(posedge spi_clk); // SPIクロックの立ち上がりエッジでデータを送信
                 spi_mosi = data[i]; // MSBファーストでデータビットを送信
+                $display("tb_spi_logmel spi_mosi=%d", spi_mosi);
             end
         end
     endtask
