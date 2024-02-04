@@ -140,7 +140,11 @@ always @(posedge spi_clk or negedge rst_n)    // Positive Edge
       end
    end
 
-always @(posedge clk or negedge rst_n)
+always @(posedge clk or negedge rst_n) begin
+   $display("flag_counter_nnn=%d, transfer_enable_flag=%d, transfer_enable_flag_nnn=%d, spi_cs=%d, inference_type=%d", flag_counter_nnn, transfer_enable_flag, transfer_enable_flag_nnn, spi_cs, inference_type);
+   //  if (transfer_enable_flag_nnn!=0 | spi_cs!=0 | inference_type!=1) begin
+   //    $display("flag_counter_nnn=%d, transfer_enable_flag_nnn=%d, spi_cs=%d, inference_type=%d", flag_counter_nnn, transfer_enable_flag_nnn, spi_cs, inference_type);
+   //  end
     if (!rst_n) begin
       flag_counter_nnn <= 0;
       transfer_enable_flag_nnn <= 0;
@@ -158,12 +162,13 @@ always @(posedge clk or negedge rst_n)
          flag_counter_nnn <= flag_counter_nnn + 1'b1;
       end
     end
+end
 
 // serial address input
 
 always @(posedge spi_clk or negedge rst_n)  begin  // Positive Edge
    // $display("transfer_enable_flag=%d", transfer_enable_flag);
-   $display("transfer_enable_flag=%d, transfer_enable_flag_spi=%d, transfer_enable_flag_nnn=%d", transfer_enable_flag, transfer_enable_flag_spi, transfer_enable_flag_nnn);
+   // $display("transfer_enable_flag=%d, transfer_enable_flag_spi=%d, transfer_enable_flag_nnn=%d", transfer_enable_flag, transfer_enable_flag_spi, transfer_enable_flag_nnn);
    if (!rst_n)
       addr <= {ap{1'b0}};
    else if (transfer_enable_flag == 1'b0) begin
