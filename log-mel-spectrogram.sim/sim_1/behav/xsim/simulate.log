@@ -1,5 +1,4 @@
 Time resolution is 1 ps
-WARNING: Too many words specified in data file input.txt
 in_clk_count_tmp-1=          x, rst=0, di_en=1, data_i=  4096
 in_clk_count_tmp-1=         -1, rst=0, di_en=1, data_i=  4096
 in_clk_count_tmp-1=         -1, rst=0, di_en=1, data_i=  4064
@@ -1584,4 +1583,5 @@ in_clk_count_tmp-1=       1539, rst=1, di_en=0, data_i=  3936
 in_clk_count_tmp-1=       1540, rst=1, di_en=0, data_i=  3936
 in_clk_count_tmp-1=       1541, rst=1, di_en=0, data_i=  3936
 in_clk_count_tmp-1=       1542, rst=1, di_en=0, data_i=  3904
-in_clk_count_tm
+in_clk_count_tmp-1=       1543, rst=1, di_en=0, data_i=  3904
+in_clk_cou
