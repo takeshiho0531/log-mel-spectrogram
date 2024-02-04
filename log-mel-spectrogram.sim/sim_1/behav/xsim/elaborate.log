@@ -1,14 +1,19 @@
 Vivado Simulator v2023.2
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: C:/Xilinx/Vivado/2023.2/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot TB_behav xil_defaultlib.TB xil_defaultlib.glbl -log elaborate.log 
+Running: C:/Xilinx/Vivado/2023.2/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot TB_SPI_behav xil_defaultlib.TB_SPI xil_defaultlib.glbl -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_B_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:338]
+WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_A_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:339]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.spi_clock
+Compiling module xil_defaultlib.spi_if_default
+Compiling module xil_defaultlib.spi_regs
 Compiling module xil_defaultlib.input_counter
 Compiling module xil_defaultlib.framing_default
 Compiling module xil_defaultlib.hann_window_rom
@@ -40,6 +45,7 @@ Compiling module xil_defaultlib.mel_filter_coef
 Compiling module xil_defaultlib.mel_filter
 Compiling module xil_defaultlib.log
 Compiling module xil_defaultlib.log_mel_spectrogram
-Compiling module xil_defaultlib.TB
+Compiling module xil_defaultlib.spi_logic_default
+Compiling module xil_defaultlib.TB_SPI
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot TB_behav
+Built simulation snapshot TB_SPI_behav
