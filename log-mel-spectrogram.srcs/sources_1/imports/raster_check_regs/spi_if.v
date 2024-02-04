@@ -161,19 +161,22 @@ always @(posedge clk or negedge rst_n)
 
 // serial address input
 
-always @(posedge spi_clk or negedge rst_n)    // Positive Edge
+always @(posedge spi_clk or negedge rst_n)  begin  // Positive Edge
+   $display("transfer_enable_flag=%d", transfer_enable_flag);
    if (!rst_n)
       addr <= {ap{1'b0}};
    else if (transfer_enable_flag == 1'b0) begin
+      // $display("transfer_enable_flag=%d, count=%d, spi_cs=%d, num_bytes=%d, addr=%b", transfer_enable_flag, count, spi_cs, num_bytes, addr);
       if ((count < al) && ~spi_cs && (num_bytes <= 3'b001)) begin
          addr <= {addr[ap-2:0],spi_mosi};
-         $display("spi_if spi_mosi=%d", spi_mosi);
-         $display("addr=%b", addr);
+         // $display("spi_if spi_mosi=%d", spi_mosi);
+         // $display("addr=%b", addr);
          // $display("addr_out addr is equal=%d", addr_out == addr);
       end
       else
          addr <= addr;
    end
+end
 
 
 // command detection
