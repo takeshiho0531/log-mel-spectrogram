@@ -267,7 +267,7 @@ else if (transfer_enable_flag == 1'b0)
    wr_act_q3 <= wr_act_q2;
    // $display("wr_pulse=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_act_q2, wr_act_q3);
    end
-$display("wr_pulse=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_act_q2, wr_act_q3);
+$display("wr_pulse=%d, wr_pulse_q=%d, wr_act=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_pulse_q, wr_act, wr_act_q2, wr_act_q3);
 end
 
 always @(posedge sys_clk or negedge rst_n) begin
