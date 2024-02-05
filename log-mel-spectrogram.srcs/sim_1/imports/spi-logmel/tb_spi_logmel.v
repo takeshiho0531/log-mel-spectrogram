@@ -488,6 +488,12 @@ module TB_SPI;
     //----------------------------------------------------------------------
     //	Module Instances
     //----------------------------------------------------------------------
+    wire wr_pulse;
+    wire wr_pulse_q;
+    wire wr_act_q1;
+    wire wr_act_q2;
+    wire wr_act_q3;
+
     // spi_logicモジュールのインスタンス化
     spi_logic spi_inst (
         .clk_in(clk),
@@ -499,6 +505,14 @@ module TB_SPI;
         .spi_mosi(spi_mosi),
         .spi_miso(spi_miso),
         .spi_miso_en(spi_miso_en),
+
+        .wr_pulse(wr_pulse),
+        .wr_pulse_q(wr_pulse_q),
+        .wr_act_q1(wr_act_q1),
+        .wr_act_q2(wr_act_q2),
+        .wr_act_q3(wr_act_q3),
+
+
         .REG_IN_A_000(REG_IN_A_000),
         .REG_IN_A_001(REG_IN_A_001),
         .REG_IN_A_002(REG_IN_A_002),

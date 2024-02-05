@@ -94,7 +94,13 @@ REG_IN_B_000,
 
 REG_OUT_A_000,
 
-REG_OUT_B_000
+REG_OUT_B_000,
+
+wr_pulse,
+wr_pulse_q,
+wr_act_q1,
+wr_act_q2,
+wr_act_q3,
 );
 
 
@@ -198,6 +204,12 @@ input   [(rl*64)-1:0]        REG_OUT_A_000;
 
 
 input   [rl-1:0]        REG_OUT_B_000;
+
+output wr_pulse;
+output wr_pulse_q;
+output wr_act_q1;
+output wr_act_q2;
+output wr_act_q3;
 
 
 //-----------------------------------------------------------------------
@@ -326,7 +338,13 @@ spi_regs spi_regs_inst(
 
 .REG_IN_B_000   (REG_IN_B_000),
 .REG_OUT_A_000  (REG_OUT_A_000),
-.REG_OUT_B_000  (REG_OUT_B_000)
+.REG_OUT_B_000  (REG_OUT_B_000),
+
+.wr_pulse(wr_pulse),
+.wr_pulse_q(wr_pulse_q),
+.wr_act_q1(wr_act_q1),
+.wr_act_q2(wr_act_q2),
+.wr_act_q3(wr_act_q3)
 );
 
 // 入力先のトップモジュール

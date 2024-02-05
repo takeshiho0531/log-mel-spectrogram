@@ -92,7 +92,13 @@ REG_IN_A_063,
 REG_IN_B_000,
 
 REG_OUT_A_000,
-REG_OUT_B_000
+REG_OUT_B_000,
+
+wr_pulse,
+wr_pulse_q,
+wr_act_q1,
+wr_act_q2,
+wr_act_q3
 );
 
 //-----------------------------------------------------------------------
@@ -210,11 +216,11 @@ reg			next_q2;
 reg			next_q3;
 reg			rd_act_q1;
 reg			rd_act_q2;
-reg			wr_act_q1;
-reg			wr_act_q2;
-reg			wr_act_q3;
-reg			wr_pulse;
-reg			wr_pulse_q;
+output reg			wr_act_q1;
+output reg			wr_act_q2;
+output reg			wr_act_q3;
+output reg			wr_pulse;
+output reg			wr_pulse_q;
 reg	[dl-1:0]	wr_data;
 reg	[al-1:0]	addr_in_q;
 reg			command_q;

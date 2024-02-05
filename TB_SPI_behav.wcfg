@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="TB_SPI_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="TB_SPI" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="261,231.917 ns"></ZoomStartTime>
+      <ZoomEndTime time="261,820.418 ns"></ZoomEndTime>
+      <Cursor1Time time="261,330.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="301"></NameColumnWidth>
+      <ValueColumnWidth column_width="90"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="91" />
+   <wvobject fp_name="/TB_SPI/sys_clk" type="logic">
+      <obj_property name="ElementShortName">sys_clk</obj_property>
+      <obj_property name="ObjectShortName">sys_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/spi_clk" type="logic">
+      <obj_property name="ElementShortName">spi_clk</obj_property>
+      <obj_property name="ObjectShortName">spi_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/spi_cs" type="logic">
+      <obj_property name="ElementShortName">spi_cs</obj_property>
+      <obj_property name="ObjectShortName">spi_cs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/spi_mosi" type="logic">
+      <obj_property name="ElementShortName">spi_mosi</obj_property>
+      <obj_property name="ObjectShortName">spi_mosi</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/spi_miso" type="logic">
+      <obj_property name="ElementShortName">spi_miso</obj_property>
+      <obj_property name="ObjectShortName">spi_miso</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/spi_miso_en" type="logic">
+      <obj_property name="ElementShortName">spi_miso_en</obj_property>
+      <obj_property name="ObjectShortName">spi_miso_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/wr_pulse" type="logic">
+      <obj_property name="ElementShortName">wr_pulse</obj_property>
+      <obj_property name="ObjectShortName">wr_pulse</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/wr_pulse_q" type="logic">
+      <obj_property name="ElementShortName">wr_pulse_q</obj_property>
+      <obj_property name="ObjectShortName">wr_pulse_q</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/wr_act_q1" type="logic">
+      <obj_property name="ElementShortName">wr_act_q1</obj_property>
+      <obj_property name="ObjectShortName">wr_act_q1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/wr_act_q2" type="logic">
+      <obj_property name="ElementShortName">wr_act_q2</obj_property>
+      <obj_property name="ObjectShortName">wr_act_q2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/wr_act_q3" type="logic">
+      <obj_property name="ElementShortName">wr_act_q3</obj_property>
+      <obj_property name="ObjectShortName">wr_act_q3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/rst_log" type="logic">
+      <obj_property name="ElementShortName">rst_log</obj_property>
+      <obj_property name="ObjectShortName">rst_log</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/data_i" type="array">
+      <obj_property name="ElementShortName">data_i[13:0]</obj_property>
+      <obj_property name="ObjectShortName">data_i[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/data_o" type="array">
+      <obj_property name="ElementShortName">data_o[895:0]</obj_property>
+      <obj_property name="ObjectShortName">data_o[895:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/do_en" type="logic">
+      <obj_property name="ElementShortName">do_en</obj_property>
+      <obj_property name="ObjectShortName">do_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_000" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_000[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_000[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_001" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_001[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_001[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_002" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_002[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_002[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_003" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_003[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_003[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_004" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_004[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_004[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_005" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_005[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_005[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_006" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_006[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_006[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_007" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_007[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_007[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_008" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_008[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_008[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_009" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_009[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_009[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_010" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_010[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_010[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_011" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_011[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_011[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_012" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_012[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_012[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_013" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_013[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_013[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_014" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_014[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_014[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_015" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_015[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_015[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_016" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_016[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_016[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_017" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_017[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_017[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_018" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_018[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_018[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_019" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_019[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_019[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_020" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_020[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_020[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_021" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_021[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_021[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_022" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_022[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_022[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_023" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_023[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_023[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_024" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_024[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_024[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_025" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_025[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_025[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_026" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_026[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_026[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_027" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_027[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_027[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_028" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_028[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_028[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_029" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_029[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_029[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_030" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_030[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_030[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_031" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_031[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_031[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_032" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_032[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_032[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_033" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_033[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_033[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_034" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_034[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_034[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_035" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_035[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_035[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_036" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_036[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_036[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_037" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_037[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_037[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_038" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_038[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_038[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_039" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_039[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_039[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_040" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_040[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_040[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_041" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_041[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_041[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_042" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_042[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_042[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_043" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_043[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_043[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_044" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_044[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_044[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_045" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_045[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_045[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_046" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_046[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_046[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_047" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_047[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_047[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_048" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_048[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_048[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_049" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_049[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_049[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_050" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_050[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_050[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_051" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_051[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_051[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_052" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_052[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_052[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_053" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_053[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_053[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_054" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_054[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_054[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_055" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_055[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_055[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_056" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_056[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_056[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_057" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_057[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_057[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_058" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_058[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_058[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_059" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_059[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_059[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_060" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_060[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_060[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_061" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_061[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_061[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_062" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_062[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_062[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_A_063" type="array">
+      <obj_property name="ElementShortName">REG_IN_A_063[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_A_063[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_IN_B_000" type="array">
+      <obj_property name="ElementShortName">REG_IN_B_000[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_IN_B_000[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_OUT_A_000" type="array">
+      <obj_property name="ElementShortName">REG_OUT_A_000[895:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_OUT_A_000[895:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/REG_OUT_B_000" type="array">
+      <obj_property name="ElementShortName">REG_OUT_B_000[13:0]</obj_property>
+      <obj_property name="ObjectShortName">REG_OUT_B_000[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/I_BW" type="array">
+      <obj_property name="ElementShortName">I_BW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">I_BW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/O_BW" type="array">
+      <obj_property name="ElementShortName">O_BW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">O_BW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/N" type="array">
+      <obj_property name="ElementShortName">N[31:0]</obj_property>
+      <obj_property name="ObjectShortName">N[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/IN_N" type="array">
+      <obj_property name="ElementShortName">IN_N[31:0]</obj_property>
+      <obj_property name="ObjectShortName">IN_N[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/OUT_N" type="array">
+      <obj_property name="ElementShortName">OUT_N[31:0]</obj_property>
+      <obj_property name="ObjectShortName">OUT_N[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/OUT_N_PAIR" type="array">
+      <obj_property name="ElementShortName">OUT_N_PAIR[31:0]</obj_property>
+      <obj_property name="ObjectShortName">OUT_N_PAIR[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_SPI/CYCLE" type="array">
+      <obj_property name="ElementShortName">CYCLE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CYCLE[31:0]</obj_property>
+   </wvobject>
+</wave_config>
