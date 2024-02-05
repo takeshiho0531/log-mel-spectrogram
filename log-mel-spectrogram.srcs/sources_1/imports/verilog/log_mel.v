@@ -33,6 +33,7 @@ module log_mel_spectrogram #(
 
 
     always @(posedge clk or negedge rst) begin
+        $display("clk");
         // $display("in_clk_count_tmp-1=%d, rst=%d, di_en=%d, data_i=%d", in_clk_count_tmp-1, rst, di_en, data_i);
         if (!rst) begin
             in_clk_count_tmp <= 0;

@@ -311,7 +311,8 @@ else if (transfer_enable_flag == 1'b0) begin
       wr_data <= wr_data;
 end
 
-always @(posedge sys_clk or negedge rst_n)
+always @(posedge sys_clk or negedge rst_n) begin
+$display("sys clock");
 if (!rst_n)
    command_q <= 1'b0;
 else if (transfer_enable_flag == 1'b0) begin
@@ -320,8 +321,10 @@ else if (transfer_enable_flag == 1'b0) begin
    else
       command_q <= command_q;
 end
+end
 
-always @(posedge selected_sys_clk or negedge rst_n)
+always @(posedge selected_sys_clk or negedge rst_n) begin
+$display("selected sys clock");
 if (!rst_n) begin
    REG_IN_A_000 <= {rl{1'b0}};
    REG_IN_A_001 <= {rl{1'b0}};
@@ -541,133 +544,8 @@ else begin
    end
    else if (rd_act_q2) begin
       case (addr_in_q)
-         // 15'd0:      data_out[rl-1:0] <= REG_IN_A_000;
-         // 15'd1:      data_out[rl-1:0] <= REG_IN_A_001;
-         // 15'd2:      data_out[rl-1:0] <= REG_IN_A_002;
-         // 15'd3:      data_out[rl-1:0] <= REG_IN_A_003;
-         // 15'd4:      data_out[rl-1:0] <= REG_IN_A_004;
-         // 15'd5:      data_out[rl-1:0] <= REG_IN_A_005;
-         // 15'd6:      data_out[rl-1:0] <= REG_IN_A_006;
-         // 15'd7:      data_out[rl-1:0] <= REG_IN_A_007;
-         // 15'd8:      data_out[rl-1:0] <= REG_IN_A_008;
-         // 15'd9:      data_out[rl-1:0] <= REG_IN_A_009;
-         // 15'd10:      data_out[rl-1:0] <= REG_IN_A_010;
-         // 15'd11:      data_out[rl-1:0] <= REG_IN_A_011;
-         // 15'd12:      data_out[rl-1:0] <= REG_IN_A_012;
-         // 15'd13:      data_out[rl-1:0] <= REG_IN_A_013;
-         // 15'd14:      data_out[rl-1:0] <= REG_IN_A_014;
-         // 15'd15:      data_out[rl-1:0] <= REG_IN_A_015;
-         // 15'd16:      data_out[rl-1:0] <= REG_IN_A_016;
-         // 15'd17:      data_out[rl-1:0] <= REG_IN_A_017;
-         // 15'd18:      data_out[rl-1:0] <= REG_IN_A_018;
-         // 15'd19:      data_out[rl-1:0] <= REG_IN_A_019;
-         // 15'd20:      data_out[rl-1:0] <= REG_IN_A_020;
-         // 15'd21:      data_out[rl-1:0] <= REG_IN_A_021;
-         // 15'd22:      data_out[rl-1:0] <= REG_IN_A_022;
-         // 15'd23:      data_out[rl-1:0] <= REG_IN_A_023;
-         // 15'd24:      data_out[rl-1:0] <= REG_IN_A_024;
-         // 15'd25:      data_out[rl-1:0] <= REG_IN_A_025;
-         // 15'd26:      data_out[rl-1:0] <= REG_IN_A_026;
-         // 15'd27:      data_out[rl-1:0] <= REG_IN_A_027;
-         // 15'd28:      data_out[rl-1:0] <= REG_IN_A_028;
-         // 15'd29:      data_out[rl-1:0] <= REG_IN_A_029;
-         // 15'd30:      data_out[rl-1:0] <= REG_IN_A_030;
-         // 15'd31:      data_out[rl-1:0] <= REG_IN_A_031;
-         // 15'd32:      data_out[rl-1:0] <= REG_IN_A_032;
-         // 15'd33:      data_out[rl-1:0] <= REG_IN_A_033;
-         // 15'd34:      data_out[rl-1:0] <= REG_IN_A_034;
-         // 15'd35:      data_out[rl-1:0] <= REG_IN_A_035;
-         // 15'd36:      data_out[rl-1:0] <= REG_IN_A_036;
-         // 15'd37:      data_out[rl-1:0] <= REG_IN_A_037;
-         // 15'd38:      data_out[rl-1:0] <= REG_IN_A_038;
-         // 15'd39:      data_out[rl-1:0] <= REG_IN_A_039;
-         // 15'd40:      data_out[rl-1:0] <= REG_IN_A_040;
-         // 15'd41:      data_out[rl-1:0] <= REG_IN_A_041;
-         // 15'd42:      data_out[rl-1:0] <= REG_IN_A_042;
-         // 15'd43:      data_out[rl-1:0] <= REG_IN_A_043;
-         // 15'd44:      data_out[rl-1:0] <= REG_IN_A_044;
-         // 15'd45:      data_out[rl-1:0] <= REG_IN_A_045;
-         // 15'd46:      data_out[rl-1:0] <= REG_IN_A_046;
-         // 15'd47:      data_out[rl-1:0] <= REG_IN_A_047;
-         // 15'd48:      data_out[rl-1:0] <= REG_IN_A_048;
-         // 15'd49:      data_out[rl-1:0] <= REG_IN_A_049;
-         // 15'd50:      data_out[rl-1:0] <= REG_IN_A_050;
-         // 15'd51:      data_out[rl-1:0] <= REG_IN_A_051;
-         // 15'd52:      data_out[rl-1:0] <= REG_IN_A_052;
-         // 15'd53:      data_out[rl-1:0] <= REG_IN_A_053;
-         // 15'd54:      data_out[rl-1:0] <= REG_IN_A_054;
-         // 15'd55:      data_out[rl-1:0] <= REG_IN_A_055;
-         // 15'd56:      data_out[rl-1:0] <= REG_IN_A_056;
-         // 15'd57:      data_out[rl-1:0] <= REG_IN_A_057;
-         // 15'd58:      data_out[rl-1:0] <= REG_IN_A_058;
-         // 15'd59:      data_out[rl-1:0] <= REG_IN_A_059;
-         // 15'd60:      data_out[rl-1:0] <= REG_IN_A_060;
-         // 15'd61:      data_out[rl-1:0] <= REG_IN_A_061;
-
          15'b111111111111111:      data_out[rl-1:0] <= REG_IN_B_000;
 
-         // 15'd0:      data_out[rl-1:0] <= REG_OUT_A_000;
-         // 15'd1:      data_out[rl-1:0] <= REG_OUT_A_001;
-         // 15'd2:      data_out[rl-1:0] <= REG_OUT_A_002;
-         // 15'd3:      data_out[rl-1:0] <= REG_OUT_A_003;
-         // 15'd4:      data_out[rl-1:0] <= REG_OUT_A_004;
-         // 15'd5:      data_out[rl-1:0] <= REG_OUT_A_005;
-         // 15'd6:      data_out[rl-1:0] <= REG_OUT_A_006;
-         // 15'd7:      data_out[rl-1:0] <= REG_OUT_A_007;
-         // 15'd8:      data_out[rl-1:0] <= REG_OUT_A_008;
-         // 15'd9:      data_out[rl-1:0] <= REG_OUT_A_009;
-         // 15'd10:      data_out[rl-1:0] <= REG_OUT_A_010;
-         // 15'd11:      data_out[rl-1:0] <= REG_OUT_A_011;
-         // 15'd12:      data_out[rl-1:0] <= REG_OUT_A_012;
-         // 15'd13:      data_out[rl-1:0] <= REG_OUT_A_013;
-         // 15'd14:      data_out[rl-1:0] <= REG_OUT_A_014;
-         // 15'd15:      data_out[rl-1:0] <= REG_OUT_A_015;
-         // 15'd16:      data_out[rl-1:0] <= REG_OUT_A_016;
-         // 15'd17:      data_out[rl-1:0] <= REG_OUT_A_017;
-         // 15'd18:      data_out[rl-1:0] <= REG_OUT_A_018;
-         // 15'd19:      data_out[rl-1:0] <= REG_OUT_A_019;
-         // 15'd20:      data_out[rl-1:0] <= REG_OUT_A_020;
-         // 15'd21:      data_out[rl-1:0] <= REG_OUT_A_021;
-         // 15'd22:      data_out[rl-1:0] <= REG_OUT_A_022;
-         // 15'd23:      data_out[rl-1:0] <= REG_OUT_A_023;
-         // 15'd24:      data_out[rl-1:0] <= REG_OUT_A_024;
-         // 15'd25:      data_out[rl-1:0] <= REG_OUT_A_025;
-         // 15'd26:      data_out[rl-1:0] <= REG_OUT_A_026;
-         // 15'd27:      data_out[rl-1:0] <= REG_OUT_A_027;
-         // 15'd28:      data_out[rl-1:0] <= REG_OUT_A_028;
-         // 15'd29:      data_out[rl-1:0] <= REG_OUT_A_029;
-         // 15'd30:      data_out[rl-1:0] <= REG_OUT_A_030;
-         // 15'd31:      data_out[rl-1:0] <= REG_OUT_A_031;
-         // 15'd32:      data_out[rl-1:0] <= REG_OUT_A_032;
-         // 15'd33:      data_out[rl-1:0] <= REG_OUT_A_033;
-         // 15'd34:      data_out[rl-1:0] <= REG_OUT_A_034;
-         // 15'd35:      data_out[rl-1:0] <= REG_OUT_A_035;
-         // 15'd36:      data_out[rl-1:0] <= REG_OUT_A_036;
-         // 15'd37:      data_out[rl-1:0] <= REG_OUT_A_037;
-         // 15'd38:      data_out[rl-1:0] <= REG_OUT_A_038;
-         // 15'd39:      data_out[rl-1:0] <= REG_OUT_A_039;
-         // 15'd40:      data_out[rl-1:0] <= REG_OUT_A_040;
-         // 15'd41:      data_out[rl-1:0] <= REG_OUT_A_041;
-         // 15'd42:      data_out[rl-1:0] <= REG_OUT_A_042;
-         // 15'd43:      data_out[rl-1:0] <= REG_OUT_A_043;
-         // 15'd44:      data_out[rl-1:0] <= REG_OUT_A_044;
-         // 15'd45:      data_out[rl-1:0] <= REG_OUT_A_045;
-         // 15'd46:      data_out[rl-1:0] <= REG_OUT_A_046;
-         // 15'd47:      data_out[rl-1:0] <= REG_OUT_A_047;
-         // 15'd48:      data_out[rl-1:0] <= REG_OUT_A_048;
-         // 15'd49:      data_out[rl-1:0] <= REG_OUT_A_049;
-         // 15'd50:      data_out[rl-1:0] <= REG_OUT_A_050;
-         // 15'd51:      data_out[rl-1:0] <= REG_OUT_A_051;
-         // 15'd52:      data_out[rl-1:0] <= REG_OUT_A_052;
-         // 15'd53:      data_out[rl-1:0] <= REG_OUT_A_053;
-         // 15'd54:      data_out[rl-1:0] <= REG_OUT_A_054;
-         // 15'd55:      data_out[rl-1:0] <= REG_OUT_A_055;
-         // 15'd56:      data_out[rl-1:0] <= REG_OUT_A_056;
-         // 15'd57:      data_out[rl-1:0] <= REG_OUT_A_057;
-         // 15'd58:      data_out[rl-1:0] <= REG_OUT_A_058;
-         // 15'd59:      data_out[rl-1:0] <= REG_OUT_A_059;
-         // 15'd60:      data_out[rl-1:0] <= REG_OUT_A_060;
-         // 15'd61:      data_out[rl-1:0] <= REG_OUT_A_061;
          15'd0:      data_out[rl-1:0] <= REG_OUT_A_000[13*1-1:13*0];
          15'd1:      data_out[rl-1:0] <= REG_OUT_A_000[13*2-1:13*1];
          15'd2:      data_out[rl-1:0] <= REG_OUT_A_000[13*3-1:13*2];
@@ -739,6 +617,7 @@ else begin
          default:       data_out <= {dl{1'b0}};
       endcase
    end
+end
 end
 endmodule	//spi_regs
 

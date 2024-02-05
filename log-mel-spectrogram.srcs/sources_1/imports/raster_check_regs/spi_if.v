@@ -105,7 +105,8 @@ assign addr_out = addr[ap-1:0];
 assign spi_clk_b = ~spi_clk;
 assign transfer_enable_flag = transfer_enable_flag_spi ^ transfer_enable_flag_nnn;
 
-always @(posedge spi_clk or negedge rst_n)    // Positive Edge
+always @(posedge spi_clk or negedge rst_n) begin   // Positive Edge
+   $display("spi clock");
    if (!rst_n) begin
       flag_counter_spi <= 0;
       num_bytes <= {nb{1'b0}};
@@ -139,9 +140,10 @@ always @(posedge spi_clk or negedge rst_n)    // Positive Edge
          count <= count + 1;
       end
    end
+end
 
 always @(posedge clk or negedge rst_n) begin
-   $display("flag_counter_nnn=%d, transfer_enable_flag=%d, transfer_enable_flag_nnn=%d, spi_cs=%d, inference_type=%d", flag_counter_nnn, transfer_enable_flag, transfer_enable_flag_nnn, spi_cs, inference_type);
+   // $display("flag_counter_nnn=%d, transfer_enable_flag=%d, transfer_enable_flag_nnn=%d, spi_cs=%d, inference_type=%d", flag_counter_nnn, transfer_enable_flag, transfer_enable_flag_nnn, spi_cs, inference_type);
    //  if (transfer_enable_flag_nnn!=0 | spi_cs!=0 | inference_type!=1) begin
    //    $display("flag_counter_nnn=%d, transfer_enable_flag_nnn=%d, spi_cs=%d, inference_type=%d", flag_counter_nnn, transfer_enable_flag_nnn, spi_cs, inference_type);
    //  end
@@ -187,7 +189,7 @@ end
 
 // command detection
 
-always @(posedge spi_clk or negedge rst_n)    // Positive Edge
+always @(posedge spi_clk or negedge rst_n)    // Positive Edge // write command = 1
    if (!rst_n) begin
       command <= 1'b0;
       inference_type <= 1'b0;
