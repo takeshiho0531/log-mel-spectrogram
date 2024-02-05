@@ -106,7 +106,7 @@ assign spi_clk_b = ~spi_clk;
 assign transfer_enable_flag = transfer_enable_flag_spi ^ transfer_enable_flag_nnn;
 
 always @(posedge spi_clk or negedge rst_n) begin   // Positive Edge
-   $display("spi clock");
+   // $display("spi clock");
    if (!rst_n) begin
       flag_counter_spi <= 0;
       num_bytes <= {nb{1'b0}};

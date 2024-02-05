@@ -253,7 +253,7 @@ else if (transfer_enable_flag == 1'b0)
    next_q3 <= next_q2;
    end
 
-always @(posedge sys_clk or negedge rst_n)
+always @(posedge sys_clk or negedge rst_n) begin
 if (!rst_n)
    begin
    wr_act_q1 <= 1'b0;
@@ -265,9 +265,13 @@ else if (transfer_enable_flag == 1'b0)
    wr_act_q1 <= wr_act;
    wr_act_q2 <= wr_act_q1;
    wr_act_q3 <= wr_act_q2;
+   // $display("wr_pulse=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_act_q2, wr_act_q3);
    end
+$display("wr_pulse=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_act_q2, wr_act_q3);
+end
 
-always @(posedge sys_clk or negedge rst_n)
+always @(posedge sys_clk or negedge rst_n) begin
+// $display("wr_pulse=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_act_q2, wr_act_q3);
 if (!rst_n)
 begin
    wr_pulse   <= 1'b0;
@@ -278,6 +282,7 @@ else if (transfer_enable_flag == 1'b0)
       wr_pulse   <= wr_act_q2 && ~wr_act_q3;
       wr_pulse_q <= wr_pulse;
    end
+end
 
 always @(posedge sys_clk or negedge rst_n)
 if (!rst_n)
@@ -301,7 +306,8 @@ else if (transfer_enable_flag == 1'b0) begin
       addr_in_q <= addr_in_q;
 end
 
-always @(posedge sys_clk or negedge rst_n)
+always @(posedge sys_clk or negedge rst_n) begin
+// $display("wr_pulse=%d", wr_pulse);
 if (!rst_n)
    wr_data <= {dl{1'b0}};
 else if (transfer_enable_flag == 1'b0) begin
@@ -310,9 +316,10 @@ else if (transfer_enable_flag == 1'b0) begin
    else
       wr_data <= wr_data;
 end
+end
 
 always @(posedge sys_clk or negedge rst_n) begin
-$display("sys clock");
+// $display("sys clock");
 if (!rst_n)
    command_q <= 1'b0;
 else if (transfer_enable_flag == 1'b0) begin
@@ -324,7 +331,7 @@ end
 end
 
 always @(posedge selected_sys_clk or negedge rst_n) begin
-$display("selected sys clock");
+// $display("selected sys clock");
 if (!rst_n) begin
    REG_IN_A_000 <= {rl{1'b0}};
    REG_IN_A_001 <= {rl{1'b0}};
