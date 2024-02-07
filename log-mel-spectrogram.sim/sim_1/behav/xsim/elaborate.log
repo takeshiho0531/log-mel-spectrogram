@@ -5,8 +5,8 @@ Running: C:/Xilinx/Vivado/2023.2/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_B_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:356]
-WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_A_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:357]
+WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_B_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:338]
+WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_A_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:339]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
