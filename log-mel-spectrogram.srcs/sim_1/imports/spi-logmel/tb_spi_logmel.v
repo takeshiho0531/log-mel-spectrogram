@@ -187,275 +187,199 @@ module TB_SPI;
         // send_spi_byte(40'b1111111111111111000000000000000000000001); // flagをB_000に。
         // Input data for one line;
         send_spi_byte(40'b1111111111111111100000000000000000000001); // 推論モードに。
-        // di_en <= 1;
+
         // 0個目
-        // data_i <= imem[n+1];
-        // 0個目
-        data_i <= imem[n];
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[0];
+        send_spi_byte({1'b1, 15'd0, 1'b1, 9'b0, imem[0][13:0]});
         // 1個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[1];
+        send_spi_byte({1'b1, 15'd1, 1'b1, 9'b0, imem[1][13:0]});
         // 2個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[2];
+        send_spi_byte({1'b1, 15'd2, 1'b1, 9'b0, imem[2][13:0]});
         // 3個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[3];
+        send_spi_byte({1'b1, 15'd3, 1'b1, 9'b0, imem[3][13:0]});
         // 4個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[4];
+        send_spi_byte({1'b1, 15'd4, 1'b1, 9'b0, imem[4][13:0]});
         // 5個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[5];
+        send_spi_byte({1'b1, 15'd5, 1'b1, 9'b0, imem[5][13:0]});
         // 6個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[6];
+        send_spi_byte({1'b1, 15'd6, 1'b1, 9'b0, imem[6][13:0]});
         // 7個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[7];
+        send_spi_byte({1'b1, 15'd7, 1'b1, 9'b0, imem[7][13:0]});
         // 8個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[8];
+        send_spi_byte({1'b1, 15'd8, 1'b1, 9'b0, imem[8][13:0]});
         // 9個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[9];
+        send_spi_byte({1'b1, 15'd9, 1'b1, 9'b0, imem[9][13:0]});
         // 10個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[10];
+        send_spi_byte({1'b1, 15'd10, 1'b1, 9'b0, imem[10][13:0]});
         // 11個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[11];
+        send_spi_byte({1'b1, 15'd11, 1'b1, 9'b0, imem[11][13:0]});
         // 12個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[12];
+        send_spi_byte({1'b1, 15'd12, 1'b1, 9'b0, imem[12][13:0]});
         // 13個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[13];
+        send_spi_byte({1'b1, 15'd13, 1'b1, 9'b0, imem[13][13:0]});
         // 14個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[14];
+        send_spi_byte({1'b1, 15'd14, 1'b1, 9'b0, imem[14][13:0]});
         // 15個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[15];
+        send_spi_byte({1'b1, 15'd15, 1'b1, 9'b0, imem[15][13:0]});
         // 16個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[16];
+        send_spi_byte({1'b1, 15'd16, 1'b1, 9'b0, imem[16][13:0]});
         // 17個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[17];
+        send_spi_byte({1'b1, 15'd17, 1'b1, 9'b0, imem[17][13:0]});
         // 18個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[18];
+        send_spi_byte({1'b1, 15'd18, 1'b1, 9'b0, imem[18][13:0]});
         // 19個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[19];
+        send_spi_byte({1'b1, 15'd19, 1'b1, 9'b0, imem[19][13:0]});
         // 20個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[20];
+        send_spi_byte({1'b1, 15'd20, 1'b1, 9'b0, imem[20][13:0]});
         // 21個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[21];
+        send_spi_byte({1'b1, 15'd21, 1'b1, 9'b0, imem[21][13:0]});
         // 22個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[22];
+        send_spi_byte({1'b1, 15'd22, 1'b1, 9'b0, imem[22][13:0]});
         // 23個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[23];
+        send_spi_byte({1'b1, 15'd23, 1'b1, 9'b0, imem[23][13:0]});
         // 24個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[24];
+        send_spi_byte({1'b1, 15'd24, 1'b1, 9'b0, imem[24][13:0]});
         // 25個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[25];
+        send_spi_byte({1'b1, 15'd25, 1'b1, 9'b0, imem[25][13:0]});
         // 26個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[26];
+        send_spi_byte({1'b1, 15'd26, 1'b1, 9'b0, imem[26][13:0]});
         // 27個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[27];
+        send_spi_byte({1'b1, 15'd27, 1'b1, 9'b0, imem[27][13:0]});
         // 28個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[28];
+        send_spi_byte({1'b1, 15'd28, 1'b1, 9'b0, imem[28][13:0]});
         // 29個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[29];
+        send_spi_byte({1'b1, 15'd29, 1'b1, 9'b0, imem[29][13:0]});
         // 30個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[30];
+        send_spi_byte({1'b1, 15'd30, 1'b1, 9'b0, imem[30][13:0]});
         // 31個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[31];
+        send_spi_byte({1'b1, 15'd31, 1'b1, 9'b0, imem[31][13:0]});
         // 32個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[32];
+        send_spi_byte({1'b1, 15'd32, 1'b1, 9'b0, imem[32][13:0]});
         // 33個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[33];
+        send_spi_byte({1'b1, 15'd33, 1'b1, 9'b0, imem[33][13:0]});
         // 34個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[34];
+        send_spi_byte({1'b1, 15'd34, 1'b1, 9'b0, imem[34][13:0]});
         // 35個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[35];
+        send_spi_byte({1'b1, 15'd35, 1'b1, 9'b0, imem[35][13:0]});
         // 36個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[36];
+        send_spi_byte({1'b1, 15'd36, 1'b1, 9'b0, imem[36][13:0]});
         // 37個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[37];
+        send_spi_byte({1'b1, 15'd37, 1'b1, 9'b0, imem[37][13:0]});
         // 38個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[38];
+        send_spi_byte({1'b1, 15'd38, 1'b1, 9'b0, imem[38][13:0]});
         // 39個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[39];
+        send_spi_byte({1'b1, 15'd39, 1'b1, 9'b0, imem[39][13:0]});
         // 40個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[40];
+        send_spi_byte({1'b1, 15'd40, 1'b1, 9'b0, imem[40][13:0]});
         // 41個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[41];
+        send_spi_byte({1'b1, 15'd41, 1'b1, 9'b0, imem[41][13:0]});
         // 42個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[42];
+        send_spi_byte({1'b1, 15'd42, 1'b1, 9'b0, imem[42][13:0]});
         // 43個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[43];
+        send_spi_byte({1'b1, 15'd43, 1'b1, 9'b0, imem[43][13:0]});
         // 44個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[44];
+        send_spi_byte({1'b1, 15'd44, 1'b1, 9'b0, imem[44][13:0]});
         // 45個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[45];
+        send_spi_byte({1'b1, 15'd45, 1'b1, 9'b0, imem[45][13:0]});
         // 46個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[46];
+        send_spi_byte({1'b1, 15'd46, 1'b1, 9'b0, imem[46][13:0]});
         // 47個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[47];
+        send_spi_byte({1'b1, 15'd47, 1'b1, 9'b0, imem[47][13:0]});
         // 48個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[48];
+        send_spi_byte({1'b1, 15'd48, 1'b1, 9'b0, imem[48][13:0]});
         // 49個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[49];
+        send_spi_byte({1'b1, 15'd49, 1'b1, 9'b0, imem[49][13:0]});
         // 50個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[50];
+        send_spi_byte({1'b1, 15'd50, 1'b1, 9'b0, imem[50][13:0]});
         // 51個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[51];
+        send_spi_byte({1'b1, 15'd51, 1'b1, 9'b0, imem[51][13:0]});
         // 52個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[52];
+        send_spi_byte({1'b1, 15'd52, 1'b1, 9'b0, imem[52][13:0]});
         // 53個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[53];
+        send_spi_byte({1'b1, 15'd53, 1'b1, 9'b0, imem[53][13:0]});
         // 54個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[54];
+        send_spi_byte({1'b1, 15'd54, 1'b1, 9'b0, imem[54][13:0]});
         // 55個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[55];
+        send_spi_byte({1'b1, 15'd55, 1'b1, 9'b0, imem[55][13:0]});
         // 56個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[56];
+        send_spi_byte({1'b1, 15'd56, 1'b1, 9'b0, imem[56][13:0]});
         // 57個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[57];
+        send_spi_byte({1'b1, 15'd57, 1'b1, 9'b0, imem[57][13:0]});
         // 58個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[58];
+        send_spi_byte({1'b1, 15'd58, 1'b1, 9'b0, imem[58][13:0]});
         // 59個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[59];
+        send_spi_byte({1'b1, 15'd59, 1'b1, 9'b0, imem[59][13:0]});
         // 60個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[60];
+        send_spi_byte({1'b1, 15'd60, 1'b1, 9'b0, imem[60][13:0]});
         // 61個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[61];
+        send_spi_byte({1'b1, 15'd61, 1'b1, 9'b0, imem[61][13:0]});
         // 62個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        data_i <= imem[62];
+        send_spi_byte({1'b1, 15'd62, 1'b1, 9'b0, imem[62][13:0]});
         // 63個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
-        // // 64個目
-        // data_i <= imem[n+1];
-        // n <= n + 1;
-        // rst_log <= 1'b0;
-        // #100;
-        $display("n=%d", n);
-        // send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
-        rst_log <= 1'b1;
-        // rst_log <= 1'b0;
-        // #100;
-        // rst_log <= 1'b1;
+        data_i <= imem[63];
+        send_spi_byte({1'b1, 15'd63, 1'b1, 9'b0, imem[63][13:0]});
 
         // di_en <= 0;
         // data_i <= 'bx;
@@ -625,6 +549,7 @@ module TB_SPI;
         input [39:0] data;
         integer i;
         begin
+            $display("data=%d", data[38:24]);
             for (i = 39; i >= 0; i = i - 1) begin
                 @(posedge spi_clk); // SPIクロックの立ち上がりエッジでデータを送信
                 spi_mosi = data[i]; // MSBファーストでデータビットを送信
