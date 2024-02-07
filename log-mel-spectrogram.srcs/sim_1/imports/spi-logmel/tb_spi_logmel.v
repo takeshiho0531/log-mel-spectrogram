@@ -554,7 +554,7 @@ module TB_SPI;
         input [39:0] data;
         integer i;
         begin
-            $display("data=%d", data[38:24]);
+            // $display("data=%d", data[38:24]);
             for (i = 39; i >= 0; i = i - 1) begin
                 @(posedge spi_clk); // SPIクロックの立ち上がりエッジでデータを送信
                 spi_mosi = data[i]; // MSBファーストでデータビットを送信

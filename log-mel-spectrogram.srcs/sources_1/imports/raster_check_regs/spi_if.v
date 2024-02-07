@@ -171,7 +171,7 @@ end
 // serial address input
 
 always @(posedge spi_clk or negedge rst_n)  begin  // Positive Edge
-   $display("transfer_enable_flag=%d", transfer_enable_flag);
+   // $display("transfer_enable_flag=%d", transfer_enable_flag);
    // $display("transfer_enable_flag=%d, transfer_enable_flag_spi=%d, transfer_enable_flag_nnn=%d", transfer_enable_flag, transfer_enable_flag_spi, transfer_enable_flag_nnn);
    // $display("addr=%d", addr); // ここの時点で62までしか入ってない
    if (!rst_n)

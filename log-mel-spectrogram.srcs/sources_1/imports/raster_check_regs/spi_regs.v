@@ -643,7 +643,7 @@ else begin
    // $display("addr_in_q=%d", addr_in_q);
    if ((command_q == wc) && wr_pulse_q) begin // addr_in_qが入らないのはこいつらのせいではない
       // $display("command_q==wc, wr_pulse_q=%d", command_q==wc, wr_pulse_q);
-      $display("addr_in_q=%d, wr_data=%d", addr_in_q, wr_data[rl-1:0]);
+      // $display("addr_in_q=%d, wr_data=%d", addr_in_q, wr_data[rl-1:0]);
       case (addr_in_q)
          15'd0:   REG_IN_A_000 <= wr_data[rl-1:0];
          15'd1:   REG_IN_A_001 <= wr_data[rl-1:0];
