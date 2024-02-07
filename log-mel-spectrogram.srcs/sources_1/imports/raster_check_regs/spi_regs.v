@@ -92,7 +92,8 @@ REG_IN_A_063,
 REG_IN_B_000,
 
 REG_OUT_A_000,
-REG_OUT_B_000
+REG_OUT_B_000,
+rst_for_logmel
 );
 
 //-----------------------------------------------------------------------
@@ -191,6 +192,7 @@ output   reg  [rl-1:0]        REG_IN_B_000;
 input   [(rl*64)-1:0]              REG_OUT_A_000;
 
 input   [rl-1:0]              REG_OUT_B_000;
+input rst_for_logmel;
 
 //-----------------------------------------------------------------------
 // Signal Declaration
@@ -220,11 +222,13 @@ reg	[al-1:0]	addr_in_q;
 reg			command_q;
 
 reg   [10:0] di_en_reg;
-reg   [9:0]  di_en_sub_reg;
+// reg   [9:0]  di_en_sub_reg;
+integer clk_cnt;
 
 initial begin
    di_en_reg <= 11'b0;
-   di_en_sub_reg <= 10'b0;
+   clk_cnt <= 0;
+   // di_en_sub_reg <= 10'b0;
 end
 
 always @(posedge sys_clk or negedge rst_n) begin
@@ -267,7 +271,7 @@ else if (transfer_enable_flag == 1'b0)
    wr_act_q3 <= wr_act_q2;
    // $display("wr_pulse=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_act_q2, wr_act_q3);
    end
-$display("wr_pulse=%d, wr_pulse_q=%d, wr_act=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_pulse_q, wr_act, wr_act_q2, wr_act_q3);
+// $display("wr_pulse=%d, wr_pulse_q=%d, wr_act=%d, wr_act_q2=%d, wr_act_q3=%d", wr_pulse, wr_pulse_q, wr_act, wr_act_q2, wr_act_q3);
 end
 
 always @(posedge sys_clk or negedge rst_n) begin
@@ -406,76 +410,229 @@ if (!rst_n) begin
 
 
    REG_IN_B_000 <= {rl{1'b0}};
-end 
+end
 else if (transfer_enable_flag == 1'b1) begin
-   REG_IN_A_000 <= REG_IN_A_001;
-   REG_IN_A_001 <= REG_IN_A_002;
-   REG_IN_A_002 <= REG_IN_A_003;
-   REG_IN_A_003 <= REG_IN_A_004;
-   REG_IN_A_004 <= REG_IN_A_005;
-   REG_IN_A_005 <= REG_IN_A_006;
-   REG_IN_A_006 <= REG_IN_A_007;
-   REG_IN_A_007 <= REG_IN_A_008;
-   REG_IN_A_008 <= REG_IN_A_009;
-   REG_IN_A_009 <= REG_IN_A_010;
-   REG_IN_A_010 <= REG_IN_A_011;
-   REG_IN_A_011 <= REG_IN_A_012;
-   REG_IN_A_012 <= REG_IN_A_013;
-   REG_IN_A_013 <= REG_IN_A_014;
-   REG_IN_A_014 <= REG_IN_A_015;
-   REG_IN_A_015 <= REG_IN_A_016;
-   REG_IN_A_016 <= REG_IN_A_017;
-   REG_IN_A_017 <= REG_IN_A_018;
-   REG_IN_A_018 <= REG_IN_A_019;
-   REG_IN_A_019 <= REG_IN_A_020;
-   REG_IN_A_020 <= REG_IN_A_021;
-   REG_IN_A_021 <= REG_IN_A_022;
-   REG_IN_A_022 <= REG_IN_A_023;
-   REG_IN_A_023 <= REG_IN_A_024;
-   REG_IN_A_024 <= REG_IN_A_025;
-   REG_IN_A_025 <= REG_IN_A_026;
-   REG_IN_A_026 <= REG_IN_A_027;
-   REG_IN_A_027 <= REG_IN_A_028;
-   REG_IN_A_028 <= REG_IN_A_029;
-   REG_IN_A_029 <= REG_IN_A_030;
-   REG_IN_A_030 <= REG_IN_A_031;
-   REG_IN_A_031 <= REG_IN_A_032;
-   REG_IN_A_032 <= REG_IN_A_033;
-   REG_IN_A_033 <= REG_IN_A_034;
-   REG_IN_A_034 <= REG_IN_A_035;
-   REG_IN_A_035 <= REG_IN_A_036;
-   REG_IN_A_036 <= REG_IN_A_037;
-   REG_IN_A_037 <= REG_IN_A_038;
-   REG_IN_A_038 <= REG_IN_A_039;
-   REG_IN_A_039 <= REG_IN_A_040;
-   REG_IN_A_040 <= REG_IN_A_041;
-   REG_IN_A_041 <= REG_IN_A_042;
-   REG_IN_A_042 <= REG_IN_A_043;
-   REG_IN_A_043 <= REG_IN_A_044;
-   REG_IN_A_044 <= REG_IN_A_045;
-   REG_IN_A_045 <= REG_IN_A_046;
-   REG_IN_A_046 <= REG_IN_A_047;
-   REG_IN_A_047 <= REG_IN_A_048;
-   REG_IN_A_048 <= REG_IN_A_049;
-   REG_IN_A_049 <= REG_IN_A_050;
-   REG_IN_A_050 <= REG_IN_A_051;
-   REG_IN_A_051 <= REG_IN_A_052;
-   REG_IN_A_052 <= REG_IN_A_053;
-   REG_IN_A_053 <= REG_IN_A_054;
-   REG_IN_A_054 <= REG_IN_A_055;
-   REG_IN_A_055 <= REG_IN_A_056;
-   REG_IN_A_056 <= REG_IN_A_057;
-   REG_IN_A_057 <= REG_IN_A_058;
-   REG_IN_A_058 <= REG_IN_A_059;
-   REG_IN_A_059 <= REG_IN_A_060;
-   REG_IN_A_060 <= REG_IN_A_061;
-   REG_IN_A_061 <= REG_IN_A_062;
-   REG_IN_A_062 <= REG_IN_A_063;
-   REG_IN_A_063 <= REG_IN_A_000;
-   di_en_reg <= di_en_reg + 1'b1;
-   if (di_en_reg == 11'd1024) begin
-      REG_IN_B_000 <= 2'b0;
+   if (rst_for_logmel) begin
+      if (clk_cnt < 1024) begin
+         REG_IN_B_000 <= 2'b1;
+      end
+      else if ((clk_cnt % 1024 < 160))begin
+         REG_IN_B_000 <= 2'b1;
+      end
+      else if ((clk_cnt % 1024) >= 160) begin
+         REG_IN_B_000 <= 2'd2;
+      end
+      else begin
+         REG_IN_B_000 <= 2'b0;
+      end
+
+      if (clk_cnt < 1024 | (clk_cnt % 1024 < 160)) begin
+         REG_IN_A_000 <= REG_IN_A_001;
+         REG_IN_A_001 <= REG_IN_A_002;
+         REG_IN_A_002 <= REG_IN_A_003;
+         REG_IN_A_003 <= REG_IN_A_004;
+         REG_IN_A_004 <= REG_IN_A_005;
+         REG_IN_A_005 <= REG_IN_A_006;
+         REG_IN_A_006 <= REG_IN_A_007;
+         REG_IN_A_007 <= REG_IN_A_008;
+         REG_IN_A_008 <= REG_IN_A_009;
+         REG_IN_A_009 <= REG_IN_A_010;
+         REG_IN_A_010 <= REG_IN_A_011;
+         REG_IN_A_011 <= REG_IN_A_012;
+         REG_IN_A_012 <= REG_IN_A_013;
+         REG_IN_A_013 <= REG_IN_A_014;
+         REG_IN_A_014 <= REG_IN_A_015;
+         REG_IN_A_015 <= REG_IN_A_016;
+         REG_IN_A_016 <= REG_IN_A_017;
+         REG_IN_A_017 <= REG_IN_A_018;
+         REG_IN_A_018 <= REG_IN_A_019;
+         REG_IN_A_019 <= REG_IN_A_020;
+         REG_IN_A_020 <= REG_IN_A_021;
+         REG_IN_A_021 <= REG_IN_A_022;
+         REG_IN_A_022 <= REG_IN_A_023;
+         REG_IN_A_023 <= REG_IN_A_024;
+         REG_IN_A_024 <= REG_IN_A_025;
+         REG_IN_A_025 <= REG_IN_A_026;
+         REG_IN_A_026 <= REG_IN_A_027;
+         REG_IN_A_027 <= REG_IN_A_028;
+         REG_IN_A_028 <= REG_IN_A_029;
+         REG_IN_A_029 <= REG_IN_A_030;
+         REG_IN_A_030 <= REG_IN_A_031;
+         REG_IN_A_031 <= REG_IN_A_032;
+         REG_IN_A_032 <= REG_IN_A_033;
+         REG_IN_A_033 <= REG_IN_A_034;
+         REG_IN_A_034 <= REG_IN_A_035;
+         REG_IN_A_035 <= REG_IN_A_036;
+         REG_IN_A_036 <= REG_IN_A_037;
+         REG_IN_A_037 <= REG_IN_A_038;
+         REG_IN_A_038 <= REG_IN_A_039;
+         REG_IN_A_039 <= REG_IN_A_040;
+         REG_IN_A_040 <= REG_IN_A_041;
+         REG_IN_A_041 <= REG_IN_A_042;
+         REG_IN_A_042 <= REG_IN_A_043;
+         REG_IN_A_043 <= REG_IN_A_044;
+         REG_IN_A_044 <= REG_IN_A_045;
+         REG_IN_A_045 <= REG_IN_A_046;
+         REG_IN_A_046 <= REG_IN_A_047;
+         REG_IN_A_047 <= REG_IN_A_048;
+         REG_IN_A_048 <= REG_IN_A_049;
+         REG_IN_A_049 <= REG_IN_A_050;
+         REG_IN_A_050 <= REG_IN_A_051;
+         REG_IN_A_051 <= REG_IN_A_052;
+         REG_IN_A_052 <= REG_IN_A_053;
+         REG_IN_A_053 <= REG_IN_A_054;
+         REG_IN_A_054 <= REG_IN_A_055;
+         REG_IN_A_055 <= REG_IN_A_056;
+         REG_IN_A_056 <= REG_IN_A_057;
+         REG_IN_A_057 <= REG_IN_A_058;
+         REG_IN_A_058 <= REG_IN_A_059;
+         REG_IN_A_059 <= REG_IN_A_060;
+         REG_IN_A_060 <= REG_IN_A_061;
+         REG_IN_A_061 <= REG_IN_A_062;
+         REG_IN_A_062 <= REG_IN_A_063;
+         REG_IN_A_063 <= REG_IN_A_000;
+         clk_cnt <= clk_cnt + 1;
+      end
+      else begin
+         REG_IN_B_000 <= 2'b0;
+         REG_IN_A_000 <= REG_IN_A_000;
+         REG_IN_A_001 <= REG_IN_A_001;
+         REG_IN_A_002 <= REG_IN_A_002;
+         REG_IN_A_003 <= REG_IN_A_003;
+         REG_IN_A_004 <= REG_IN_A_004;
+         REG_IN_A_005 <= REG_IN_A_005;
+         REG_IN_A_006 <= REG_IN_A_006;
+         REG_IN_A_007 <= REG_IN_A_007;
+         REG_IN_A_008 <= REG_IN_A_008;
+         REG_IN_A_009 <= REG_IN_A_009;
+         REG_IN_A_010 <= REG_IN_A_010;
+         REG_IN_A_011 <= REG_IN_A_011;
+         REG_IN_A_012 <= REG_IN_A_012;
+         REG_IN_A_013 <= REG_IN_A_013;
+         REG_IN_A_014 <= REG_IN_A_014;
+         REG_IN_A_015 <= REG_IN_A_015;
+         REG_IN_A_016 <= REG_IN_A_016;
+         REG_IN_A_017 <= REG_IN_A_017;
+         REG_IN_A_018 <= REG_IN_A_018;
+         REG_IN_A_019 <= REG_IN_A_019;
+         REG_IN_A_020 <= REG_IN_A_020;
+         REG_IN_A_021 <= REG_IN_A_021;
+         REG_IN_A_022 <= REG_IN_A_022;
+         REG_IN_A_023 <= REG_IN_A_023;
+         REG_IN_A_024 <= REG_IN_A_024;
+         REG_IN_A_025 <= REG_IN_A_025;
+         REG_IN_A_026 <= REG_IN_A_026;
+         REG_IN_A_027 <= REG_IN_A_027;
+         REG_IN_A_028 <= REG_IN_A_028;
+         REG_IN_A_029 <= REG_IN_A_029;
+         REG_IN_A_030 <= REG_IN_A_030;
+         REG_IN_A_031 <= REG_IN_A_031;
+         REG_IN_A_032 <= REG_IN_A_032;
+         REG_IN_A_033 <= REG_IN_A_033;
+         REG_IN_A_034 <= REG_IN_A_034;
+         REG_IN_A_035 <= REG_IN_A_035;
+         REG_IN_A_036 <= REG_IN_A_036;
+         REG_IN_A_037 <= REG_IN_A_037;
+         REG_IN_A_038 <= REG_IN_A_038;
+         REG_IN_A_039 <= REG_IN_A_039;
+         REG_IN_A_040 <= REG_IN_A_040;
+         REG_IN_A_041 <= REG_IN_A_041;
+         REG_IN_A_042 <= REG_IN_A_042;
+         REG_IN_A_043 <= REG_IN_A_043;
+         REG_IN_A_044 <= REG_IN_A_044;
+         REG_IN_A_045 <= REG_IN_A_045;
+         REG_IN_A_046 <= REG_IN_A_046;
+         REG_IN_A_047 <= REG_IN_A_047;
+         REG_IN_A_048 <= REG_IN_A_048;
+         REG_IN_A_049 <= REG_IN_A_049;
+         REG_IN_A_050 <= REG_IN_A_050;
+         REG_IN_A_051 <= REG_IN_A_051;
+         REG_IN_A_052 <= REG_IN_A_052;
+         REG_IN_A_053 <= REG_IN_A_053;
+         REG_IN_A_054 <= REG_IN_A_054;
+         REG_IN_A_055 <= REG_IN_A_055;
+         REG_IN_A_056 <= REG_IN_A_056;
+         REG_IN_A_057 <= REG_IN_A_057;
+         REG_IN_A_058 <= REG_IN_A_058;
+         REG_IN_A_059 <= REG_IN_A_059;
+         REG_IN_A_060 <= REG_IN_A_060;
+         REG_IN_A_061 <= REG_IN_A_061;
+         REG_IN_A_062 <= REG_IN_A_062;
+         REG_IN_A_063 <= REG_IN_A_063;
+         clk_cnt <= clk_cnt + 1;
+      end
    end
+   else begin
+      REG_IN_A_000 <= REG_IN_A_000;
+      REG_IN_A_001 <= REG_IN_A_001;
+      REG_IN_A_002 <= REG_IN_A_002;
+      REG_IN_A_003 <= REG_IN_A_003;
+      REG_IN_A_004 <= REG_IN_A_004;
+      REG_IN_A_005 <= REG_IN_A_005;
+      REG_IN_A_006 <= REG_IN_A_006;
+      REG_IN_A_007 <= REG_IN_A_007;
+      REG_IN_A_008 <= REG_IN_A_008;
+      REG_IN_A_009 <= REG_IN_A_009;
+      REG_IN_A_010 <= REG_IN_A_010;
+      REG_IN_A_011 <= REG_IN_A_011;
+      REG_IN_A_012 <= REG_IN_A_012;
+      REG_IN_A_013 <= REG_IN_A_013;
+      REG_IN_A_014 <= REG_IN_A_014;
+      REG_IN_A_015 <= REG_IN_A_015;
+      REG_IN_A_016 <= REG_IN_A_016;
+      REG_IN_A_017 <= REG_IN_A_017;
+      REG_IN_A_018 <= REG_IN_A_018;
+      REG_IN_A_019 <= REG_IN_A_019;
+      REG_IN_A_020 <= REG_IN_A_020;
+      REG_IN_A_021 <= REG_IN_A_021;
+      REG_IN_A_022 <= REG_IN_A_022;
+      REG_IN_A_023 <= REG_IN_A_023;
+      REG_IN_A_024 <= REG_IN_A_024;
+      REG_IN_A_025 <= REG_IN_A_025;
+      REG_IN_A_026 <= REG_IN_A_026;
+      REG_IN_A_027 <= REG_IN_A_027;
+      REG_IN_A_028 <= REG_IN_A_028;
+      REG_IN_A_029 <= REG_IN_A_029;
+      REG_IN_A_030 <= REG_IN_A_030;
+      REG_IN_A_031 <= REG_IN_A_031;
+      REG_IN_A_032 <= REG_IN_A_032;
+      REG_IN_A_033 <= REG_IN_A_033;
+      REG_IN_A_034 <= REG_IN_A_034;
+      REG_IN_A_035 <= REG_IN_A_035;
+      REG_IN_A_036 <= REG_IN_A_036;
+      REG_IN_A_037 <= REG_IN_A_037;
+      REG_IN_A_038 <= REG_IN_A_038;
+      REG_IN_A_039 <= REG_IN_A_039;
+      REG_IN_A_040 <= REG_IN_A_040;
+      REG_IN_A_041 <= REG_IN_A_041;
+      REG_IN_A_042 <= REG_IN_A_042;
+      REG_IN_A_043 <= REG_IN_A_043;
+      REG_IN_A_044 <= REG_IN_A_044;
+      REG_IN_A_045 <= REG_IN_A_045;
+      REG_IN_A_046 <= REG_IN_A_046;
+      REG_IN_A_047 <= REG_IN_A_047;
+      REG_IN_A_048 <= REG_IN_A_048;
+      REG_IN_A_049 <= REG_IN_A_049;
+      REG_IN_A_050 <= REG_IN_A_050;
+      REG_IN_A_051 <= REG_IN_A_051;
+      REG_IN_A_052 <= REG_IN_A_052;
+      REG_IN_A_053 <= REG_IN_A_053;
+      REG_IN_A_054 <= REG_IN_A_054;
+      REG_IN_A_055 <= REG_IN_A_055;
+      REG_IN_A_056 <= REG_IN_A_056;
+      REG_IN_A_057 <= REG_IN_A_057;
+      REG_IN_A_058 <= REG_IN_A_058;
+      REG_IN_A_059 <= REG_IN_A_059;
+      REG_IN_A_060 <= REG_IN_A_060;
+      REG_IN_A_061 <= REG_IN_A_061;
+      REG_IN_A_062 <= REG_IN_A_062;
+      REG_IN_A_063 <= REG_IN_A_063;
+      clk_cnt <= clk_cnt;
+   end
+   // di_en_reg <= di_en_reg + 1'b1;
+   // if (di_en_reg == 11'd1024) begin
+   //    REG_IN_B_000 <= 2'b0;
+   // end
 end
 else begin
    if ((command_q == wc) && wr_pulse_q) begin

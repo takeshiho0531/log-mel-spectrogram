@@ -326,16 +326,23 @@ spi_regs spi_regs_inst(
 
 .REG_IN_B_000   (REG_IN_B_000),
 .REG_OUT_A_000  (REG_OUT_A_000),
-.REG_OUT_B_000  (REG_OUT_B_000)
+.REG_OUT_B_000  (REG_OUT_B_000),
+.rst_for_logmel(rst_for_logmel)
 );
+
+wire [1:0] logmel_di_en;
+wire logmel_do_en;
+
+assign logmel_di_en = REG_IN_B_000[1:0];
+assign logmel_do_en = REG_OUT_B_000[0];
 
 // 入力先のトップモジュール
 log_mel_spectrogram logmel(
     .clk(clk_out),
     .rst(rst_for_logmel),
-    .di_en(REG_IN_B_000[1:0]),
+    .di_en(logmel_di_en),
     .data_i(REG_IN_A_000),
-    .do_en(REG_OUT_B_000[0]),
+    .do_en(logmel_do_en),
     .data_o(REG_OUT_A_000)
 );
 
