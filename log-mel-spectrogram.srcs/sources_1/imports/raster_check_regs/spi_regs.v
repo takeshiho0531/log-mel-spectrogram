@@ -335,6 +335,7 @@ end
 end
 
 always @(posedge selected_sys_clk or negedge rst_n) begin
+// $display("addr_in_q=%d", addr_in_q); // ここの時点で62までしか入ってない
 // $display("selected sys clock");
 if (!rst_n) begin
    REG_IN_A_000 <= {rl{1'b0}};
@@ -637,7 +638,8 @@ else if (transfer_enable_flag == 1'b1) begin
    // end
 end
 else begin
-   if ((command_q == wc) && wr_pulse_q) begin
+   // $display("addr_in_q=%d", addr_in_q);
+   if ((command_q == wc) && wr_pulse_q) begin // addr_in_qが入らないのはこいつらのせいではない
       // $display("command_q==wc, wr_pulse_q=%d", command_q==wc, wr_pulse_q);
       $display("addr_in_q=%d", addr_in_q);
       case (addr_in_q)
