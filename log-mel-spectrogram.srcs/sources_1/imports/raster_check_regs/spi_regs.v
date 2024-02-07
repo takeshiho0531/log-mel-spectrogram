@@ -427,7 +427,7 @@ else if (transfer_enable_flag == 1'b1) begin
          REG_IN_B_000 <= 2'b0;
       end
 
-      if (((0 < clk_cnt) & (clk_cnt < 1024)) | (clk_cnt >= 1024 & (clk_cnt % 1024 < 160))) begin // clk_cnt==1を除いているのは0の時はその時入ってる値をlogmelにいれたいため
+      if (((0 < clk_cnt) & (clk_cnt < 1024)) | (clk_cnt >= 1024 & (clk_cnt % 1024 < 160))) begin // clk_cnt==0を除いているのは0の時はその時入ってる値をlogmelにいれたいため
          REG_IN_A_000 <= REG_IN_A_001;
          REG_IN_A_001 <= REG_IN_A_002;
          REG_IN_A_002 <= REG_IN_A_003;
