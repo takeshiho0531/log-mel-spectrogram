@@ -190,6 +190,7 @@ module TB_SPI;
         // di_en <= 1;
         // 0個目
         // data_i <= imem[n+1];
+        // 0個目
         data_i <= imem[n];
         send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
         // 1個目
@@ -444,12 +445,13 @@ module TB_SPI;
         data_i <= imem[n+1];
         n <= n + 1;
         send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
-        // 64個目
-        data_i <= imem[n+1];
-        n <= n + 1;
-        rst_log <= 1'b0;
-        #100;
-        send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
+        // // 64個目
+        // data_i <= imem[n+1];
+        // n <= n + 1;
+        // rst_log <= 1'b0;
+        // #100;
+        $display("n=%d", n);
+        // send_spi_byte({1'b1, n[14:0], 1'b1, 9'b0, data_i[13:0]});
         rst_log <= 1'b1;
         // rst_log <= 1'b0;
         // #100;

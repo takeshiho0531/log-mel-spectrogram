@@ -639,6 +639,7 @@ end
 else begin
    if ((command_q == wc) && wr_pulse_q) begin
       // $display("command_q==wc, wr_pulse_q=%d", command_q==wc, wr_pulse_q);
+      $display("addr_in_q=%d", addr_in_q);
       case (addr_in_q)
          15'd0:   REG_IN_A_000 <= wr_data[rl-1:0];
          15'd1:   REG_IN_A_001 <= wr_data[rl-1:0];
