@@ -3,7 +3,7 @@
 Oct 13 2023
 20:47:58
 C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.sim/sim_1/behav/xsim/glbl.v,1697210495,verilog,,,,glbl,,,,,,,,
-C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sim_1/imports/spi-logmel/tb_spi_logmel.v,1707304923,verilog,,,,TB_SPI,,,,,,,,
+C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sim_1/imports/spi-logmel/tb_spi_logmel.v,1707305793,verilog,,,,TB_SPI,,,,,,,,
 C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/log/log.v,1706461688,verilog,,C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/verilog/log_mel.v,,log,,,,,,,,
 C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_clock.v,1706847777,verilog,,C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_if.v,,spi_clock,,,,,,,,
 C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_if.v,1707303996,verilog,,C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v,,spi_if,,,,,,,,

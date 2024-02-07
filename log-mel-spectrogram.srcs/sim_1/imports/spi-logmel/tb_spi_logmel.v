@@ -381,6 +381,11 @@ module TB_SPI;
         data_i <= imem[63];
         send_spi_byte({1'b1, 15'd63, 1'b1, 9'b0, imem[63][13:0]});
 
+        rst_log <= 1'b0;
+
+        #100;
+        rst_log <= 1;
+
         // di_en <= 0;
         // data_i <= 'bx;
         // send_spi_byte(40'b1111111111111111100000000000000000000000); // 推論モードに。
