@@ -632,7 +632,7 @@ else if (transfer_enable_flag == 1'b1) begin
       REG_IN_A_061 <= REG_IN_A_061;
       REG_IN_A_062 <= REG_IN_A_062;
       REG_IN_A_063 <= REG_IN_A_063;
-      clk_cnt <= 0;
+      clk_cnt <= clk_cnt;
    end
    // di_en_reg <= di_en_reg + 1'b1;
    // if (di_en_reg == 11'd1024) begin

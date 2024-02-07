@@ -91,6 +91,7 @@ REG_IN_A_061,
 REG_IN_A_062,
 REG_IN_A_063,
 REG_IN_B_000,
+logmel_do_en,
 
 REG_OUT_A_000,
 
@@ -191,6 +192,7 @@ output  [rl-1:0]        REG_IN_A_060;
 output  [rl-1:0]        REG_IN_A_061;
 output  [rl-1:0]        REG_IN_A_062;
 output  [rl-1:0]        REG_IN_A_063;
+output logmel_do_en;
 
 output  [rl-1:0]        REG_IN_B_000;
 

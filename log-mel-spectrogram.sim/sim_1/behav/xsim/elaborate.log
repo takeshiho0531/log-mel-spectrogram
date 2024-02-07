@@ -5,46 +5,6 @@ Running: C:/Xilinx/Vivado/2023.2/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_A_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:346]
+WARNING: [VRFC 10-3129] assignment to input 'REG_OUT_A_000' [C:/Users/kawada/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/raster_check_regs/spi_logic.v:348]
 Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.spi_clock
-Compiling module xil_defaultlib.spi_if_default
-Compiling module xil_defaultlib.spi_regs
-Compiling module xil_defaultlib.input_counter
-Compiling module xil_defaultlib.framing_default
-Compiling module xil_defaultlib.hann_window_rom
-Compiling module xil_defaultlib.hann_window
-Compiling module xil_defaultlib.Butterfly
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=512)
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=256)
-Compiling module xil_defaultlib.Twiddle
-Compiling module xil_defaultlib.Multiply
-Compiling module xil_defaultlib.SdfUnit_default
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=128)
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=64)
-Compiling module xil_defaultlib.SdfUnit(M=256)
-Compiling module xil_defaultlib.DelayBuffer
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=16)
-Compiling module xil_defaultlib.SdfUnit(M=64)
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=8)
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=4)
-Compiling module xil_defaultlib.SdfUnit(M=16)
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=2)
-Compiling module xil_defaultlib.DelayBuffer(DEPTH=1)
-Compiling module xil_defaultlib.SdfUnit(M=4)
-Compiling module xil_defaultlib.FFT
-Compiling module xil_defaultlib.counter
-Compiling module xil_defaultlib.bit_reversal_count
-Compiling module xil_defaultlib.select_buffer
-Compiling module xil_defaultlib.squared
-Compiling module xil_defaultlib.mel_filter_coef
-Compiling module xil_defaultlib.mel_filter
-Compiling module xil_defaultlib.log
-Compiling module xil_defaultlib.log_mel_spectrogram
-Compiling module xil_defaultlib.spi_logic_default
-Compiling module xil_defaultlib.TB_SPI
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot TB_SPI_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
