@@ -102,7 +102,7 @@ in_clk_count_tmp=         59, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=         60, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=         61, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=         62, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=         63, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=         63, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=         64, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=         65, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=         66, rst=1, di_en=1, data_i=  4064
@@ -166,7 +166,7 @@ in_clk_count_tmp=        123, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        124, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        125, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        126, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        127, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        127, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        128, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        129, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        130, rst=1, di_en=1, data_i=  4064
@@ -230,7 +230,7 @@ in_clk_count_tmp=        187, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        188, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        189, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        190, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        191, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        191, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        192, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        193, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        194, rst=1, di_en=1, data_i=  4064
@@ -294,7 +294,7 @@ in_clk_count_tmp=        251, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        252, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        253, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        254, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        255, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        255, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        256, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        257, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        258, rst=1, di_en=1, data_i=  4064
@@ -358,7 +358,7 @@ in_clk_count_tmp=        315, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        316, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        317, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        318, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        319, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        319, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        320, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        321, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        322, rst=1, di_en=1, data_i=  4064
@@ -422,7 +422,7 @@ in_clk_count_tmp=        379, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        380, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        381, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        382, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        383, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        383, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        384, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        385, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        386, rst=1, di_en=1, data_i=  4064
@@ -486,7 +486,7 @@ in_clk_count_tmp=        443, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        444, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        445, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        446, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        447, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        447, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        448, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        449, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        450, rst=1, di_en=1, data_i=  4064
@@ -550,7 +550,7 @@ in_clk_count_tmp=        507, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        508, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        509, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        510, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        511, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        511, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        512, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        513, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        514, rst=1, di_en=1, data_i=  4064
@@ -614,7 +614,7 @@ in_clk_count_tmp=        571, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        572, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        573, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        574, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        575, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        575, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        576, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        577, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        578, rst=1, di_en=1, data_i=  4064
@@ -678,7 +678,7 @@ in_clk_count_tmp=        635, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        636, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        637, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        638, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        639, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        639, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        640, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        641, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        642, rst=1, di_en=1, data_i=  4064
@@ -742,7 +742,7 @@ in_clk_count_tmp=        699, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        700, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        701, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        702, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        703, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        703, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        704, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        705, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        706, rst=1, di_en=1, data_i=  4064
@@ -806,7 +806,7 @@ in_clk_count_tmp=        763, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        764, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        765, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        766, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        767, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        767, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        768, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        769, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        770, rst=1, di_en=1, data_i=  4064
@@ -870,7 +870,7 @@ in_clk_count_tmp=        827, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        828, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        829, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        830, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        831, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        831, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        832, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        833, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        834, rst=1, di_en=1, data_i=  4064
@@ -934,7 +934,7 @@ in_clk_count_tmp=        891, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        892, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        893, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        894, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        895, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        895, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        896, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        897, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        898, rst=1, di_en=1, data_i=  4064
@@ -998,7 +998,7 @@ in_clk_count_tmp=        955, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        956, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        957, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=        958, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=        959, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=        959, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=        960, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=        961, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=        962, rst=1, di_en=1, data_i=  4064
@@ -1062,7 +1062,7 @@ in_clk_count_tmp=       1019, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1020, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1021, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1022, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=       1023, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=       1023, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=       1024, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=       1025, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=       1026, rst=1, di_en=1, data_i=  4064
@@ -1126,7 +1126,7 @@ in_clk_count_tmp=       1083, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1084, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1085, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1086, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=       1087, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=       1087, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=       1088, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=       1089, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=       1090, rst=1, di_en=1, data_i=  4064
@@ -1190,7 +1190,7 @@ in_clk_count_tmp=       1147, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1148, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1149, rst=1, di_en=1, data_i=  3808
 in_clk_count_tmp=       1150, rst=1, di_en=1, data_i=  3808
-in_clk_count_tmp=       1151, rst=1, di_en=1, data_i=  3776
+in_clk_count_tmp=       1151, rst=1, di_en=1, data_i= -4416
 in_clk_count_tmp=       1152, rst=1, di_en=1, data_i=     0
 in_clk_count_tmp=       1153, rst=1, di_en=1, data_i=  4096
 in_clk_count_tmp=       1154, rst=1, di_en=1, data_i=  4064

@@ -413,6 +413,7 @@ if (!rst_n) begin
    clk_cnt <= 0;
 end
 else if (transfer_enable_flag == 1'b1) begin
+   // $display("ok REG_IN_A_063=%d", REG_IN_A_063);
    if (rst_for_logmel) begin
       if (clk_cnt < 1024) begin
          REG_IN_B_000 <= 2'b1;
