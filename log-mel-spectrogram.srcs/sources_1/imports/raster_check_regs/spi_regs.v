@@ -410,6 +410,7 @@ if (!rst_n) begin
 
 
    REG_IN_B_000 <= {rl{1'b0}};
+   clk_cnt <= 0;
 end
 else if (transfer_enable_flag == 1'b1) begin
    if (rst_for_logmel) begin
@@ -426,7 +427,7 @@ else if (transfer_enable_flag == 1'b1) begin
          REG_IN_B_000 <= 2'b0;
       end
 
-      if (clk_cnt < 1024 | (clk_cnt % 1024 < 160)) begin
+      if (((0 < clk_cnt) & (clk_cnt < 1024)) | (clk_cnt >= 1024 & (clk_cnt % 1024 < 160))) begin // clk_cnt==1を除いているのは0の時はその時入ってる値をlogmelにいれたいため
          REG_IN_A_000 <= REG_IN_A_001;
          REG_IN_A_001 <= REG_IN_A_002;
          REG_IN_A_002 <= REG_IN_A_003;
@@ -494,7 +495,6 @@ else if (transfer_enable_flag == 1'b1) begin
          clk_cnt <= clk_cnt + 1;
       end
       else begin
-         REG_IN_B_000 <= 2'b0;
          REG_IN_A_000 <= REG_IN_A_000;
          REG_IN_A_001 <= REG_IN_A_001;
          REG_IN_A_002 <= REG_IN_A_002;
@@ -563,6 +563,7 @@ else if (transfer_enable_flag == 1'b1) begin
       end
    end
    else begin
+      REG_IN_B_000 <= 2'b0;
       REG_IN_A_000 <= REG_IN_A_000;
       REG_IN_A_001 <= REG_IN_A_001;
       REG_IN_A_002 <= REG_IN_A_002;
@@ -627,7 +628,7 @@ else if (transfer_enable_flag == 1'b1) begin
       REG_IN_A_061 <= REG_IN_A_061;
       REG_IN_A_062 <= REG_IN_A_062;
       REG_IN_A_063 <= REG_IN_A_063;
-      clk_cnt <= clk_cnt;
+      clk_cnt <= 0;
    end
    // di_en_reg <= di_en_reg + 1'b1;
    // if (di_en_reg == 11'd1024) begin
