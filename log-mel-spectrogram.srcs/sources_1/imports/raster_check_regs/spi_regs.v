@@ -300,7 +300,8 @@ begin
    rd_act_q2 <= rd_act_q1;
 end
 
-always @(posedge sys_clk or negedge rst_n)
+always @(posedge sys_clk or negedge rst_n) begin
+$display("addr_in=%d, addr_in_q=%d", addr_in, addr_in_q);
 if (!rst_n)
    addr_in_q <= {al{1'b0}};
 else if (transfer_enable_flag == 1'b0) begin
@@ -308,6 +309,7 @@ else if (transfer_enable_flag == 1'b0) begin
       addr_in_q <= addr_in;
    else
       addr_in_q <= addr_in_q;
+end
 end
 
 always @(posedge sys_clk or negedge rst_n) begin
