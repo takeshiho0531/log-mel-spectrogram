@@ -11,4 +11,6 @@
 *.wdb
 *.xpr
 *.lpr
+*.obj
+*.exe
 log-mel-spectrogram.cache/
