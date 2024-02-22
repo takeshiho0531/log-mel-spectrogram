@@ -127,7 +127,7 @@ module TB_SPI;
         forever begin
             while (do_en !== 1) @(negedge clk);
             while ((do_en == 1) && (n < OUT_N_PAIR)) begin
-                $display("data_o=%b", data_o);
+                // $display("data_o=%b", data_o);
                 for (i=0; i<64; i=i+1) begin
                     for (j=0; j<O_BW; j=j+1) begin
                         data_o_partial[j] = data_o[i*O_BW+j];
@@ -420,6 +420,7 @@ module TB_SPI;
     //	Module Instances
     //----------------------------------------------------------------------
     // spi_logicモジュールのインスタンス化
+    wire [(14*64)-1:0] logmel_data_o;
     spi_logic spi_inst (
         .clk_in(clk),
         .sys_clk_in(sys_clk),
@@ -495,12 +496,17 @@ module TB_SPI;
         .REG_IN_A_062(REG_IN_A_062),
         .REG_IN_A_063(REG_IN_A_063),
         .logmel_do_en(do_en),
+        .logmel_data_o(logmel_data_o),
 
 
         .REG_IN_B_000(REG_IN_B_000),
         .REG_OUT_A_000(REG_OUT_A_000),
         .REG_OUT_B_000(REG_OUT_B_000)
     );
+
+    // always @(posedge clk) begin
+    //     $display("logmel_data_o=%d", logmel_data_o);
+    // end
 
 
     //----------------------------------------------------------------------

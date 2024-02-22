@@ -44,5 +44,3 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kawad/log-mel-spectrogram/
 INFO: [VRFC 10-311] analyzing module squared
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kawad/log-mel-spectrogram/log-mel-spectrogram.srcs/sim_1/imports/spi-logmel/tb_spi_logmel.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module TB_SPI
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kawad/log-mel-spectrogram/log-mel-spectrogram.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl

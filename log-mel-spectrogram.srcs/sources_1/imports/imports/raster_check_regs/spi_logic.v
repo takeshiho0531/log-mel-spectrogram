@@ -92,6 +92,7 @@ REG_IN_A_062,
 REG_IN_A_063,
 REG_IN_B_000,
 logmel_do_en,
+logmel_data_o,
 
 REG_OUT_A_000,
 
@@ -193,6 +194,7 @@ output  [rl-1:0]        REG_IN_A_061;
 output  [rl-1:0]        REG_IN_A_062;
 output  [rl-1:0]        REG_IN_A_063;
 output logmel_do_en;
+output [(14*64)-1:0] logmel_data_o;
 
 output  [rl-1:0]        REG_IN_B_000;
 
@@ -334,9 +336,11 @@ spi_regs spi_regs_inst(
 
 wire [1:0] logmel_di_en;
 wire logmel_do_en;
+// wire [(14*64)-1:0] logmel_data_o;
 
 assign logmel_di_en = REG_IN_B_000[1:0];
 assign logmel_do_en = REG_OUT_B_000[0];
+assign logmel_data_o = REG_OUT_A_000;
 
 // 入力先のトップモジュール
 log_mel_spectrogram logmel(
@@ -345,7 +349,7 @@ log_mel_spectrogram logmel(
     .di_en(logmel_di_en),
     .data_i(REG_IN_A_000),
     .do_en(logmel_do_en),
-    .data_o(REG_OUT_A_000)
+    .data_o(logmel_data_o)
 );
 
 

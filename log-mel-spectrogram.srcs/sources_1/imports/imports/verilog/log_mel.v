@@ -8,7 +8,9 @@ module log_mel_spectrogram #(
     input [1:0] di_en,
     input signed [I_BW-1:0] data_i,
     output reg do_en,
-    output reg signed [O_BW*64-1:0] data_o
+    // output reg signed [O_BW*64-1:0] data_o
+    // output reg signed [14*64-1:0] data_o
+    output reg [14*64-1:0] data_o
 );
     localparam INPUT_COUNTER_O_BW = 14;
     localparam FRAMING_O_BW = 14;
@@ -34,7 +36,7 @@ module log_mel_spectrogram #(
 
     always @(posedge clk or negedge rst) begin
         // $display("clk");
-        $display("in_clk_count_tmp=%d, rst=%d, di_en=%d, data_i=%d", in_clk_count_tmp, rst, di_en, data_i);
+        // $display("in_clk_count_tmp=%d, rst=%d, di_en=%d, data_i=%d", in_clk_count_tmp, rst, di_en, data_i);
         if (!rst) begin
             in_clk_count_tmp <= 0;
         end
@@ -429,9 +431,12 @@ module log_mel_spectrogram #(
     );
 
     localparam LOG_O_BW = 14;
-    wire signed [LOG_O_BW*64-1:0] out_log0;
-    wire signed [LOG_O_BW*64-1:0] out_log1;
-    wire signed [LOG_O_BW*64-1:0] out_log2;
+    // wire signed [LOG_O_BW*64-1:0] out_log0;
+    // wire signed [LOG_O_BW*64-1:0] out_log1;
+    // wire signed [LOG_O_BW*64-1:0] out_log2;
+    wire signed [O_BW*64-1:0] out_log0;
+    wire signed [O_BW*64-1:0] out_log1;
+    wire signed [O_BW*64-1:0] out_log2;
 
     log #(
        .I_BW(MEL_O_BW),
@@ -457,23 +462,43 @@ module log_mel_spectrogram #(
         .data_o(out_log2)
     );
 
+    // // reg signed [64*14-1:0] tmpp;
+    // wire signed [64*14-1:0] tmpp;
+    // assign tmpp = 0;
+    
     always @(posedge clk or negedge rst) begin
+        // $display("tmpp=%d", tmpp);
         if (!rst) begin
-            data_o <= 0;
+            data_o <= 896'b0;
+            // tmpp <= 896'b0;
+            // $display("reset data_o=%d", data_o);
+            // $display("reset tmpp=%d", tmpp);
         end
         else begin
+            $display("data_o=%d", data_o[100]);
+
             if (mel0_do_en) begin
                 data_o <= out_log0;
+                $display("out_log0=%d", out_log0[100]);
+                // $display("out_log0=%d", out_log0);
+                // $display("data_o=%d", data_o);
                 // $display("out_mel0_group_num=%d, mel0_do_en=%d", out_mel0_group_num, mel0_do_en);
                 do_en <= 1;
+                // $display("do_en=%d", do_en);
             end
             else if (mel1_do_en) begin
                 data_o <= out_log1;
+                $display("out_log1=%d", out_log1[100]);
+                // $display("out_log1=%d", out_log1);
+                // $display("data_o=%d", data_o);
                 // $display("out_mel1_group_num=%d, mel1_do_en=%d", out_mel1_group_num, mel1_do_en);
                 do_en <= 1;        
             end
             else if (mel2_do_en) begin
                 data_o <= out_log2;
+                $display("out_log2=%d", out_log2[100]);
+                // $display("out_log2=%d", out_log2);
+                // $display("data_o=%d", data_o);
                 // $display("out_mel2_group_num=%d, mel2_do_en=%d", out_mel2_group_num, mel2_do_en);
                 do_en <= 1;
             end
