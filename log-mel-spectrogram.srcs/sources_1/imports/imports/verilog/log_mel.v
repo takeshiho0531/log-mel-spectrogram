@@ -29,6 +29,21 @@ module log_mel_spectrogram #(
     wire [($clog2(FRAME_LEN)-1):0] out_hann_group_idx;
     wire [$clog2(OUT_FRAMING_TOTAL_DATA/FRAME_LEN):0] out_hann_group_num;
 
+    integer in_clk_count_tmp;
+
+
+    always @(posedge clk or negedge rst) begin
+        // $display("clk");
+        $display("in_clk_count_tmp=%d, rst=%d, di_en=%d, data_i=%d", in_clk_count_tmp, rst, di_en, data_i);
+        if (!rst) begin
+            in_clk_count_tmp <= 0;
+        end
+        else begin
+            in_clk_count_tmp <= in_clk_count_tmp+1;
+        end
+    end
+
+
 
 
     input_counter #(
