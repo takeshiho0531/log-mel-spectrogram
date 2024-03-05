@@ -1,0 +1,4 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/kawada/squared/squared.srcs/sources_1/imports/squared/squared.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module squared
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/kawada/squared/squared.srcs/sim_1/imports/squared/t_squared.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module t_squared
