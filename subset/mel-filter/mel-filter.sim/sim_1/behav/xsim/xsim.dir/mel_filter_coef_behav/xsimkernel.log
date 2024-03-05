@@ -1,0 +1,7 @@
+Running: xsim.dir/mel_filter_coef_behav/xsimk -simmode gui -wdb mel_filter_coef_behav.wdb -simrunnum 0 -socket 44573
+Design successfully loaded
+Design Loading Memory Usage: 28048 KB (Peak: 28104 KB)
+Design Loading CPU Usage: 80 ms
+Simulation completed
+Simulation Memory Usage: 103640 KB (Peak: 161172 KB)
+Simulation CPU Usage: 110 ms
