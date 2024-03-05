@@ -1,0 +1,10 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../bit-reversal-count.srcs/sources_1/imports/bit-reversal-count/bit_reversal_count.v" \
+"../../../../bit-reversal-count.srcs/sim_1/imports/bit-reversal-count/t_bit_reversal_count.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
