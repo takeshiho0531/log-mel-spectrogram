@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/kawada/hamming_window/hamming_window.srcs/sources_1/imports/hamming_window/hann_window.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hann_window
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/kawada/hamming_window/hamming_window.srcs/sources_1/imports/hamming_window/hann_window_rom.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hann_window_rom
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/kawada/hamming_window/hamming_window.srcs/sim_1/imports/hamming_window/t_hann_window.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module t_hann_window

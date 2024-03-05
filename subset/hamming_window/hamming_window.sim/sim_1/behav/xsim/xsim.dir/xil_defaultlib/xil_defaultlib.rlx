@@ -1,0 +1,8 @@
+0.7
+2020.2
+Oct 14 2022
+05:07:14
+/home/kawada/hamming_window/hamming_window.sim/sim_1/behav/xsim/glbl.v,1665704903,verilog,,,,glbl,,,,,,,,
+/home/kawada/hamming_window/hamming_window.srcs/sim_1/imports/hamming_window/t_hann_window.v,1703070181,verilog,,,,t_hann_window,,,,,,,,
+/home/kawada/hamming_window/hamming_window.srcs/sources_1/imports/hamming_window/hann_window.v,1704699576,verilog,,/home/kawada/hamming_window/hamming_window.srcs/sources_1/imports/hamming_window/hann_window_rom.v,,hann_window,,,,,,,,
+/home/kawada/hamming_window/hamming_window.srcs/sources_1/imports/hamming_window/hann_window_rom.v,1704547205,verilog,,/home/kawada/hamming_window/hamming_window.srcs/sim_1/imports/hamming_window/t_hann_window.v,,hann_window_rom,,,,,,,,
