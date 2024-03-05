@@ -1,0 +1,12 @@
+*.wdb
+*.pb
+*.dbg
+*.mem
+*.rtti
+*.reloc
+*.svtype
+*.type
+*.xdbg
+xsimk
+*.o
+*.sdb

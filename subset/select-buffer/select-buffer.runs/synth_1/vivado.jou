@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sat Jan  6 23:03:39 2024
+# Process ID: 2887845
+# Current directory: /home/kawada/select-buffer/select-buffer.runs/synth_1
+# Command line: vivado -log select_buffer.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source select_buffer.tcl
+# Log file: /home/kawada/select-buffer/select-buffer.runs/synth_1/select_buffer.vds
+# Journal file: /home/kawada/select-buffer/select-buffer.runs/synth_1/vivado.jou
+# Running On: nedo2021dec, OS: Linux, CPU Frequency: 1500.000 MHz, CPU Physical cores: 32, Host memory: 1082041 MB
+#-----------------------------------------------------------
+source select_buffer.tcl -notrace
