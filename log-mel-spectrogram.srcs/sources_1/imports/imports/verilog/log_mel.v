@@ -469,17 +469,14 @@ module log_mel_spectrogram #(
 
             if (mel0_do_en) begin
                 data_o <= out_log0;
-                $display("out_log0=%d", out_log0[100]);
                 do_en <= 1;
             end
             else if (mel1_do_en) begin
                 data_o <= out_log1;
-                $display("out_log1=%d", out_log1[100]);
-                do_en <= 1;        
+                do_en <= 1;
             end
             else if (mel2_do_en) begin
                 data_o <= out_log2;
-                $display("out_log2=%d", out_log2[100]);
                 do_en <= 1;
             end
             else begin
