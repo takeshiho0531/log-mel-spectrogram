@@ -106,8 +106,6 @@ assign spi_clk_b = ~spi_clk;
 assign transfer_enable_flag = transfer_enable_flag_spi ^ transfer_enable_flag_nnn;
 
 always @(posedge spi_clk or negedge rst_n) begin   // Positive Edge
-   // $display("spi clock");
-   // $display("flag_counter_spi=%d", flag_counter_spi);
    if (!rst_n) begin
       flag_counter_spi <= 0;
       num_bytes <= {nb{1'b0}};
@@ -145,10 +143,6 @@ always @(posedge spi_clk or negedge rst_n) begin   // Positive Edge
 end
 
 always @(posedge clk or negedge rst_n) begin
-   // $display("flag_counter_nnn=%d, transfer_enable_flag=%d, transfer_enable_flag_nnn=%d, spi_cs=%d, inference_type=%d", flag_counter_nnn, transfer_enable_flag, transfer_enable_flag_nnn, spi_cs, inference_type);
-   //  if (transfer_enable_flag_nnn!=0 | spi_cs!=0 | inference_type!=1) begin
-   //    $display("flag_counter_nnn=%d, transfer_enable_flag_nnn=%d, spi_cs=%d, inference_type=%d", flag_counter_nnn, transfer_enable_flag_nnn, spi_cs, inference_type);
-   //  end
     if (!rst_n) begin
       flag_counter_nnn <= 0;
       transfer_enable_flag_nnn <= 0;
@@ -171,19 +165,12 @@ end
 // serial address input
 
 always @(posedge spi_clk or negedge rst_n)  begin  // Positive Edge
-   // $display("transfer_enable_flag=%d", transfer_enable_flag);
-   // $display("transfer_enable_flag=%d, transfer_enable_flag_spi=%d, transfer_enable_flag_nnn=%d", transfer_enable_flag, transfer_enable_flag_spi, transfer_enable_flag_nnn);
    // $display("addr=%d", addr); // ここの時点で62までしか入ってない
    if (!rst_n)
       addr <= {ap{1'b0}};
    else if (transfer_enable_flag == 1'b0) begin
-      // $display("transfer_enable_flag=%d, count=%d, spi_cs=%d, num_bytes=%d, addr=%b", transfer_enable_flag, count, spi_cs, num_bytes, addr);
-      // $display("spi_cs=%d, addr=%d", spi_cs, addr);
       if ((count < al) && ~spi_cs && (num_bytes <= 3'b001)) begin
          addr <= {addr[ap-2:0],spi_mosi};
-         // $display("spi_if spi_mosi=%d", spi_mosi);
-         // $display("addr=%b", addr);
-         // $display("addr_out addr is equal=%d", addr_out == addr);
       end
       else
          addr <= addr;

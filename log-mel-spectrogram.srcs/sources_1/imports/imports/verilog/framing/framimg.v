@@ -93,7 +93,4 @@ module framing # (
         end
     end
 
-    // always @(posedge clk) begin
-    //     $display("di_en=%d, enque_addr=%d, deque_addr=%d, data_o=%d, out_num=%d", di_en, enque_addr, deque_addr, data_o, out_num);
-    // end    
 endmodule

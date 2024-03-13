@@ -127,16 +127,13 @@ module TB_SPI;
         forever begin
             while (do_en !== 1) @(negedge clk);
             while ((do_en == 1) && (n < OUT_N_PAIR)) begin
-                // $display("data_o=%b", data_o);
                 for (i=0; i<64; i=i+1) begin
                     for (j=0; j<O_BW; j=j+1) begin
                         data_o_partial[j] = data_o[i*O_BW+j];
                     end
                     omem[n*64+i] = data_o_partial;
-                    // $display("n=%d, i=%d, data_o_partial=%b", n, i, data_o_partial);
                 end
                 n <= n+1;
-                // $display("-----");
                 @(negedge clk);
             end
         end
@@ -504,9 +501,6 @@ module TB_SPI;
         .REG_OUT_B_000(REG_OUT_B_000)
     );
 
-    // always @(posedge clk) begin
-    //     $display("logmel_data_o=%d", logmel_data_o);
-    // end
 
 
     //----------------------------------------------------------------------
@@ -561,11 +555,9 @@ module TB_SPI;
         input [39:0] data;
         integer i;
         begin
-            // $display("data=%d", data[38:24]);
             for (i = 39; i >= 0; i = i - 1) begin
                 @(posedge spi_clk); // SPIクロックの立ち上がりエッジでデータを送信
                 spi_mosi = data[i]; // MSBファーストでデータビットを送信
-                // $display("tb_spi_logmel spi_mosi=%d", spi_mosi);
             end
         end
     endtask
