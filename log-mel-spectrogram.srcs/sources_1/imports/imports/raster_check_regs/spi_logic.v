@@ -352,7 +352,7 @@ log_mel_spectrogram logmel(
     .data_o(logmel_data_o)
 );
 
-always @(posedge clk_out) $display("logmel_data_o=%d, REG_OUT_A_000=%d", logmel_data_o[100], REG_OUT_A_000[100]);
+// always @(posedge clk_out) $display("logmel_data_o=%d, REG_OUT_A_000=%d", logmel_data_o[100], REG_OUT_A_000[100]);
 
 
 endmodule	//spi_logic

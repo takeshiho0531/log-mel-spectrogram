@@ -320,6 +320,7 @@ end
 end
 
 always @(posedge sys_clk or negedge rst_n) begin
+$display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
 if (!rst_n)
    command_q <= 1'b0;
 else if (transfer_enable_flag == 1'b0) begin
@@ -331,7 +332,6 @@ end
 end
 
 always @(posedge selected_sys_clk or negedge rst_n) begin
-// $display("addr_in_q=%d", addr_in_q); // ここの時点で62までしか入ってない
 if (!rst_n) begin
    REG_IN_A_000 <= {rl{1'b0}};
    REG_IN_A_001 <= {rl{1'b0}};
@@ -702,7 +702,8 @@ else begin
          15'b111111111111111:   REG_IN_B_000 <= wr_data[rl-1:0];
       endcase
    end
-   else if (rd_act_q2) begin
+   else if (rd_act_q2) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
+      // $display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
       case (addr_in_q)
          15'b111111111111111:      data_out[rl-1:0] <= REG_IN_B_000;
 
