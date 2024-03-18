@@ -320,7 +320,7 @@ end
 end
 
 always @(posedge sys_clk or negedge rst_n) begin
-$display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
+// $display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
 if (!rst_n)
    command_q <= 1'b0;
 else if (transfer_enable_flag == 1'b0) begin
@@ -703,7 +703,8 @@ else begin
       endcase
    end
    else if (rd_act_q2) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
-      // $display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
+      $display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
+      // $display("ok"); // この条件自体の中には入ってそう
       case (addr_in_q)
          15'b111111111111111:      data_out[rl-1:0] <= REG_IN_B_000;
 
