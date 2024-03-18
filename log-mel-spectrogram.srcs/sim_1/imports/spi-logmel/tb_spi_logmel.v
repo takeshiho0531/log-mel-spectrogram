@@ -378,6 +378,8 @@ module TB_SPI;
         data_i <= imem[63];
         send_spi_byte({1'b1, 15'd63, 1'b1, 9'b0, imem[63][13:0]});
 
+        // spi_cs = 1'b1; // チップセレクトを非アクティブに
+
         rst_log <= 1'b0;
 
         #500; // 10*50

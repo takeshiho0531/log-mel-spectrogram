@@ -465,7 +465,7 @@ module log_mel_spectrogram #(
             data_o <= 896'b0;
         end
         else begin
-            // $display("data_o=%d", data_o[100]);
+            $display("di_en=%d, data_i=%d, do_en=%d, data_o=%d", di_en, data_i, do_en, data_o[100]);
 
             if (mel0_do_en) begin
                 data_o <= out_log0;
