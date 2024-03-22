@@ -3,7 +3,8 @@ module TB_SPI;
     localparam I_BW = 14;
     localparam O_BW = 14;
     localparam N = 1024;
-    localparam IN_N = 15104; // 88*160+1023*1=15104
+    // localparam IN_N = 15104; // 88*160+1023*1=15104
+    localparam IN_N = 1024;
     localparam OUT_N = 5696; // 64*89
     localparam OUT_N_PAIR = OUT_N/64;
 
@@ -392,7 +393,8 @@ module TB_SPI;
         // // send_spi_byte(40'b1111111111111111100000000000000000000000); // 推論モードに。
         // #608000;
         // #158800;
-        // spi_cs = 1'b1; // チップセレクトを非アクティブに
+        #50000;
+        spi_cs = 1'b1; // チップセレクトを非アクティブに
         // #500;
         // spi_cs = 1'b0;
         // send_spi_byte(40'b0000000000000000100000000000000000110100);
