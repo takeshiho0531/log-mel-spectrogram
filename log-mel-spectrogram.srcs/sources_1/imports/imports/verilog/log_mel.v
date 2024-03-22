@@ -1,7 +1,9 @@
 `timescale	1ns/1ns
 module log_mel_spectrogram #(
     parameter I_BW = 14,
-    parameter O_BW = 14
+    parameter O_BW = 14,
+    parameter TOTAL_DATA = 15104,
+    parameter OUT_FRAMING_TOTAL_DATA = 91136
 )(
     input clk,
     input rst,
@@ -14,8 +16,8 @@ module log_mel_spectrogram #(
 );
     localparam INPUT_COUNTER_O_BW = 14;
     localparam FRAMING_O_BW = 14;
-    localparam TOTAL_DATA = 15104;
-    localparam OUT_FRAMING_TOTAL_DATA = 91136;
+    // localparam TOTAL_DATA = 15104;
+    // localparam OUT_FRAMING_TOTAL_DATA = 91136;
     localparam HANN_WINDOW_O_BW = 14;
     localparam FRAME_LEN = 1024;
 
@@ -48,7 +50,8 @@ module log_mel_spectrogram #(
 
     input_counter #(
         .I_BW(INPUT_COUNTER_O_BW),
-        .O_BW(FRAMING_O_BW)
+        .O_BW(FRAMING_O_BW),
+        .TOTAL_DATA(OUT_FRAMING_TOTAL_DATA)
     )count(
         .clk(clk),
         .rst(rst),
@@ -67,6 +70,7 @@ module log_mel_spectrogram #(
 
     framing #(
         .TOTAL_DATA(TOTAL_DATA),
+        .OUTPUT_TOTAL_DATA(OUT_FRAMING_TOTAL_DATA),
         .I_BW(INPUT_COUNTER_O_BW),
         .O_BW(FRAMING_O_BW)
     ) frame (
@@ -171,7 +175,8 @@ module log_mel_spectrogram #(
 
     counter #(
         .I_BW(FFT_O_BW),
-        .O_BW(COUNTER_O_BW)
+        .O_BW(COUNTER_O_BW),
+        .TOTAL_DATA(OUT_FRAMING_TOTAL_DATA)
     ) counter0(
         .clk(clk),
         .rst(rst),
@@ -186,7 +191,8 @@ module log_mel_spectrogram #(
 
     counter #(
         .I_BW(FFT_O_BW),
-        .O_BW(COUNTER_O_BW)
+        .O_BW(COUNTER_O_BW),
+        .TOTAL_DATA(OUT_FRAMING_TOTAL_DATA)
     ) counter1(
         .clk(clk),
         .rst(rst),
@@ -201,7 +207,8 @@ module log_mel_spectrogram #(
 
     counter #(
         .I_BW(FFT_O_BW),
-        .O_BW(COUNTER_O_BW)
+        .O_BW(COUNTER_O_BW),
+        .TOTAL_DATA(OUT_FRAMING_TOTAL_DATA)
     ) counter2(
         .clk(clk),
         .rst(rst),

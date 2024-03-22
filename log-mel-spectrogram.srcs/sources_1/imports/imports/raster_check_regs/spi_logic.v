@@ -343,7 +343,10 @@ assign logmel_do_en = REG_OUT_B_000[0];
 assign REG_OUT_A_000 = logmel_data_o;
 
 // 入力先のトップモジュール
-log_mel_spectrogram logmel(
+log_mel_spectrogram # (
+    .TOTAL_DATA(1024),
+    .OUT_FRAMING_TOTAL_DATA(1024)
+) logmel(
     .clk(clk_out),
     .rst(rst_for_logmel),
     .di_en(logmel_di_en),
