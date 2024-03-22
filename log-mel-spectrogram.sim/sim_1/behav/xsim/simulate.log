@@ -1550,27 +1550,5 @@ debug_count=          x
 debug_count=          x
 debug_count=          x
 debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
 chipselect
 debug_count=          x
-debug_count=          x
-debug_count=          x
-k=          1
-k=          2
-debug_count=          x
-logmel_data_o[100]=1
-done
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-debug_count=          x
-$finish called at time : 418500 ns : File "C:/Users/kawad/log-mel-spectrogram/log-mel-spectrogram.srcs/sim_1/imports/spi-logmel/tb_spi_logmel.v" Line 550
