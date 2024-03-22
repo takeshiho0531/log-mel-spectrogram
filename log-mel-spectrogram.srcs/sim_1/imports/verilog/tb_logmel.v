@@ -3,8 +3,10 @@ module TB;
     localparam I_BW = 14;
     localparam O_BW = 14;
     localparam N = 1024;
-    localparam IN_N = 15104; // 88*160+1023*1
-    localparam OUT_N = 5696; // 64*89
+    // localparam IN_N = 15104; // 88*160+1023*1
+    localparam IN_N = 1024;
+    // localparam OUT_N = 5696; // 64*89
+    localparam OUT_N = 64;
     localparam OUT_N_PAIR = OUT_N/64;
 
     reg clk;
@@ -57,7 +59,6 @@ module TB;
                         data_o_partial[j] = data_o[i*O_BW+j];
                     end
                     omem[n*64+i] = data_o_partial;
-                    // $display("n=%d, i=%d, data_o_partial=%b", n, i, data_o_partial);
                 end
                 n <= n+1;
                 // $display("-----");
@@ -85,7 +86,7 @@ module TB;
 
         n = 0;
         while (n <= IN_N) begin  // 0行目のデータが採用されない設計になってしまってる
-            $display("t_clk=%d, n=%d", t_clk, n); 
+            // $display("t_clk=%d, n=%d", t_clk, n); 
             if (t_clk < 1024) begin
                 di_en <= 1;
                 data_i <= imem[n];
