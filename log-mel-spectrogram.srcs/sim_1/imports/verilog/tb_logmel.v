@@ -84,7 +84,7 @@ module TB;
 
         n = 0;
         while (n <= IN_N) begin  // 0行目のデータが採用されない設計になってしまってる
-            $display("t_clk=%d, n=%d", t_clk, n); 
+            // $display("t_clk=%d, n=%d", t_clk, n); 
             if (t_clk < 1024) begin
                 di_en <= 1;
                 data_i <= imem[n];
