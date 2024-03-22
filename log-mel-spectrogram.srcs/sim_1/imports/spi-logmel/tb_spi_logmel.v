@@ -5,7 +5,8 @@ module TB_SPI;
     localparam N = 1024;
     // localparam IN_N = 15104; // 88*160+1023*1=15104
     localparam IN_N = 1024;
-    localparam OUT_N = 5696; // 64*89
+    // localparam OUT_N = 5696; // 64*89
+    localparam OUT_N = 64;
     localparam OUT_N_PAIR = OUT_N/64;
 
     // テストベンチで使用する変数定義
@@ -379,11 +380,10 @@ module TB_SPI;
         data_i <= imem[63];
         send_spi_byte({1'b1, 15'd63, 1'b1, 9'b0, imem[63][13:0]});
 
-        // spi_cs = 1'b1; // チップセレクトを非アクティブに
-
         rst_log <= 1'b0;
 
-        #500; // 10*50
+        // #500; // 10*50
+        repeat(5) @(posedge clk);
         rst_log <= 1;
 
         // di_en <= 0;
@@ -393,7 +393,8 @@ module TB_SPI;
         // // send_spi_byte(40'b1111111111111111100000000000000000000000); // 推論モードに。
         // #608000;
         // #158800;
-        #50000;
+        repeat(1100) @(posedge clk);
+        $display("chipselect");
         spi_cs = 1'b1; // チップセレクトを非アクティブに
         // #500;
         // spi_cs = 1'b0;

@@ -243,7 +243,6 @@ end
 
 
 always @(posedge sys_clk or negedge rst_n) begin
-// $display("transfer_enable_flag=%d, next=%d", transfer_enable_flag, next);
 if (!rst_n)
    begin
    next_q1 <= 1'b0;
@@ -252,7 +251,6 @@ if (!rst_n)
    end
 else if (transfer_enable_flag == 1'b0) 
    begin
-   // $display("next=%d", next);
    next_q1 <= next;
    next_q2 <= next_q1;
    next_q3 <= next_q2;
