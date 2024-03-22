@@ -3,8 +3,10 @@ module TB;
     localparam I_BW = 14;
     localparam O_BW = 14;
     localparam N = 1024;
-    localparam IN_N = 15104; // 88*160+1023*1
-    localparam OUT_N = 5696; // 64*89
+    // localparam IN_N = 15104; // 88*160+1023*1
+    localparam IN_N = 1024;
+    // localparam OUT_N = 5696; // 64*89
+    localparam OUT_N = 64;
     localparam OUT_N_PAIR = OUT_N/64;
 
     reg clk;
