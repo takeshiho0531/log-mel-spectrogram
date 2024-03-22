@@ -28,7 +28,6 @@ module log #(
                     // logb2 = j;
                     // logE = (logb2+SHIFT) * 5/7;
                 end
-                // $display("value=%d, logb2=%d, logE=%d", value, logb2, logE);
             end
             logb2 = j;
             logE = (logb2+SHIFT) * 5/7;

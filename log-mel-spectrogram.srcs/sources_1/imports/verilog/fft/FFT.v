@@ -87,8 +87,4 @@ SdfUnit #(.N(1024),.M(4),.WIDTH(WIDTH)) SU5 (
     .do_im  (do_im      )   //  o
 );
 
-always @(posedge clock) begin
-    // $display("su1_do_en=%b, su2_do_en=%b, su3_do_en=%b, su4_do_en=%b, do_en=%b", su1_do_en, su2_do_en, su3_do_en, su4_do_en, do_en);
-end
-
 endmodule

@@ -30,8 +30,4 @@ end
 assign  do_re = buf_re[DEPTH-1];
 assign  do_im = buf_im[DEPTH-1];
 
-always @(posedge clock) begin
-    // $display("DEPTH=%d, buf_re[0]=%d, buf_re[64]=%d, buf_re[128]=%d, buf_re[192]=%d, buf_re[256]=%d, buf_re[320]=%d, buf_re[384]=%d, buf_re[448]=%d, buf_re[511]=%d", DEPTH, buf_re[0], buf_re[64], buf_re[128], buf_re[192], buf_re[256], buf_re[320], buf_re[384], buf_re[448], buf_re[511]);
-end
-
 endmodule

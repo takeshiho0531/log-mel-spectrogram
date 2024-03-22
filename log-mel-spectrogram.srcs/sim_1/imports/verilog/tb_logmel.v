@@ -57,7 +57,6 @@ module TB;
                         data_o_partial[j] = data_o[i*O_BW+j];
                     end
                     omem[n*64+i] = data_o_partial;
-                    // $display("n=%d, i=%d, data_o_partial=%b", n, i, data_o_partial);
                 end
                 n <= n+1;
                 // $display("-----");
