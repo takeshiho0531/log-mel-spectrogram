@@ -393,21 +393,16 @@ module TB_SPI;
         // // send_spi_byte(40'b1111111111111111100000000000000000000000); // 推論モードに。
         // #608000;
         // #158800;
-        // repeat(1557) @(posedge clk);
-        // repeat(50) @(posedge clk); // finishする
-        // repeat(1000) @(posedge clk); // finishする
-        // repeat(1556) @(posedge clk); // finishする
-        // repeat(2000) @(posedge clk); // finishする
-        repeat(1558) @(posedge clk);
+        repeat(1500) @(posedge clk);
         $display("chipselect");
-        spi_cs = 1'b1; // チップセレクトを非アクティブに
+        // spi_cs = 1'b1; // チップセレクトを非アクティブに
         // #500;
         // spi_cs = 1'b0;
         // send_spi_byte(40'b0000000000000000100000000000000000110100);
         // send_spi_byte(40'b0000000000000001100000000000000000000000);
         // spi_cs = 1'b1; // チップセレクトを非アクティブに
         // #800;
-        repeat(5) @(posedge clk);
+        repeat(1500) @(posedge clk);
         spi_cs = 1'b0;
         $finish;
     end

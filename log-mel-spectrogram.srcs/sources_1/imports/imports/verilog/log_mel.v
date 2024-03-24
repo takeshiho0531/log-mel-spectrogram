@@ -37,12 +37,15 @@ module log_mel_spectrogram #(
 
     integer debug_count;
     always @(posedge clk or negedge rst) begin
-        // $display("debug_count=%d", debug_count);
         if (!rst) begin
             debug_count <= 0;
         end if (di_en) begin
-            debug_count <= debug_count+1;
-            $display("debug_count=%d", debug_count);
+            // $display("debug_count=%d", debug_count);
+            if (!(debug_count>=0)) begin
+                debug_count <= 0;
+            end else begin
+                debug_count <= debug_count+1;
+            end
         end else begin
             debug_count <= debug_count;
         end
@@ -502,6 +505,10 @@ module log_mel_spectrogram #(
                 data_o <= 0;
             end
         end
+    end
+
+    always @(posedge clk or negedge rst) begin
+        $display("di_en=%d, data_i=%d, do_en=%d, data_o=%d", di_en, data_i, do_en, data_o[113:100]);
     end
 
 

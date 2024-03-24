@@ -357,7 +357,7 @@ log_mel_spectrogram # (
 
 always @(posedge clk_out) begin
     if (logmel_do_en) begin
-        $display("logmel_data_o[100]=%d", logmel_data_o[100]);
+        // $display("logmel_data_o[100]=%d", logmel_data_o[100]);
     end
 end
 
