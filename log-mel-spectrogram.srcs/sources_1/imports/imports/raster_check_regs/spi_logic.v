@@ -341,7 +341,7 @@ wire logmel_do_en;
 assign logmel_di_en = REG_IN_B_000[1:0];
 // assign logmel_do_en = REG_OUT_B_000[0];
 assign REG_OUT_B_000[0] = logmel_do_en;
-assign REG_OUT_A_000 = logmel_data_o;
+assign REG_OUT_A_000 = logmel_do_en ? logmel_data_o : REG_OUT_A_000;
 
 // 入力先のトップモジュール
 log_mel_spectrogram # (
