@@ -705,7 +705,7 @@ else begin
          15'b111111111111111:   REG_IN_B_000 <= wr_data[rl-1:0];
       endcase
    end
-   else if (rd_act_q2) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
+   else if (rd_act_q2 && REG_OUT_B_000[0]) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
       // $display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
       // $display("ok"); // この条件自体の中には入ってそう
       case (addr_in_q)

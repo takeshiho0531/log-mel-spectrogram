@@ -107,45 +107,49 @@ assign transfer_enable_flag = transfer_enable_flag_spi ^ transfer_enable_flag_nn
 
 always @(posedge spi_clk or negedge rst_n) begin   // Positive Edge
    // $display("transfer_enable_flag_spi=%d, flag_counter_spi=%d", transfer_enable_flag_spi, flag_counter_spi);
+   // $display("spi_clk");
    if (!rst_n) begin
       flag_counter_spi <= 0;
       num_bytes <= {nb{1'b0}};
       transfer_enable_flag_spi <= 0;
       count <= {cl{1'b0}};
-      $display("rst_n");
+      // $display("rst_n");
    end else if (spi_cs == 1'b1) begin
       num_bytes <= {nb{1'b0}};
       flag_counter_spi <= 0;
       transfer_enable_flag_spi <= 0;
       count <= {cl{1'b0}};
-      $display("else if (spi_cs == 1'b1)");
+      // $display("else if (spi_cs == 1'b1)");
    end else if (transfer_enable_flag == 1'b0) begin
     if ((count == 3'h7) && ~spi_cs && (num_bytes <= 3'b011)) begin
          num_bytes <= num_bytes + 1;
          flag_counter_spi <= flag_counter_spi;
          transfer_enable_flag_spi <= transfer_enable_flag_spi;
          count <= count + 1;
-         $display("hi, ((count == 3'h7) && ~spi_cs && (num_bytes <= 3'b011)");
+         // $display("hi, ((count == 3'h7) && ~spi_cs && (num_bytes <= 3'b011)");
       end else if ((count == 3'h7) && ~spi_cs && (num_bytes == 3'b100)) begin
          num_bytes <= {nb{1'b0}};
          flag_counter_spi <= flag_counter_spi + 1;
          transfer_enable_flag_spi <= transfer_enable_flag_spi;
          count <= count + 1;
-         $display("hi, else if ((count == 3'h7) && ~spi_cs && (num_bytes == 3'b100))");
+         // $display("hi, else if ((count == 3'h7) && ~spi_cs && (num_bytes == 3'b100))");
       end else if ((count == 3'h0) && (flag_counter_spi == 11'd65)) begin
          // end else if ((count == 3'h0) && (flag_counter_spi == 11'd66)) begin
          flag_counter_spi <= 0;
          transfer_enable_flag_spi <= transfer_enable_flag_spi + 1'b1;
          count <= {cl{1'b0}};
          num_bytes <= {nb{1'b0}};
-         $display("hi, else if ((count == 3'h0) && (flag_counter_spi == 11'd65))");
+         // $display("hi, else if ((count == 3'h0) && (flag_counter_spi == 11'd65))");
       end else begin
          num_bytes <= num_bytes;
          flag_counter_spi <= flag_counter_spi;
          transfer_enable_flag_spi <= transfer_enable_flag_spi;
          count <= count + 1;
-         $display("hi, else");
+         // $display("hi, else");
       end
+   end else begin
+      count <= count + 1;
+      $display("hi, else else else..!");
    end
 end
 

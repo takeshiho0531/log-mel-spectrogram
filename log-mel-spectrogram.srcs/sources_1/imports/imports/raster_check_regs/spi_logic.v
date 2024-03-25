@@ -339,7 +339,8 @@ wire logmel_do_en;
 // wire [(14*64)-1:0] logmel_data_o;
 
 assign logmel_di_en = REG_IN_B_000[1:0];
-assign logmel_do_en = REG_OUT_B_000[0];
+// assign logmel_do_en = REG_OUT_B_000[0];
+assign REG_OUT_B_000[0] = logmel_do_en;
 assign REG_OUT_A_000 = logmel_data_o;
 
 // 入力先のトップモジュール
