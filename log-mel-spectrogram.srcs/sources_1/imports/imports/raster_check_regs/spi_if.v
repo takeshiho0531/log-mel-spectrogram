@@ -93,85 +93,53 @@ reg   [10:0] flag_counter_spi; // 追記
 reg   [9:0] flag_counter_nnn;
 wire   transfer_enable_flag; //　追記
 reg   transfer_enable_flag_spi;
-reg   transfer_enable_flag_nnn;
 reg         inference_type; // whole_frame = 1, just_one_line = 0
 wire			spi_clk_b;
+wire transfer_enable_flag_nnn;
 
 assign addr_out = addr[ap-1:0];
-
-
+assign transfer_enable_flag_nnn = 0; // 今回はnnn関係ないので
 
 
 assign spi_clk_b = ~spi_clk;
 assign transfer_enable_flag = transfer_enable_flag_spi ^ transfer_enable_flag_nnn;
 
 always @(posedge spi_clk or negedge rst_n) begin   // Positive Edge
-   // $display("transfer_enable_flag_spi=%d, flag_counter_spi=%d", transfer_enable_flag_spi, flag_counter_spi);
-   // $display("spi_clk");
    if (!rst_n) begin
       flag_counter_spi <= 0;
       num_bytes <= {nb{1'b0}};
       transfer_enable_flag_spi <= 0;
       count <= {cl{1'b0}};
-      // $display("rst_n");
    end else if (spi_cs == 1'b1) begin
       num_bytes <= {nb{1'b0}};
       flag_counter_spi <= 0;
       transfer_enable_flag_spi <= 0;
       count <= {cl{1'b0}};
-      // $display("else if (spi_cs == 1'b1)");
    end else if (transfer_enable_flag == 1'b0) begin
     if ((count == 3'h7) && ~spi_cs && (num_bytes <= 3'b011)) begin
          num_bytes <= num_bytes + 1;
          flag_counter_spi <= flag_counter_spi;
          transfer_enable_flag_spi <= transfer_enable_flag_spi;
          count <= count + 1;
-         // $display("hi, ((count == 3'h7) && ~spi_cs && (num_bytes <= 3'b011)");
       end else if ((count == 3'h7) && ~spi_cs && (num_bytes == 3'b100)) begin
          num_bytes <= {nb{1'b0}};
          flag_counter_spi <= flag_counter_spi + 1;
          transfer_enable_flag_spi <= transfer_enable_flag_spi;
          count <= count + 1;
-         // $display("hi, else if ((count == 3'h7) && ~spi_cs && (num_bytes == 3'b100))");
       end else if ((count == 3'h0) && (flag_counter_spi == 11'd65)) begin
-         // end else if ((count == 3'h0) && (flag_counter_spi == 11'd66)) begin
          flag_counter_spi <= 0;
          transfer_enable_flag_spi <= transfer_enable_flag_spi + 1'b1;
          count <= {cl{1'b0}};
          num_bytes <= {nb{1'b0}};
-         // $display("hi, else if ((count == 3'h0) && (flag_counter_spi == 11'd65))");
       end else begin
          num_bytes <= num_bytes;
          flag_counter_spi <= flag_counter_spi;
          transfer_enable_flag_spi <= transfer_enable_flag_spi;
          count <= count + 1;
-         // $display("hi, else");
       end
-   end else begin
-      count <= count + 1;
-      $display("hi, else else else..!");
    end
 end
 
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-      flag_counter_nnn <= 0;
-      transfer_enable_flag_nnn <= 0;
-    end else if (spi_cs == 1'b1) begin
-      flag_counter_nnn <= 0;
-      transfer_enable_flag_nnn <= 0;
-    end else if (transfer_enable_flag == 1'b1) begin 
-      if ((flag_counter_nnn == 10'd64) && (inference_type == 1'b0)) begin
-         flag_counter_nnn <= 0;
-         transfer_enable_flag_nnn <= transfer_enable_flag_nnn + 1'b1;
-      end else if ((flag_counter_nnn == 10'd64) && (inference_type == 1'b1)) begin
-         flag_counter_nnn <= 0;
-         transfer_enable_flag_nnn <= transfer_enable_flag_nnn;
-      end else begin
-         flag_counter_nnn <= flag_counter_nnn + 1'b1;
-      end
-    end
-end
 
 // serial address input
 
