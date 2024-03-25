@@ -90,10 +90,8 @@ reg	[dl-1:0]	data_out;
 reg	[cl-1:0]	count;
 reg	[nb-1:0]	num_bytes;
 reg   [10:0] flag_counter_spi; // 追記
-reg   [9:0] flag_counter_nnn;
 wire   transfer_enable_flag; //　追記
 reg   transfer_enable_flag_spi;
-reg         inference_type; // whole_frame = 1, just_one_line = 0
 wire			spi_clk_b;
 wire transfer_enable_flag_nnn;
 
@@ -162,20 +160,15 @@ end
 always @(posedge spi_clk or negedge rst_n)    // Positive Edge // write command = 1
    if (!rst_n) begin
       command <= 1'b0;
-      inference_type <= 1'b0;
    end else if (transfer_enable_flag == 1'b0) begin
       if (spi_cs) begin
          command <= 1'b0;
-         inference_type <= 1'b0;
       end else if ((num_bytes == {nb{1'b0}}) && (count == {cl{1'b0}}) && ~spi_cs) begin
          command <= spi_mosi;
-         inference_type <= inference_type;
       end else if ((num_bytes == 3'd2) && (count == {cl{1'b0}}) && ~spi_cs) begin
          command <= command;
-         inference_type <= spi_mosi;
       end else begin
          command <= command;
-         inference_type <= inference_type;
       end
    end
 
