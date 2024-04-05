@@ -7306,4 +7306,23 @@ di_en=2, data_i=     0, do_en=0, data_o=    0
 4 spi_miso=0, spi_miso_en=0
 4 spi_miso=0, spi_miso_en=0
 4 spi_miso=0, spi_miso_en=0
-4
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+4 spi_miso=0, spi_miso_en=0
+$finish called at time : 571700 ns : File "C:/Users/kawad/log-mel-spectrogram/log-mel-spectrogram.srcs/sim_1/imports/spi-logmel/tb_spi_logmel.v" Line 407
