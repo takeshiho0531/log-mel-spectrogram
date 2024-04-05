@@ -12,300 +12,292 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module spi_if (
-rst_n,
-spi_cs,
-spi_mosi,
-spi_miso,
-spi_miso_en,
-spi_clk,
-clk,
+    rst_n_i,
+    spi_cs_i,
+    spi_mosi_i,
+    spi_miso_o,
+    spi_miso_en_o,
+    spi_clk_i,
+    clk_i,
 
-addr_out,
-wr_data,
-rd_data,
-next,
-wr_act,
-command,
-transfer_enable_flag,
+    addr_out_o,
+    wr_data_o,
+    rd_data_i,
+    next_o,
+    wr_act_o,
+    command_o,
+    transfer_enable_flag,
 
-spi_reg_out_req,
-spi_reg_out_req_addr
+    spi_reg_out_req_o,
+    spi_reg_out_req_addr_o
 );
 
 
-//-----------------------------------------------------------------------
-// Parameter Definition
-//-----------------------------------------------------------------------
-parameter al = 16;		// address length, including R/W bit
-parameter dl = 24;		// data length
-parameter wc = 1'b1;		// write command
-parameter rc = 1'b0;		// read command
-parameter cl = 3;		// counter length
-parameter nb = 3;		// number of data byte
-parameter ap = al - 1;		// R/W flag in address field
-parameter rl = 14;       // register length
+  //-----------------------------------------------------------------------
+  // Parameter Definition
+  //-----------------------------------------------------------------------
+  parameter al = 16;  // address length, including R/W bit
+  parameter dl = 24;  // data length
+  parameter wc = 1'b1;  // write command_o
+  parameter rc = 1'b0;  // read command_o
+  parameter cl = 3;  // counter length
+  parameter nb = 3;  // number of data byte
+  parameter ap = al - 1;  // R/W flag in address field
+  parameter rl = 14;  // register length
 
 
-//-----------------------------------------------------------------------
-// Port Declaration
-//-----------------------------------------------------------------------
-input			rst_n;
-input			spi_cs;
-input			spi_mosi;
-input       spi_clk;
-input        clk;
-output			spi_miso;
-output			spi_miso_en;
+  //-----------------------------------------------------------------------
+  // Port Declaration
+  //-----------------------------------------------------------------------
+  input rst_n_i;
+  input spi_cs_i;
+  input spi_mosi_i;
+  input spi_clk_i;
+  input clk_i;
+  output spi_miso_o;
+  output spi_miso_en_o;
 
-output	[al-2:0]	addr_out;
-output	[dl-1:0]	wr_data;
-input	[dl-1:0]	rd_data;
+  output [al-2:0] addr_out_o;
+  output [dl-1:0] wr_data_o;
+  input [dl-1:0] rd_data_i;
 
-output			next;
-output			wr_act;
-output			command;
-output         transfer_enable_flag;
+  output next_o;
+  output wr_act_o;
+  output command_o;
+  output transfer_enable_flag_o;
 
-output reg spi_reg_out_req;
-output reg [4:0] spi_reg_out_req_addr; // 14桁なので....
-
-
-//-----------------------------------------------------------------------
-// Signal Declaration
-//-----------------------------------------------------------------------
-wire 			rst_n;
-wire 			spi_cs;
-wire 			spi_mosi;
-reg 			spi_miso;
-reg			spi_miso_en;
-
-wire	[al-2:0]	addr_out;
-reg	[dl-1:0]	wr_data;
-wire	[dl-1:0]	rd_data;
-
-reg 			next;			// next byte
-reg 			wr_act;			// write data
-reg			command;		// write = 1, read = 0
+  output reg spi_reg_out_req_o;
+  output reg [4:0] spi_reg_out_req_addr_o;  // 14桁なので....
 
 
-//-----------------------------------------------------------------------
-// Operations
-//-----------------------------------------------------------------------
-reg	[al-2:0]	addr;
-wire	[dl-1:0]	data_out;
-reg	[cl-1:0]	count;
-reg	[nb-1:0]	num_bytes;
-reg   [10:0] flag_counter_spi; // 追記
-wire   transfer_enable_flag; //　追記
-reg   transfer_enable_flag_spi;
-wire			spi_clk_b;
-wire transfer_enable_flag_nnn;
+  //-----------------------------------------------------------------------
+  // Signal Declaration
+  //-----------------------------------------------------------------------
+  wire    rst_n_i;
+  wire    spi_cs_i;
+  wire    spi_mosi_i;
+  reg    spi_miso_o;
+  reg   spi_miso_en_o;
 
-assign addr_out = addr[ap-1:0];
-assign transfer_enable_flag_nnn = 0; // 今回はnnn関係ないので
+  wire [al-2:0] addr_out_o;
+  reg [dl-1:0] wr_data_o;
+  wire [dl-1:0] rd_data_i;
+
+  reg    next_o;   // next_o byte
+  reg    wr_act_o;   // write data
+  reg   command_o;  // write = 1, read = 0
 
 
-assign spi_clk_b = ~spi_clk;
-assign transfer_enable_flag = transfer_enable_flag_spi ^ transfer_enable_flag_nnn;
+  //-----------------------------------------------------------------------
+  // Operations
+  //-----------------------------------------------------------------------
+  reg [al-2:0] addr;
+  wire [dl-1:0] data_out;
+  reg [cl-1:0] count;
+  reg [nb-1:0] num_bytes;
+  reg   [10:0] flag_counter_spi; // 追記
+  wire   transfer_enable_flag; //　追記
+  reg   transfer_enable_flag_spi;
+  wire   spi_clk_b;
+  wire transfer_enable_flag_nnn;
 
-always @(posedge spi_clk or negedge rst_n) begin   // Positive Edge
-   if (!rst_n) begin
+  assign addr_out_o = addr[ap-1:0];
+  assign transfer_enable_flag_nnn = 0;  // 今回はnnn関係ないので
+
+
+  assign spi_clk_b = ~spi_clk_i;
+  assign transfer_enable_flag = transfer_enable_flag_spi ^ transfer_enable_flag_nnn;
+
+  always @(posedge spi_clk_i or negedge rst_n_i) begin  // Positive Edge
+    if (!rst_n_i) begin
       flag_counter_spi <= 0;
       num_bytes <= {nb{1'b0}};
       transfer_enable_flag_spi <= 0;
       count <= {cl{1'b0}};
-   end else if (spi_cs == 1'b1) begin
+    end else if (spi_cs_i == 1'b1) begin
       num_bytes <= {nb{1'b0}};
       flag_counter_spi <= 0;
       transfer_enable_flag_spi <= 0;
       count <= {cl{1'b0}};
-   end else if (transfer_enable_flag == 1'b0) begin
-    if ((count == 3'h7) && ~spi_cs && (num_bytes <= 3'b011)) begin
-         num_bytes <= num_bytes + 1;
-         flag_counter_spi <= flag_counter_spi;
-         transfer_enable_flag_spi <= transfer_enable_flag_spi;
-         count <= count + 1;
-      end else if ((count == 3'h7) && ~spi_cs && (num_bytes == 3'b100)) begin
-         num_bytes <= {nb{1'b0}};
-         flag_counter_spi <= flag_counter_spi + 1;
-         transfer_enable_flag_spi <= transfer_enable_flag_spi;
-         count <= count + 1;
+    end else if (transfer_enable_flag == 1'b0) begin
+      if ((count == 3'h7) && ~spi_cs_i && (num_bytes <= 3'b011)) begin
+        num_bytes <= num_bytes + 1;
+        flag_counter_spi <= flag_counter_spi;
+        transfer_enable_flag_spi <= transfer_enable_flag_spi;
+        count <= count + 1;
+      end else if ((count == 3'h7) && ~spi_cs_i && (num_bytes == 3'b100)) begin
+        num_bytes <= {nb{1'b0}};
+        flag_counter_spi <= flag_counter_spi + 1;
+        transfer_enable_flag_spi <= transfer_enable_flag_spi;
+        count <= count + 1;
       end else if ((count == 3'h0) && (flag_counter_spi == 11'd65)) begin
-         flag_counter_spi <= 0;
-         transfer_enable_flag_spi <= transfer_enable_flag_spi + 1'b1;
-         count <= {cl{1'b0}};
-         num_bytes <= {nb{1'b0}};
+        flag_counter_spi <= 0;
+        transfer_enable_flag_spi <= transfer_enable_flag_spi + 1'b1;
+        count <= {cl{1'b0}};
+        num_bytes <= {nb{1'b0}};
       end else begin
-         num_bytes <= num_bytes;
-         flag_counter_spi <= flag_counter_spi;
-         transfer_enable_flag_spi <= transfer_enable_flag_spi;
-         count <= count + 1;
+        num_bytes <= num_bytes;
+        flag_counter_spi <= flag_counter_spi;
+        transfer_enable_flag_spi <= transfer_enable_flag_spi;
+        count <= count + 1;
       end
-   end
-end
+    end
+  end
 
 
-// serial address input
+  // serial address input
 
-always @(posedge spi_clk or negedge rst_n)  begin  // Positive Edge
-   // $display("addr=%d", addr); // ここの時点で62までしか入ってない
-   if (!rst_n)
-      addr <= {ap{1'b0}};
-   else if (transfer_enable_flag == 1'b0) begin
-      if ((count < al) && ~spi_cs && (num_bytes <= 3'b001)) begin
-         addr <= {addr[ap-2:0],spi_mosi};
-      end
-      else
-         addr <= addr;
-   end
-end
+  always @(posedge spi_clk_i or negedge rst_n_i) begin  // Positive Edge
+    // $display("addr=%d", addr); // ここの時点で62までしか入ってない
+    if (!rst_n_i) addr <= {ap{1'b0}};
+    else if (transfer_enable_flag == 1'b0) begin
+      if ((count < al) && ~spi_cs_i && (num_bytes <= 3'b001)) begin
+        addr <= {addr[ap-2:0], spi_mosi_i};
+      end else addr <= addr;
+    end
+  end
 
 
-// command detection
+  // command_o detection
 
-always @(posedge spi_clk or negedge rst_n)    // Positive Edge // write command = 1
-   if (!rst_n) begin
-      command <= 1'b0;
-   end else if (transfer_enable_flag == 1'b0) begin
-      if (spi_cs) begin
-         command <= 1'b0;
-      end else if ((num_bytes == {nb{1'b0}}) && (count == {cl{1'b0}}) && ~spi_cs) begin
-         command <= spi_mosi;
-      end else if ((num_bytes == 3'd2) && (count == {cl{1'b0}}) && ~spi_cs) begin
-         command <= command;
+  always @(posedge spi_clk_i or negedge rst_n_i)  // Positive Edge // write command_o = 1
+    if (!rst_n_i) begin
+      command_o <= 1'b0;
+    end else if (transfer_enable_flag == 1'b0) begin
+      if (spi_cs_i) begin
+        command_o <= 1'b0;
+      end else if ((num_bytes == {nb{1'b0}}) && (count == {cl{1'b0}}) && ~spi_cs_i) begin
+        command_o <= spi_mosi_i;
+      end else if ((num_bytes == 3'd2) && (count == {cl{1'b0}}) && ~spi_cs_i) begin
+        command_o <= command_o;
       end else begin
-         command <= command;
+        command_o <= command_o;
       end
-   end
+    end
 
-// serial data input from mosi
+  // serial data input from mosi
 
-always @(posedge spi_clk or negedge rst_n)    // Positive Edge
-   if (!rst_n)
-      wr_data <= {dl{1'b0}};
-   else if (transfer_enable_flag == 1'b0) begin
-      if (spi_cs)
-         wr_data <= {dl{1'b0}};
-      else if ((num_bytes >= 3'b010) && ~spi_cs && (command == wc))
-         wr_data <= {wr_data[dl-2:0], spi_mosi};
-      else
-         wr_data <= wr_data;
-   end
+  always @(posedge spi_clk_i or negedge rst_n_i)  // Positive Edge
+    if (!rst_n_i) wr_data_o <= {dl{1'b0}};
+    else if (transfer_enable_flag == 1'b0) begin
+      if (spi_cs_i) wr_data_o <= {dl{1'b0}};
+      else if ((num_bytes >= 3'b010) && ~spi_cs_i && (command_o == wc))
+        wr_data_o <= {wr_data_o[dl-2:0], spi_mosi_i};
+      else wr_data_o <= wr_data_o;
+    end
 
 
-// serial data output from miso
+  // serial data output from miso
 
-// always @(posedge spi_clk_b or negedge rst_n) begin   // Negative Edge
-//    $display("spi_miso_en=%d, num_bytes=%d, count=%d, flag_counter_spi=%d, spi_cs=%d, rst_n=%d", spi_miso_en, num_bytes, count, flag_counter_spi, spi_cs, rst_n);
-//    if (!rst_n)
-//       begin
-//       data_out <= {dl{1'b0}};
-//       spi_miso <= 1'b0;
-//       spi_miso_en <= 1'b0; // For miso bus
-//       end
-//    else if (transfer_enable_flag == 1'b0) begin
-//       if ((num_bytes <= 3'b001) && ~spi_cs)
-//          begin
-//          data_out <= {dl{1'b0}};
-//          spi_miso <= 1'b0;
-//          spi_miso_en <= 1'b0; // For miso bus
-//          end
-//       else if ((num_bytes >= 3'b010) && ~spi_cs && (command == rc))
-//          begin
-//          if (next)
-//             begin
-//             data_out <= {rd_data[dl-2:0], 1'b0};
-//             spi_miso <= rd_data[dl-1];
-//             spi_miso_en <= 1'b1;
-//             end
-//          else
-//             begin
-//             data_out <= {data_out[dl-2:0], 1'b0};
-//             spi_miso <= data_out[dl-1];
-//             spi_miso_en <= 1'b1;
-//             end
-//          end
-//       else
-//          begin
-//          data_out <= data_out;			// should be clear ?
-//          spi_miso <= spi_miso;			// should be clear ?
-//          spi_miso_en <= spi_miso_en;		// should be clear ?
-//          end
-//    end
-// end
+  // always @(posedge spi_clk_b or negedge rst_n_i) begin   // Negative Edge
+  //    $display("spi_miso_en_o=%d, num_bytes=%d, count=%d, flag_counter_spi=%d, spi_cs_i=%d, rst_n_i=%d", spi_miso_en_o, num_bytes, count, flag_counter_spi, spi_cs_i, rst_n_i);
+  //    if (!rst_n_i)
+  //       begin
+  //       data_out <= {dl{1'b0}};
+  //       spi_miso_o <= 1'b0;
+  //       spi_miso_en_o <= 1'b0; // For miso bus
+  //       end
+  //    else if (transfer_enable_flag == 1'b0) begin
+  //       if ((num_bytes <= 3'b001) && ~spi_cs_i)
+  //          begin
+  //          data_out <= {dl{1'b0}};
+  //          spi_miso_o <= 1'b0;
+  //          spi_miso_en_o <= 1'b0; // For miso bus
+  //          end
+  //       else if ((num_bytes >= 3'b010) && ~spi_cs_i && (command_o == rc))
+  //          begin
+  //          if (next_o)
+  //             begin
+  //             data_out <= {rd_data_i[dl-2:0], 1'b0};
+  //             spi_miso_o <= rd_data_i[dl-1];
+  //             spi_miso_en_o <= 1'b1;
+  //             end
+  //          else
+  //             begin
+  //             data_out <= {data_out[dl-2:0], 1'b0};
+  //             spi_miso_o <= data_out[dl-1];
+  //             spi_miso_en_o <= 1'b1;
+  //             end
+  //          end
+  //       else
+  //          begin
+  //          data_out <= data_out;			// should be clear ?
+  //          spi_miso_o <= spi_miso_o;			// should be clear ?
+  //          spi_miso_en_o <= spi_miso_en_o;		// should be clear ?
+  //          end
+  //    end
+  // end
 
 
-// integer spi_reg_out_req_addr;
-integer addr_in_data_out;
-// reg spi_reg_out_req;
-assign spi_reg_out_en = rd_data[dl-1];
-assign data_out = (spi_reg_out_en && addr_in_data_out==13) ? rd_data[dl-1-1:0] : data_out;
+  // integer spi_reg_out_req_addr_o;
+  integer addr_in_data_out;
+  // reg spi_reg_out_req_o;
+  assign spi_reg_out_en = rd_data_i[dl-1];
+  assign data_out = (spi_reg_out_en && addr_in_data_out == 13) ? rd_data_i[dl-1-1:0] : data_out;
 
-always @(posedge spi_clk_b or negedge rst_n) begin   // Negative Edge
-   // $display("spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
-   if (!rst_n) begin
+  always @(posedge spi_clk_b or negedge rst_n_i) begin  // Negative Edge
+    // $display("spi_miso_o=%d, spi_miso_en_o=%d", spi_miso_o, spi_miso_en_o);
+    if (!rst_n_i) begin
       // data_out <= {dl{1'b0}};
-      spi_miso <= 1'b0;
-      spi_miso_en <= 1'b0; // For miso bus
+      spi_miso_o <= 1'b0;
+      spi_miso_en_o <= 1'b0;  // For miso bus
       addr_in_data_out <= 0;
-      spi_reg_out_req <= 0;
-      spi_reg_out_req_addr <= 0;
-   end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out==13) begin // TODO
-      spi_miso <= data_out[13];
-      spi_miso_en <= 1;
+      spi_reg_out_req_o <= 0;
+      spi_reg_out_req_addr_o <= 0;
+    end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out==13) begin // TODO
+      spi_miso_o <= data_out[13];
+      spi_miso_en_o <= 1;
       addr_in_data_out <= 12;
-      spi_reg_out_req_addr <= spi_reg_out_req_addr;
-      spi_reg_out_req <= 0;
-      $display("1: spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
-   end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out > 0) begin
-      spi_miso <= data_out[addr_in_data_out];
-      spi_miso_en <= 1;
-      addr_in_data_out <= addr_in_data_out-1;
-      spi_reg_out_req_addr <= spi_reg_out_req_addr;
-      spi_reg_out_req <= 0;
-      $display("2: spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
-   end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out == 0) begin
-      spi_miso <= data_out[0];
-      spi_miso_en <= 1;
+      spi_reg_out_req_addr_o <= spi_reg_out_req_addr_o;
+      spi_reg_out_req_o <= 0;
+      $display("1: spi_miso_o=%d, spi_miso_en_o=%d", spi_miso_o, spi_miso_en_o);
+    end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out > 0) begin
+      spi_miso_o <= data_out[addr_in_data_out];
+      spi_miso_en_o <= 1;
+      addr_in_data_out <= addr_in_data_out - 1;
+      spi_reg_out_req_addr_o <= spi_reg_out_req_addr_o;
+      spi_reg_out_req_o <= 0;
+      $display("2: spi_miso_o=%d, spi_miso_en_o=%d", spi_miso_o, spi_miso_en_o);
+    end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out == 0) begin
+      spi_miso_o <= data_out[0];
+      spi_miso_en_o <= 1;
       addr_in_data_out <= 13;
-      spi_reg_out_req_addr <= spi_reg_out_req_addr +1;
-      spi_reg_out_req <= 1;
-      $display("3 spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
-   end else begin
-      $display("4 spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
-      spi_miso <= 0;
-      spi_miso_en <= 0;
-      addr_in_data_out <= 0; // ?????
-      spi_reg_out_req_addr <= spi_reg_out_req_addr;
-      spi_reg_out_req <= 0; // ?????
-   end
-end
+      spi_reg_out_req_addr_o <= spi_reg_out_req_addr_o + 1;
+      spi_reg_out_req_o <= 1;
+      $display("3 spi_miso_o=%d, spi_miso_en_o=%d", spi_miso_o, spi_miso_en_o);
+    end else begin
+      $display("4 spi_miso_o=%d, spi_miso_en_o=%d", spi_miso_o, spi_miso_en_o);
+      spi_miso_o <= 0;
+      spi_miso_en_o <= 0;
+      addr_in_data_out <= 0;  // ?????
+      spi_reg_out_req_addr_o <= spi_reg_out_req_addr_o;
+      spi_reg_out_req_o <= 0;  // ?????
+    end
+  end
 
 
 
-//--- Data Handling
+  //--- Data Handling
 
-// always @(posedge spi_clk or negedge rst_n)    // Positive Edge
-//    if (!rst_n)
-//       next <= 1'b0;
-//    else if (transfer_enable_flag == 1'b0) begin
-//       if ((count == 'h7) && ~spi_cs && (num_bytes == 3'b001))
-//          next <= 1'b1;
-//       else
-//          next <= 1'b0;
-//    end
+  // always @(posedge spi_clk_i or negedge rst_n_i)    // Positive Edge
+  //    if (!rst_n_i)
+  //       next_o <= 1'b0;
+  //    else if (transfer_enable_flag == 1'b0) begin
+  //       if ((count == 'h7) && ~spi_cs_i && (num_bytes == 3'b001))
+  //          next_o <= 1'b1;
+  //       else
+  //          next_o <= 1'b0;
+  //    end
 
 
-//--- Write Data Handling
+  //--- Write Data Handling
 
-always @(posedge spi_clk or negedge rst_n)    // Positive Edge
-   if (!rst_n)
-      wr_act <= 1'b0;
-   else if (transfer_enable_flag == 1'b0) begin
-      if ((count == 'h7) && ~spi_cs && (num_bytes == 3'b100) && (command == wc))
-         wr_act <= 1'b1;
-      else
-         wr_act <= 1'b0;
-   end
+  always @(posedge spi_clk_i or negedge rst_n_i)  // Positive Edge
+    if (!rst_n_i) wr_act_o <= 1'b0;
+    else if (transfer_enable_flag == 1'b0) begin
+      if ((count == 'h7) && ~spi_cs_i && (num_bytes == 3'b100) && (command_o == wc))
+        wr_act_o <= 1'b1;
+      else wr_act_o <= 1'b0;
+    end
 
-endmodule	//spi_if
+endmodule  //spi_if
