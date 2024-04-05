@@ -26,7 +26,10 @@ rd_data,
 next,
 wr_act,
 command,
-transfer_enable_flag
+transfer_enable_flag,
+
+spi_reg_out_req,
+spi_reg_out_req_addr
 );
 
 
@@ -63,6 +66,9 @@ output			wr_act;
 output			command;
 output         transfer_enable_flag;
 
+output reg spi_reg_out_req;
+output reg [4:0] spi_reg_out_req_addr; // 14桁なので....
+
 
 //-----------------------------------------------------------------------
 // Signal Declaration
@@ -86,7 +92,7 @@ reg			command;		// write = 1, read = 0
 // Operations
 //-----------------------------------------------------------------------
 reg	[al-2:0]	addr;
-reg	[dl-1:0]	data_out;
+wire	[dl-1:0]	data_out;
 reg	[cl-1:0]	count;
 reg	[nb-1:0]	num_bytes;
 reg   [10:0] flag_counter_spi; // 追記
@@ -189,42 +195,89 @@ always @(posedge spi_clk or negedge rst_n)    // Positive Edge
 
 // serial data output from miso
 
+// always @(posedge spi_clk_b or negedge rst_n) begin   // Negative Edge
+//    $display("spi_miso_en=%d, num_bytes=%d, count=%d, flag_counter_spi=%d, spi_cs=%d, rst_n=%d", spi_miso_en, num_bytes, count, flag_counter_spi, spi_cs, rst_n);
+//    if (!rst_n)
+//       begin
+//       data_out <= {dl{1'b0}};
+//       spi_miso <= 1'b0;
+//       spi_miso_en <= 1'b0; // For miso bus
+//       end
+//    else if (transfer_enable_flag == 1'b0) begin
+//       if ((num_bytes <= 3'b001) && ~spi_cs)
+//          begin
+//          data_out <= {dl{1'b0}};
+//          spi_miso <= 1'b0;
+//          spi_miso_en <= 1'b0; // For miso bus
+//          end
+//       else if ((num_bytes >= 3'b010) && ~spi_cs && (command == rc))
+//          begin
+//          if (next)
+//             begin
+//             data_out <= {rd_data[dl-2:0], 1'b0};
+//             spi_miso <= rd_data[dl-1];
+//             spi_miso_en <= 1'b1;
+//             end
+//          else
+//             begin
+//             data_out <= {data_out[dl-2:0], 1'b0};
+//             spi_miso <= data_out[dl-1];
+//             spi_miso_en <= 1'b1;
+//             end
+//          end
+//       else
+//          begin
+//          data_out <= data_out;			// should be clear ?
+//          spi_miso <= spi_miso;			// should be clear ?
+//          spi_miso_en <= spi_miso_en;		// should be clear ?
+//          end
+//    end
+// end
+
+
+// integer spi_reg_out_req_addr;
+integer addr_in_data_out;
+// reg spi_reg_out_req;
+assign spi_reg_out_en = rd_data[dl-1];
+assign data_out = (spi_reg_out_en && addr_in_data_out==13) ? rd_data[dl-1-1:0] : data_out;
+
 always @(posedge spi_clk_b or negedge rst_n) begin   // Negative Edge
-   $display("spi_miso_en=%d, num_bytes=%d, count=%d, flag_counter_spi=%d, spi_cs=%d, rst_n=%d", spi_miso_en, num_bytes, count, flag_counter_spi, spi_cs, rst_n);
-   if (!rst_n)
-      begin
-      data_out <= {dl{1'b0}};
+   // $display("spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
+   if (!rst_n) begin
+      // data_out <= {dl{1'b0}};
       spi_miso <= 1'b0;
       spi_miso_en <= 1'b0; // For miso bus
-      end
-   else if (transfer_enable_flag == 1'b0) begin
-      if ((num_bytes <= 3'b001) && ~spi_cs)
-         begin
-         data_out <= {dl{1'b0}};
-         spi_miso <= 1'b0;
-         spi_miso_en <= 1'b0; // For miso bus
-         end
-      else if ((num_bytes >= 3'b010) && ~spi_cs && (command == rc))
-         begin
-         if (next)
-            begin
-            data_out <= {rd_data[dl-2:0], 1'b0};
-            spi_miso <= rd_data[dl-1];
-            spi_miso_en <= 1'b1;
-            end
-         else
-            begin
-            data_out <= {data_out[dl-2:0], 1'b0};
-            spi_miso <= data_out[dl-1];
-            spi_miso_en <= 1'b1;
-            end
-         end
-      else
-         begin
-         data_out <= data_out;			// should be clear ?
-         spi_miso <= spi_miso;			// should be clear ?
-         spi_miso_en <= spi_miso_en;		// should be clear ?
-         end
+      addr_in_data_out <= 0;
+      spi_reg_out_req <= 0;
+      spi_reg_out_req_addr <= 0;
+   end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out==13) begin // TODO
+      spi_miso <= data_out[13];
+      spi_miso_en <= 1;
+      addr_in_data_out <= 12;
+      spi_reg_out_req_addr <= spi_reg_out_req_addr;
+      spi_reg_out_req <= 0;
+      $display("1: spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
+   end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out > 0) begin
+      spi_miso <= data_out[addr_in_data_out];
+      spi_miso_en <= 1;
+      addr_in_data_out <= addr_in_data_out-1;
+      spi_reg_out_req_addr <= spi_reg_out_req_addr;
+      spi_reg_out_req <= 0;
+      $display("2: spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
+   end else if (transfer_enable_flag == 0 && spi_reg_out_en && addr_in_data_out == 0) begin
+      spi_miso <= data_out[0];
+      spi_miso_en <= 1;
+      addr_in_data_out <= 13;
+      spi_reg_out_req_addr <= spi_reg_out_req_addr +1;
+      spi_reg_out_req <= 1;
+      $display("3 spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
+   end else begin
+      $display("4 spi_miso=%d, spi_miso_en=%d", spi_miso, spi_miso_en);
+      spi_miso <= 0;
+      spi_miso_en <= 0;
+      addr_in_data_out <= 0; // ?????
+      spi_reg_out_req_addr <= spi_reg_out_req_addr;
+      spi_reg_out_req <= 0; // ?????
    end
 end
 
@@ -232,15 +285,15 @@ end
 
 //--- Data Handling
 
-always @(posedge spi_clk or negedge rst_n)    // Positive Edge
-   if (!rst_n)
-      next <= 1'b0;
-   else if (transfer_enable_flag == 1'b0) begin
-      if ((count == 'h7) && ~spi_cs && (num_bytes == 3'b001))
-         next <= 1'b1;
-      else
-         next <= 1'b0;
-   end
+// always @(posedge spi_clk or negedge rst_n)    // Positive Edge
+//    if (!rst_n)
+//       next <= 1'b0;
+//    else if (transfer_enable_flag == 1'b0) begin
+//       if ((count == 'h7) && ~spi_cs && (num_bytes == 3'b001))
+//          next <= 1'b1;
+//       else
+//          next <= 1'b0;
+//    end
 
 
 //--- Write Data Handling

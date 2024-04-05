@@ -93,7 +93,10 @@ REG_IN_B_000,
 
 REG_OUT_A_000,
 REG_OUT_B_000,
-rst_for_logmel
+rst_for_logmel,
+
+spi_reg_out_req,
+spi_reg_out_req_addr
 );
 
 //-----------------------------------------------------------------------
@@ -193,6 +196,8 @@ input   [(rl*64)-1:0]              REG_OUT_A_000;
 
 input   [rl-1:0]              REG_OUT_B_000;
 input rst_for_logmel;
+input spi_reg_out_req;
+input [4:0] spi_reg_out_req_addr;
 
 //-----------------------------------------------------------------------
 // Signal Declaration
@@ -705,79 +710,79 @@ else begin
          15'b111111111111111:   REG_IN_B_000 <= wr_data[rl-1:0];
       endcase
    end
-   else if (rd_act_q2) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
+   else if (spi_reg_out_req) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
       // $display("addr_in_q=%d, data_out=%d, REG_OUT_A_000[100]=%d", addr_in_q, data_out, REG_OUT_A_000[100]);
       // $display("ok"); // この条件自体の中には入ってそう
-      case (addr_in_q)
+      case (spi_reg_out_req_addr)
          15'b111111111111111:      data_out[rl-1:0] <= REG_IN_B_000;
 
-         15'd0:      data_out[rl-1:0] <= REG_OUT_A_000[13*1-1:13*0];
-         15'd1:      data_out[rl-1:0] <= REG_OUT_A_000[13*2-1:13*1];
-         15'd2:      data_out[rl-1:0] <= REG_OUT_A_000[13*3-1:13*2];
-         15'd3:      data_out[rl-1:0] <= REG_OUT_A_000[13*4-1:13*3];
-         15'd4:      data_out[rl-1:0] <= REG_OUT_A_000[13*5-1:13*4];
-         15'd5:      data_out[rl-1:0] <= REG_OUT_A_000[13*6-1:13*5];
-         15'd6:      data_out[rl-1:0] <= REG_OUT_A_000[13*7-1:13*6];
-         15'd7:      data_out[rl-1:0] <= REG_OUT_A_000[13*8-1:13*7];
-         15'd8:      data_out[rl-1:0] <= REG_OUT_A_000[13*9-1:13*8];
-         15'd9:      data_out[rl-1:0] <= REG_OUT_A_000[13*10-1:13*9];
-         15'd10:      data_out[rl-1:0] <= REG_OUT_A_000[13*11-1:13*10];
-         15'd11:      data_out[rl-1:0] <= REG_OUT_A_000[13*12-1:13*11];
-         15'd12:      data_out[rl-1:0] <= REG_OUT_A_000[13*13-1:13*12];
-         15'd13:      data_out[rl-1:0] <= REG_OUT_A_000[13*14-1:13*13];
-         15'd14:      data_out[rl-1:0] <= REG_OUT_A_000[13*15-1:13*14];
-         15'd15:      data_out[rl-1:0] <= REG_OUT_A_000[13*16-1:13*15];
-         15'd16:      data_out[rl-1:0] <= REG_OUT_A_000[13*17-1:13*16];
-         15'd17:      data_out[rl-1:0] <= REG_OUT_A_000[13*18-1:13*17];
-         15'd18:      data_out[rl-1:0] <= REG_OUT_A_000[13*19-1:13*18];
-         15'd19:      data_out[rl-1:0] <= REG_OUT_A_000[13*20-1:13*19];
-         15'd20:      data_out[rl-1:0] <= REG_OUT_A_000[13*21-1:13*20];
-         15'd21:      data_out[rl-1:0] <= REG_OUT_A_000[13*22-1:13*21];
-         15'd22:      data_out[rl-1:0] <= REG_OUT_A_000[13*23-1:13*22];
-         15'd23:      data_out[rl-1:0] <= REG_OUT_A_000[13*24-1:13*23];
-         15'd24:      data_out[rl-1:0] <= REG_OUT_A_000[13*25-1:13*24];
-         15'd25:      data_out[rl-1:0] <= REG_OUT_A_000[13*26-1:13*25];
-         15'd26:      data_out[rl-1:0] <= REG_OUT_A_000[13*27-1:13*26];
-         15'd27:      data_out[rl-1:0] <= REG_OUT_A_000[13*28-1:13*27];
-         15'd28:      data_out[rl-1:0] <= REG_OUT_A_000[13*29-1:13*28];
-         15'd29:      data_out[rl-1:0] <= REG_OUT_A_000[13*30-1:13*29];
-         15'd30:      data_out[rl-1:0] <= REG_OUT_A_000[13*31-1:13*30];
-         15'd31:      data_out[rl-1:0] <= REG_OUT_A_000[13*32-1:13*31];
-         15'd32:      data_out[rl-1:0] <= REG_OUT_A_000[13*33-1:13*32];
-         15'd33:      data_out[rl-1:0] <= REG_OUT_A_000[13*34-1:13*33];
-         15'd34:      data_out[rl-1:0] <= REG_OUT_A_000[13*35-1:13*34];
-         15'd35:      data_out[rl-1:0] <= REG_OUT_A_000[13*36-1:13*35];
-         15'd36:      data_out[rl-1:0] <= REG_OUT_A_000[13*37-1:13*36];
-         15'd37:      data_out[rl-1:0] <= REG_OUT_A_000[13*38-1:13*37];
-         15'd38:      data_out[rl-1:0] <= REG_OUT_A_000[13*39-1:13*38];
-         15'd39:      data_out[rl-1:0] <= REG_OUT_A_000[13*40-1:13*39];
-         15'd40:      data_out[rl-1:0] <= REG_OUT_A_000[13*41-1:13*40];
-         15'd41:      data_out[rl-1:0] <= REG_OUT_A_000[13*42-1:13*41];
-         15'd42:      data_out[rl-1:0] <= REG_OUT_A_000[13*43-1:13*42];
-         15'd43:      data_out[rl-1:0] <= REG_OUT_A_000[13*44-1:13*43];
-         15'd44:      data_out[rl-1:0] <= REG_OUT_A_000[13*45-1:13*44];
-         15'd45:      data_out[rl-1:0] <= REG_OUT_A_000[13*46-1:13*45];
-         15'd46:      data_out[rl-1:0] <= REG_OUT_A_000[13*47-1:13*46];
-         15'd47:      data_out[rl-1:0] <= REG_OUT_A_000[13*48-1:13*47];
-         15'd48:      data_out[rl-1:0] <= REG_OUT_A_000[13*49-1:13*48];
-         15'd49:      data_out[rl-1:0] <= REG_OUT_A_000[13*50-1:13*49];
-         15'd50:      data_out[rl-1:0] <= REG_OUT_A_000[13*51-1:13*50];
-         15'd51:      data_out[rl-1:0] <= REG_OUT_A_000[13*52-1:13*51];
-         15'd52:      data_out[rl-1:0] <= REG_OUT_A_000[13*53-1:13*52];
-         15'd53:      data_out[rl-1:0] <= REG_OUT_A_000[13*54-1:13*53];
-         15'd54:      data_out[rl-1:0] <= REG_OUT_A_000[13*55-1:13*54];
-         15'd55:      data_out[rl-1:0] <= REG_OUT_A_000[13*56-1:13*55];
-         15'd56:      data_out[rl-1:0] <= REG_OUT_A_000[13*57-1:13*56];
-         15'd57:      data_out[rl-1:0] <= REG_OUT_A_000[13*58-1:13*57];
-         15'd58:      data_out[rl-1:0] <= REG_OUT_A_000[13*59-1:13*58];
-         15'd59:      data_out[rl-1:0] <= REG_OUT_A_000[13*60-1:13*59];
-         15'd60:      data_out[rl-1:0] <= REG_OUT_A_000[13*61-1:13*60];
-         15'd61:      data_out[rl-1:0] <= REG_OUT_A_000[13*62-1:13*61];
-         15'd62:      data_out[rl-1:0] <= REG_OUT_A_000[13*63-1:13*62];
-         15'd63:      data_out[rl-1:0] <= REG_OUT_A_000[13*64-1:13*63];
+         15'd0:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*1-1:13*0]};
+         15'd1:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*2-1:13*1]};
+         15'd2:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*3-1:13*2]};
+         15'd3:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*4-1:13*3]};
+         15'd4:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*5-1:13*4]};
+         15'd5:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*6-1:13*5]};
+         15'd6:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*7-1:13*6]};
+         15'd7:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*8-1:13*7]};
+         15'd8:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*9-1:13*8]};
+         15'd9:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*10-1:13*9]};
+         15'd10:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*11-1:13*10]};
+         15'd11:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*12-1:13*11]};
+         15'd12:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*13-1:13*12]};
+         15'd13:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*14-1:13*13]};
+         15'd14:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*15-1:13*14]};
+         15'd15:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*16-1:13*15]};
+         15'd16:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*17-1:13*16]};
+         15'd17:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*18-1:13*17]};
+         15'd18:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*19-1:13*18]};
+         15'd19:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*20-1:13*19]};
+         15'd20:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*21-1:13*20]};
+         15'd21:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*22-1:13*21]};
+         15'd22:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*23-1:13*22]};
+         15'd23:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*24-1:13*23]};
+         15'd24:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*25-1:13*24]};
+         15'd25:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*26-1:13*25]};
+         15'd26:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*27-1:13*26]};
+         15'd27:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*28-1:13*27]};
+         15'd28:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*29-1:13*28]};
+         15'd29:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*30-1:13*29]};
+         15'd30:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*31-1:13*30]};
+         15'd31:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*32-1:13*31]};
+         15'd32:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*33-1:13*32]};
+         15'd33:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*34-1:13*33]};
+         15'd34:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*35-1:13*34]};
+         15'd35:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*36-1:13*35]};
+         15'd36:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*37-1:13*36]};
+         15'd37:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*38-1:13*37]};
+         15'd38:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*39-1:13*38]};
+         15'd39:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*40-1:13*39]};
+         15'd40:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*41-1:13*40]};
+         15'd41:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*42-1:13*41]};
+         15'd42:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*43-1:13*42]};
+         15'd43:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*44-1:13*43]};
+         15'd44:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*45-1:13*44]};
+         15'd45:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*46-1:13*45]};
+         15'd46:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*47-1:13*46]};
+         15'd47:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*48-1:13*47]};
+         15'd48:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*49-1:13*48]};
+         15'd49:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*50-1:13*49]};
+         15'd50:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*51-1:13*50]};
+         15'd51:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*52-1:13*51]};
+         15'd52:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*53-1:13*52]};
+         15'd53:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*54-1:13*53]};
+         15'd54:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*55-1:13*54]};
+         15'd55:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*56-1:13*55]};
+         15'd56:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*57-1:13*56]};
+         15'd57:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*58-1:13*57]};
+         15'd58:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*59-1:13*58]};
+         15'd59:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*60-1:13*59]};
+         15'd60:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*61-1:13*60]};
+         15'd61:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*62-1:13*61]};
+         15'd62:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*63-1:13*62]};
+         15'd63:      data_out[rl-1:0] <= {1'b1, REG_OUT_A_000[13*64-1:13*63]};
 
 
-         15'd65:      data_out[rl-1:0] <= REG_OUT_B_000;
+         // 15'd65:      data_out[rl-1:0] <= REG_OUT_B_000;
 
          default:       data_out <= {dl{1'b0}};
       endcase

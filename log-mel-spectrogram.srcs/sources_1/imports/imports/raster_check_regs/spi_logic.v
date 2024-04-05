@@ -227,6 +227,9 @@ spi_clock spi_clock_inst(
 .selected_sys_clk(selected_sys_clk)
 );
 
+wire spi_reg_out_req;
+wire [4:0] spi_reg_out_req_addr;
+
 spi_if spi_if_inst(
 .rst_n		(rst_n		),
 .spi_cs		(spi_cs		),
@@ -241,8 +244,12 @@ spi_if spi_if_inst(
 .command	(command	),
 .spi_clk    (spi_clk_in),
 .transfer_enable_flag(transfer_enable_flag),
-.clk(clk_in)
+.clk(clk_in),
+.spi_reg_out_req(spi_reg_out_req),
+.spi_reg_out_req_addr(spi_reg_out_req_addr)
 );
+
+
 
 
 // spi_regs instance
@@ -331,7 +338,9 @@ spi_regs spi_regs_inst(
 .REG_IN_B_000   (REG_IN_B_000),
 .REG_OUT_A_000  (REG_OUT_A_000),
 .REG_OUT_B_000  (REG_OUT_B_000),
-.rst_for_logmel(rst_for_logmel)
+.rst_for_logmel(rst_for_logmel),
+.spi_reg_out_req(spi_reg_out_req),
+.spi_reg_out_req_addr(spi_reg_out_req_addr)
 );
 
 wire [1:0] logmel_di_en;
