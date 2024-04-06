@@ -13,18 +13,20 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module spi_logic (
+module spi_logic #(
+  parameter rl=14 // do not change
+)(
   input clk_i,
 
   input sys_clk_i,
   input rst_n_i,
-  input rst_for_logmel_i;
+  input rst_for_logmel_i,
 
   input spi_clk_i,
   input spi_cs_i,
   input spi_mosi_i,
-  output spi_miso,
-  output spi_miso_en,
+  output spi_miso_o,
+  output spi_miso_en_o,
 
   // BASIC Registers 
   output [rl-1:0] REG_IN_A_000_o,
@@ -113,7 +115,7 @@ module spi_logic (
   parameter cl = 3;  // counter length
   parameter nb = 3;  // number of data byte
   parameter ap = al - 1;  // R/W flag in address field
-  parameter rl = 14;  // register length
+  // parameter rl = 14;  // register length
 
   //-----------------------------------------------------------------------
   // Operations
@@ -124,15 +126,16 @@ module spi_logic (
   wire next;
   wire wr_act;
   wire command;
-  wire transfer_enable_flag;  //　追記
+  wire transfer_enable_flag;  //�?追�?
+  wire selected_sys_clk;
 
 
 
 
   spi_clock spi_clock_inst (
-      .sys_clk_i             (sys_clk_i),            // 外部からのSPIクロック入力
+      .sys_clk_i             (sys_clk_i),            // 外部からのSPIクロ�?ク入�?
       .clk_i                 (clk_i),
-      .transfer_enable_flag_i(transfer_enable_flag),  // クロックを制御するフラグ
+      .transfer_enable_flag_i(transfer_enable_flag),  // クロ�?クを制御するフラグ
       .clk_o                 (clk_out),
       .selected_sys_clk_o    (selected_sys_clk)
   );
@@ -144,8 +147,8 @@ module spi_logic (
       .rst_n_i               (rst_n_i),
       .spi_cs_i              (spi_cs_i),
       .spi_mosi_i            (spi_mosi_i),
-      .spi_miso_o            (spi_miso),
-      .spi_miso_en_o         (spi_miso_en),
+      .spi_miso_o            (spi_miso_o),
+      .spi_miso_en_o         (spi_miso_en_o),
       .addr_out_o            (addr_out),
       .wr_data_o             (wr_data),
       .rd_data_i             (rd_data),
@@ -175,7 +178,7 @@ module spi_logic (
       .command_i(command),
       .transfer_enable_flag_i(transfer_enable_flag),
       .sys_clk_i(sys_clk_i),
-      .selected_sys_clk_i(selected_sys_clk_i),
+      .selected_sys_clk_i(selected_sys_clk),
 
       // BASIC Registers
       .REG_IN_A_000_o(REG_IN_A_000_o),
@@ -254,7 +257,7 @@ module spi_logic (
   );
 
   wire [1:0] logmel_di_en;
-  wire logmel_do_en;
+  // wire logmel_do_en;
   // wire [(14*64)-1:0] logmel_data_o;
 
   assign logmel_di_en = REG_IN_B_000_o[1:0];

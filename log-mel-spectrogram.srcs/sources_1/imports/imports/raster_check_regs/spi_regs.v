@@ -318,6 +318,7 @@ module spi_regs (
   end
 
   always @(posedge selected_sys_clk_i or negedge rst_n_i) begin
+    $display("spi_reg_out_req_i=%d, spi_reg_out_req_addr_i=%d", spi_reg_out_req_i, spi_reg_out_req_addr_i);
     if (!rst_n_i) begin
       REG_IN_A_000_o <= {rl{1'b0}};
       REG_IN_A_001_o <= {rl{1'b0}};
@@ -681,9 +682,8 @@ module spi_regs (
           15'b111111111111111: REG_IN_B_000_o <= wr_data[rl-1:0];
         endcase
       end
-   else if (spi_reg_out_req_i) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
-        // $display("addr_in_q=%d, data_o=%d, REG_OUT_A_000_i[100]=%d", addr_in_q, data_o, REG_OUT_A_000_i[100]);
-        // $display("ok"); // この条件自体の中には入ってそう
+    else if (spi_reg_out_req_i) begin // この条件がおかしいしaddr_in_qのまわり方もおかしい
+        $display("REG_OUT_A_000_i[13*1-1:13*0]=%d", REG_OUT_A_000_i[13*1-1:13*0]);
         case (spi_reg_out_req_addr_i)
           15'b111111111111111: data_o[rl-1:0] <= REG_IN_B_000_o;
 
