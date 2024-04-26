@@ -8,13 +8,11 @@ module mel_filter #(
     input rst_i,
     input [9:0] group_idx_i,  // 0-512
     input signed [I_BW-1:0] data_i,
-    input [6:0] group_num_i,  // 0-88
     input en_i,
     input is_first_i,
     input is_last_i,
     output signed [O_BW*64-1:0] data_o,
-    output reg en_o,
-    output reg [6:0] group_num_o  // 0-88
+    output reg en_o
 );
   wire [9:0] filter_v;  // 0-512
   wire [1:0] non_zero_num;
@@ -51,7 +49,6 @@ module mel_filter #(
         tmp[i] <= 30'b000000000000000000000000000000;
       end
       en_o <= 0;
-      group_num_o <= 0;  // 
     end else begin
       if (en_i & is_first_i) begin
         if (non_zero_num == 0) begin
@@ -59,14 +56,12 @@ module mel_filter #(
             tmp[i] <= 30'b000000000000000000000000000000;
           end
           en_o <= 0;
-          group_num_o <= group_num_i;
         end else if (non_zero_num == 1) begin
           for (i = 0; i < 64; i = i + 1) begin
             tmp[i] <= 30'b000000000000000000000000000000;
           end
           tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
           en_o <= 0;
-          group_num_o <= group_num_i;
         end else if (non_zero_num == 2) begin
           for (i = 0; i < 64; i = i + 1) begin
             tmp[i] <= 30'b000000000000000000000000000000;
@@ -74,13 +69,11 @@ module mel_filter #(
           tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
           tmp[non_zero_idx2] <= tmp[non_zero_idx2] + scaled2;
           en_o <= 0;
-          group_num_o <= group_num_i;
         end else begin
           for (i = 0; i < 64; i = i + 1) begin
             tmp[i] <= 30'b000000000000000000000000000000;
           end
           en_o <= 0;
-          group_num_o <= group_num_i;
         end
       end else if (en_i & is_last_i) begin
         if (non_zero_num == 0) begin
@@ -88,22 +81,18 @@ module mel_filter #(
             tmp[i] <= tmp[i];
           end
           en_o <= 1;
-          group_num_o <= group_num_i;
         end else if (non_zero_num == 1) begin
           tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
           en_o <= 1;
-          group_num_o <= group_num_i;
         end else if (non_zero_num == 2) begin
           tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
           tmp[non_zero_idx2] <= tmp[non_zero_idx2] + scaled2;
           en_o <= 1;
-          group_num_o <= group_num_i;
         end else begin
           for (i = 0; i < 64; i = i + 1) begin
             tmp[i] <= tmp[i];
           end
           en_o <= 0;
-          group_num_o <= group_num_i;
         end
       end else if (en_i) begin
         if (non_zero_num == 0) begin
@@ -111,29 +100,24 @@ module mel_filter #(
             tmp[i] <= tmp[i];
           end
           en_o <= 0;
-          group_num_o <= group_num_i;
         end else if (non_zero_num == 1) begin
           tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
           en_o <= 0;
-          group_num_o <= group_num_i;
         end else if (non_zero_num == 2) begin
           tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
           tmp[non_zero_idx2] <= tmp[non_zero_idx2] + scaled2;
           en_o <= 0;
-          group_num_o <= group_num_i;
         end else begin
           for (i = 0; i < 64; i = i + 1) begin
             tmp[i] <= tmp[i];
           end
           en_o <= 0;
-          group_num_o <= group_num_i;
         end
       end else begin
         for (i = 0; i < 64; i = i + 1) begin
           tmp[i] <= tmp[i];
         end
         en_o <= 0;
-        group_num_o <= group_num_i;
       end
     end
   end

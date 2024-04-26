@@ -7,8 +7,8 @@ module log_mel_spectrogram #(
     input rst_i,
     input [1:0] en_i,
     input signed [I_BW-1:0] data_i,
-    output reg en_o,
-    output reg signed [O_BW*64-1:0] data_o
+    output en_o,
+    output signed [O_BW*64-1:0] data_o
 );
   localparam INPUT_COUNTER_O_BW = 14;
   localparam FRAMING_O_BW = 14;
@@ -16,19 +16,77 @@ module log_mel_spectrogram #(
   localparam OUT_FRAMING_TOTAL_DATA = 91136;
   localparam HANN_WINDOW_O_BW = 14;
   localparam FRAME_LEN = 1024;
-
+  localparam FFT_O_BW = 14;
+  localparam POST_FFT_COUNT_O_BW = 14;
+  localparam SQUARED_O_BW = 27;
+  localparam MEL_O_BW = 30;
+  localparam LOG_O_BW = 14;
 
   wire signed [INPUT_COUNTER_O_BW-1:0] input_counter_data_lo;
-  wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] input_counter_num_lo;  // 
+  wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] input_counter_num_lo;
   wire [1:0] input_counter_en_lo;
+
   wire [($clog2(OUT_FRAMING_TOTAL_DATA)-1):0] framing_num_lo;
   wire framing_en_lo;
   wire signed [FRAMING_O_BW-1:0] framing_data_lo;
+
   wire signed [HANN_WINDOW_O_BW-1:0] hann_data_lo;
   wire hann_en_lo;
   wire [($clog2(FRAME_LEN)-1):0] hann_group_idx_lo;
   wire [$clog2(OUT_FRAMING_TOTAL_DATA/FRAME_LEN):0] hann_group_num_lo;
 
+  wire [1:0] fft_group;
+  wire fft_group0_en_li;
+  wire fft_group1_en_li;
+  wire fft_group2_en_li;
+  wire fft_group0_en_lo;
+  wire fft_group1_en_lo;
+  wire fft_group2_en_lo;
+  wire signed [FFT_O_BW-1:0] fft_group0_re_lo;
+  wire signed [FFT_O_BW-1:0] fft_group0_im_lo;
+  wire signed [FFT_O_BW-1:0] fft_group1_re_lo;
+  wire signed [FFT_O_BW-1:0] fft_group1_im_lo;
+  wire signed [FFT_O_BW-1:0] fft_group2_re_lo;
+  wire signed [FFT_O_BW-1:0] fft_group2_im_lo;
+
+  wire post_fft_count_group0_en_lo;
+  wire post_fft_count_group1_en_lo;
+  wire post_fft_count_group2_en_lo;
+  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group0_re_lo;
+  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group0_im_lo;
+  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group1_re_lo;
+  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group1_im_lo;
+  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group2_re_lo;
+  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group2_im_lo;
+  wire [9:0] post_fft_count_group0_lo;
+  wire [9:0] post_fft_count_group1_lo;
+  wire [9:0] post_fft_count_group2_lo;
+
+  wire rfft_group0_en;
+  wire rfft_group1_en;
+  wire rfft_group2_en;
+
+  wire signed [SQUARED_O_BW-1:0] power_fft_group0;
+  wire signed [SQUARED_O_BW-1:0] power_fft_group1;
+  wire signed [SQUARED_O_BW-1:0] power_fft_group2;
+
+  wire signed [MEL_O_BW*64-1:0] mel_filtered_group0_lo;
+  wire signed [MEL_O_BW*64-1:0] mel_filtered_group1_lo;
+  wire signed [MEL_O_BW*64-1:0] mel_filtered_group2_lo;
+
+  wire mel_filter_group0_en_lo;
+  wire mel_filter_group1_en_lo;
+  wire mel_filter_group2_en_lo;
+  wire is_mel_group0_first_li;
+  wire is_mel_group0_last_li;
+  wire is_mel_group1_first_li;
+  wire is_mel_group1_last_li;
+  wire is_mel_group2_first_li;
+  wire is_mel_group2_last_li;
+
+  wire signed [LOG_O_BW*64-1:0] logged_group0_lo;
+  wire signed [LOG_O_BW*64-1:0] logged_group1_lo;
+  wire signed [LOG_O_BW*64-1:0] logged_group2_lo;
 
 
   input_counter #(
@@ -76,205 +134,110 @@ module log_mel_spectrogram #(
       .group_num_o(hann_group_num_lo)
   );
 
-  localparam FFT_O_BW = 14;
-
-  wire [1:0] fft_group;
-  wire is_fft_group0;
-  wire is_fft_group1;
-  wire is_fft_group2;
-  wire fft_group0_do_en;
-  wire fft_group1_do_en;
-  wire fft_group2_do_en;
-  wire signed [HANN_WINDOW_O_BW-1:0] di_im;
-  wire signed [FFT_O_BW-1:0] fft_group0_do_re;
-  wire signed [FFT_O_BW-1:0] fft_group0_do_im;
-  wire signed [FFT_O_BW-1:0] fft_group1_do_re;
-  wire signed [FFT_O_BW-1:0] fft_group1_do_im;
-  wire signed [FFT_O_BW-1:0] fft_group2_do_re;
-  wire signed [FFT_O_BW-1:0] fft_group2_do_im;
-
   assign fft_group = hann_group_num_lo % 3;
-  assign is_fft_group0 = hann_en_lo & (fft_group == 0);
-  assign is_fft_group1 = hann_en_lo & (fft_group == 1);
-  assign is_fft_group2 = hann_en_lo & (fft_group == 2);
-
-  assign di_im = 0;
+  assign fft_group0_en_li = hann_en_lo & (fft_group == 0);
+  assign fft_group1_en_li = hann_en_lo & (fft_group == 1);
+  assign fft_group2_en_li = hann_en_lo & (fft_group == 2);
 
   FFT FFT0 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .en_i (is_fft_group0),
+      .en_i (fft_group0_en_li),
       .re_i (hann_data_lo),
-      .im_i (di_im),
-      .en_o (fft_group0_do_en),
-      .re_o (fft_group0_do_re),
-      .im_o (fft_group0_do_im)
+      .im_i (14'b0),
+      .en_o (fft_group0_en_lo),
+      .re_o (fft_group0_re_lo),
+      .im_o (fft_group0_im_lo)
   );
 
   FFT FFT1 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .en_i (is_fft_group1),
+      .en_i (fft_group1_en_li),
       .re_i (hann_data_lo),
-      .im_i (di_im),
-      .en_o (fft_group1_do_en),
-      .re_o (fft_group1_do_re),
-      .im_o (fft_group1_do_im)
+      .im_i (14'b0),
+      .en_o (fft_group1_en_lo),
+      .re_o (fft_group1_re_lo),
+      .im_o (fft_group1_im_lo)
   );
 
   FFT FFT2 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .en_i (is_fft_group2),
+      .en_i (fft_group2_en_li),
       .re_i (hann_data_lo),
-      .im_i (di_im),
-      .en_o (fft_group2_do_en),
-      .re_o (fft_group2_do_re),
-      .im_o (fft_group2_do_im)
+      .im_i (14'b0),
+      .en_o (fft_group2_en_lo),
+      .re_o (fft_group2_re_lo),
+      .im_o (fft_group2_im_lo)
   );
 
-  localparam COUNTER_O_BW = 14;
-  wire counter0_do_en;
-  wire counter1_do_en;
-  wire counter2_do_en;
-  wire signed [COUNTER_O_BW-1:0] counter0_do_re;
-  wire signed [COUNTER_O_BW-1:0] counter0_do_im;
-  wire signed [COUNTER_O_BW-1:0] counter1_do_re;
-  wire signed [COUNTER_O_BW-1:0] counter1_do_im;
-  wire signed [COUNTER_O_BW-1:0] counter2_do_re;
-  wire signed [COUNTER_O_BW-1:0] counter2_do_im;
-  wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] count0;
-  wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] count1;
-  wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] count2;
 
-  counter #(
+
+  post_fft_count #(
       .I_BW(FFT_O_BW),
-      .O_BW(COUNTER_O_BW)
-  ) counter0 (
+      .O_BW(POST_FFT_COUNT_O_BW)
+  ) count0 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .en_i (fft_group0_do_en),
-      .re_i (fft_group0_do_re),
-      .im_i (fft_group0_do_im),
-      .en_o (counter0_do_en),
-      .re_o (counter0_do_re),
-      .im_o (counter0_do_im),
-      .num_o(count0)
+      .en_i(fft_group0_en_lo),
+      .re_i(fft_group0_re_lo),
+      .im_i(fft_group0_im_lo),
+      .en_o(post_fft_count_group0_en_lo),
+      .re_o(post_fft_count_group0_re_lo),
+      .im_o(post_fft_count_group0_im_lo),
+      .post_fft_count_o(post_fft_count_group0_lo)
   );
 
-  counter #(
+  post_fft_count #(
       .I_BW(FFT_O_BW),
-      .O_BW(COUNTER_O_BW)
-  ) counter1 (
+      .O_BW(POST_FFT_COUNT_O_BW)
+  ) count1 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .en_i (fft_group1_do_en),
-      .re_i (fft_group1_do_re),
-      .im_i (fft_group1_do_im),
-      .en_o (counter1_do_en),
-      .re_o (counter1_do_re),
-      .im_o (counter1_do_im),
-      .num_o(count1)
+      .en_i(fft_group1_en_lo),
+      .re_i(fft_group1_re_lo),
+      .im_i(fft_group1_im_lo),
+      .en_o(post_fft_count_group1_en_lo),
+      .re_o(post_fft_count_group1_re_lo),
+      .im_o(post_fft_count_group1_im_lo),
+      .post_fft_count_o(post_fft_count_group1_lo)
   );
 
-  counter #(
+  post_fft_count #(
       .I_BW(FFT_O_BW),
-      .O_BW(COUNTER_O_BW)
-  ) counter2 (
+      .O_BW(POST_FFT_COUNT_O_BW)
+  ) count2 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .en_i (fft_group2_do_en),
-      .re_i (fft_group2_do_re),
-      .im_i (fft_group2_do_im),
-      .en_o (counter2_do_en),
-      .re_o (counter2_do_re),
-      .im_o (counter2_do_im),
-      .num_o(count2)
+      .en_i(fft_group2_en_lo),
+      .re_i(fft_group2_re_lo),
+      .im_i(fft_group2_im_lo),
+      .en_o(post_fft_count_group2_en_lo),
+      .re_o(post_fft_count_group2_re_lo),
+      .im_o(post_fft_count_group2_im_lo),
+      .post_fft_count_o(post_fft_count_group2_lo)
   );
 
-  wire [6:0] bit_reversal_count0_group_num;
-  wire [9:0] bit_reversal_count0_in_group_idx;
-  wire [9:0] bit_reversal_count0_out_group_idx;
-  wire [6:0] bit_reversal_count1_group_num;
-  wire [9:0] bit_reversal_count1_in_group_idx;
-  wire [9:0] bit_reversal_count1_out_group_idx;
-  wire [6:0] bit_reversal_count2_group_num;
-  wire [9:0] bit_reversal_count2_in_group_idx;
-  wire [9:0] bit_reversal_count2_out_group_idx;
+  assign rfft_group0_en = post_fft_count_group0_en_lo & (post_fft_count_group0_lo <= 512);
+  assign rfft_group1_en = post_fft_count_group1_en_lo & (post_fft_count_group1_lo <= 512);
+  assign rfft_group2_en = post_fft_count_group2_en_lo & (post_fft_count_group2_lo <= 512);
 
 
-  assign bit_reversal_count0_group_num = count0 / 1024;
-  assign bit_reversal_count0_in_group_idx = count0 % 1024;
-  assign bit_reversal_count1_group_num = count1 / 1024;
-  assign bit_reversal_count1_in_group_idx = count1 % 1024;
-  assign bit_reversal_count2_group_num = count2 / 1024;
-  assign bit_reversal_count2_in_group_idx = count2 % 1024;
 
-  function [9:0] bit_reversaled;
-    input [9:0] data_i;
-    begin
-      bit_reversaled[0] = data_i[9];
-      bit_reversaled[1] = data_i[8];
-      bit_reversaled[2] = data_i[7];
-      bit_reversaled[3] = data_i[6];
-      bit_reversaled[4] = data_i[5];
-      bit_reversaled[5] = data_i[4];
-      bit_reversaled[6] = data_i[3];
-      bit_reversaled[7] = data_i[2];
-      bit_reversaled[8] = data_i[1];
-      bit_reversaled[9] = data_i[0];
-    end
-  endfunction
-
-  assign bit_reversal_count0_out_group_idx = bit_reversaled(bit_reversal_count0_in_group_idx);
-  assign bit_reversal_count1_out_group_idx = bit_reversaled(bit_reversal_count1_in_group_idx);
-  assign bit_reversal_count2_out_group_idx = bit_reversaled(bit_reversal_count2_in_group_idx);
+  assign power_fft_group0 = post_fft_count_group0_re_lo * post_fft_count_group0_re_lo + post_fft_count_group0_im_lo * post_fft_count_group0_im_lo;
+  assign power_fft_group1 = post_fft_count_group1_re_lo * post_fft_count_group1_re_lo + post_fft_count_group1_im_lo * post_fft_count_group1_im_lo;
+  assign power_fft_group2 = post_fft_count_group2_re_lo * post_fft_count_group2_re_lo + post_fft_count_group2_im_lo * post_fft_count_group2_im_lo;
 
 
-  //   localparam SELECT_BUFFER_O_BW = 14;
-  wire select_buffer0_do_en;
-  wire select_buffer1_do_en;
-  wire select_buffer2_do_en;
-
-  assign select_buffer0_do_en = counter0_do_en & (bit_reversal_count0_in_group_idx <= 512);
-  assign select_buffer1_do_en = counter1_do_en & (bit_reversal_count1_in_group_idx <= 512);
-  assign select_buffer2_do_en = counter2_do_en & (bit_reversal_count2_in_group_idx <= 512);
-
-  localparam SQUARED_O_BW = 27;
-  wire signed [SQUARED_O_BW-1:0] out_squared0;
-  wire signed [SQUARED_O_BW-1:0] out_squared1;
-  wire signed [SQUARED_O_BW-1:0] out_squared2;
-
-  assign out_squared0 = counter0_do_re * counter0_do_re + counter0_do_im * counter0_do_im;
-  assign out_squared1 = counter1_do_re * counter1_do_re + counter1_do_im * counter1_do_im;
-  assign out_squared2 = counter2_do_re * counter2_do_re + counter2_do_im * counter2_do_im;
 
 
-  localparam MEL_O_BW = 30;
-
-  wire signed [MEL_O_BW*64-1:0] out_mel0;
-  wire signed [MEL_O_BW*64-1:0] out_mel1;
-  wire signed [MEL_O_BW*64-1:0] out_mel2;
-  wire [6:0] out_mel0_group_num;  // 0-88
-  wire [6:0] out_mel1_group_num;  // 0-88
-  wire [6:0] out_mel2_group_num;  // 0-88
-
-  wire mel0_do_en;
-  wire mel1_do_en;
-  wire mel2_do_en;
-  wire is_mel0_first_in;
-  wire is_mel0_last_in;
-  wire is_mel1_first_in;
-  wire is_mel1_last_in;
-  wire is_mel2_first_in;
-  wire is_mel2_last_in;
-
-  assign is_mel0_first_in = (bit_reversal_count0_out_group_idx % 513 == 0);
-  assign is_mel0_last_in  = (bit_reversal_count0_out_group_idx % 513 == 512);
-  assign is_mel1_first_in = (bit_reversal_count1_out_group_idx % 513 == 0);
-  assign is_mel1_last_in  = (bit_reversal_count1_out_group_idx % 513 == 512);
-  assign is_mel2_first_in = (bit_reversal_count2_out_group_idx % 513 == 0);
-  assign is_mel2_last_in  = (bit_reversal_count2_out_group_idx % 513 == 512);
+  assign is_mel_group0_first_li = (post_fft_count_group0_lo % 513 == 0);
+  assign is_mel_group0_last_li = (post_fft_count_group0_lo % 513 == 512);
+  assign is_mel_group1_first_li = (post_fft_count_group1_lo % 513 == 0);
+  assign is_mel_group1_last_li = (post_fft_count_group1_lo % 513 == 512);
+  assign is_mel_group2_first_li = (post_fft_count_group2_lo % 513 == 0);
+  assign is_mel_group2_last_li = (post_fft_count_group2_lo % 513 == 512);
 
   mel_filter #(
       .I_BW(SQUARED_O_BW),
@@ -282,15 +245,13 @@ module log_mel_spectrogram #(
   ) mel0 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .group_idx_i(bit_reversal_count0_out_group_idx),  // 0-512 // 
-      .group_num_i(bit_reversal_count0_out_group_num),  // 0-88 //
-      .data_i(out_squared0),
-      .en_i(select_buffer0_do_en),
-      .is_first_i(is_mel0_first_in),  // squared
-      .is_last_i(is_mel0_last_in),  // squared
-      .data_o(out_mel0),
-      .en_o(mel0_do_en),
-      .group_num_o(out_mel0_group_num)
+      .group_idx_i(post_fft_count_group0_lo),
+      .data_i(power_fft_group0),
+      .en_i(rfft_group0_en),
+      .is_first_i(is_mel_group0_first_li),
+      .is_last_i(is_mel_group0_last_li),
+      .data_o(mel_filtered_group0_lo),
+      .en_o(mel_filter_group0_en_lo)
   );
 
   mel_filter #(
@@ -299,15 +260,13 @@ module log_mel_spectrogram #(
   ) mel1 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .group_idx_i(bit_reversal_count1_out_group_idx),  // 0-512 // 
-      .group_num_i(bit_reversal_count1_out_group_num),  // 0-88 //
-      .data_i(out_squared1),
-      .en_i(select_buffer1_do_en),
-      .is_first_i(is_mel1_first_in),  // squared
-      .is_last_i(is_mel1_last_in),  // squared
-      .data_o(out_mel1),
-      .en_o(mel1_do_en),
-      .group_num_o(out_mel1_group_num)
+      .group_idx_i(post_fft_count_group1_lo),
+      .data_i(power_fft_group1),
+      .en_i(rfft_group1_en),
+      .is_first_i(is_mel_group1_first_li),
+      .is_last_i(is_mel_group1_last_li),
+      .data_o(mel_filtered_group1_lo),
+      .en_o(mel_filter_group1_en_lo)
   );
 
   mel_filter #(
@@ -316,64 +275,44 @@ module log_mel_spectrogram #(
   ) mel2 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .group_idx_i(bit_reversal_count2_out_group_idx),  // 0-512 //
-      .group_num_i(bit_reversal_count2_out_group_num),  // 0-88 //
-      .data_i(out_squared2),
-      .en_i(select_buffer2_do_en),
-      .is_first_i(is_mel2_first_in),
-      .is_last_i(is_mel2_last_in),
-      .data_o(out_mel2),
-      .en_o(mel2_do_en),
-      .group_num_o(out_mel2_group_num)
+      .group_idx_i(post_fft_count_group2_lo),
+      .data_i(power_fft_group2),
+      .en_i(rfft_group2_en),
+      .is_first_i(is_mel_group2_first_li),
+      .is_last_i(is_mel_group2_last_li),
+      .data_o(mel_filtered_group2_lo),
+      .en_o(mel_filter_group2_en_lo)
   );
 
-  localparam LOG_O_BW = 14;
-  wire signed [LOG_O_BW*64-1:0] out_log0;
-  wire signed [LOG_O_BW*64-1:0] out_log1;
-  wire signed [LOG_O_BW*64-1:0] out_log2;
+
 
   log #(
       .I_BW(MEL_O_BW),
       .O_BW(LOG_O_BW)
   ) log0 (
-      .data_i(out_mel0),
-      .data_o(out_log0)
+      .data_i(mel_filtered_group0_lo),
+      .data_o(logged_group0_lo)
   );
 
   log #(
       .I_BW(MEL_O_BW),
       .O_BW(LOG_O_BW)
   ) log1 (
-      .data_i(out_mel1),
-      .data_o(out_log1)
+      .data_i(mel_filtered_group1_lo),
+      .data_o(logged_group1_lo)
   );
 
   log #(
       .I_BW(MEL_O_BW),
       .O_BW(LOG_O_BW)
   ) log2 (
-      .data_i(out_mel2),
-      .data_o(out_log2)
+      .data_i(mel_filtered_group2_lo),
+      .data_o(logged_group2_lo)
   );
 
-  always @(posedge clk_i or negedge rst_i) begin
-    if (!rst_i) begin
-      data_o <= 0;
-    end else begin
-      if (mel0_do_en) begin
-        data_o <= out_log0;
-        en_o   <= 1;
-      end else if (mel1_do_en) begin
-        data_o <= out_log1;
-        en_o   <= 1;
-      end else if (mel2_do_en) begin
-        data_o <= out_log2;
-        en_o   <= 1;
-      end else begin
-        en_o   <= 0;
-        data_o <= 0;
-      end
-    end
-  end
+  assign en_o = mel_filter_group0_en_lo | mel_filter_group1_en_lo | mel_filter_group2_en_lo;
+  assign data_o = mel_filter_group0_en_lo ? logged_group0_lo :
+                        mel_filter_group1_en_lo ? logged_group1_lo : logged_group2_lo;
+
 
 endmodule
