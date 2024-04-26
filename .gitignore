@@ -11,5 +11,6 @@
 *.wdb
 *.xpr
 *.lpr
+*.bat
 log-mel-spectrogram.cache/
 .DS_Store 
