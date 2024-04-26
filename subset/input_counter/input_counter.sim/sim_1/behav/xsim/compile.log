@@ -1,4 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/kawada/input_counter/input_counter.srcs/sources_1/imports/input_counter/input_conter.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module input_counter
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/kawada/input_counter/input_counter.srcs/sim_1/imports/input_counter/t_input_counter.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module t_input_counter
