@@ -210,20 +210,25 @@ module log_mel_spectrogram #(
   assign bit_reversal_count2_group_num = count2 / 1024;
   assign bit_reversal_count2_in_group_idx = count2 % 1024;
 
-  bit_reversal_count reverse0 (
-      .group_idx_i(bit_reversal_count0_in_group_idx),
-      .group_idx_o(bit_reversal_count0_out_group_idx)
-  );
+  function [9:0] bit_reversaled;
+    input [9:0] data_i;
+    begin
+      bit_reversaled[0] = data_i[9];
+      bit_reversaled[1] = data_i[8];
+      bit_reversaled[2] = data_i[7];
+      bit_reversaled[3] = data_i[6];
+      bit_reversaled[4] = data_i[5];
+      bit_reversaled[5] = data_i[4];
+      bit_reversaled[6] = data_i[3];
+      bit_reversaled[7] = data_i[2];
+      bit_reversaled[8] = data_i[1];
+      bit_reversaled[9] = data_i[0];
+    end
+  endfunction
 
-  bit_reversal_count reverse1 (
-      .group_idx_i(bit_reversal_count1_in_group_idx),
-      .group_idx_o(bit_reversal_count1_out_group_idx)
-  );
-
-  bit_reversal_count reverse2 (
-      .group_idx_i(bit_reversal_count2_in_group_idx),
-      .group_idx_o(bit_reversal_count2_out_group_idx)
-  );
+  assign bit_reversal_count0_out_group_idx = bit_reversaled(bit_reversal_count0_in_group_idx);
+  assign bit_reversal_count1_out_group_idx = bit_reversaled(bit_reversal_count1_in_group_idx);
+  assign bit_reversal_count2_out_group_idx = bit_reversaled(bit_reversal_count2_in_group_idx);
 
 
   localparam SELECT_BUFFER_O_BW = 14;
