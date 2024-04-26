@@ -5,6 +5,9 @@ Running: C:/Xilinx/Vivado/2023.2/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 7 for port 'group_num_i' [C:/Users/kawad/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/log_mel.v:286]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 7 for port 'group_num_i' [C:/Users/kawad/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/log_mel.v:303]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 7 for port 'group_num_i' [C:/Users/kawad/log-mel-spectrogram/log-mel-spectrogram.srcs/sources_1/imports/log_mel.v:320]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -33,9 +36,6 @@ Compiling module xil_defaultlib.DelayBuffer(DEPTH=1)
 Compiling module xil_defaultlib.SdfUnit(M=4)
 Compiling module xil_defaultlib.FFT
 Compiling module xil_defaultlib.counter
-Compiling module xil_defaultlib.bit_reversal_count
-Compiling module xil_defaultlib.select_buffer
-Compiling module xil_defaultlib.squared
 Compiling module xil_defaultlib.mel_filter_coef
 Compiling module xil_defaultlib.mel_filter
 Compiling module xil_defaultlib.log

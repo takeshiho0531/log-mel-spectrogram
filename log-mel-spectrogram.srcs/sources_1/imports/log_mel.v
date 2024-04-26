@@ -231,85 +231,23 @@ module log_mel_spectrogram #(
   assign bit_reversal_count2_out_group_idx = bit_reversaled(bit_reversal_count2_in_group_idx);
 
 
-  localparam SELECT_BUFFER_O_BW = 14;
+  //   localparam SELECT_BUFFER_O_BW = 14;
   wire select_buffer0_do_en;
   wire select_buffer1_do_en;
   wire select_buffer2_do_en;
-  wire [9:0] select_buffer0_out_group_idx;
-  wire [6:0] select_buffer0_out_group_num;
-  wire [9:0] select_buffer1_out_group_idx;
-  wire [6:0] select_buffer1_out_group_num;
-  wire [9:0] select_buffer2_out_group_idx;
-  wire [6:0] select_buffer2_out_group_num;
-  wire signed [SELECT_BUFFER_O_BW-1:0] select_buffer0_do_re;
-  wire signed [SELECT_BUFFER_O_BW-1:0] select_buffer0_do_im;
-  wire signed [SELECT_BUFFER_O_BW-1:0] select_buffer1_do_re;
-  wire signed [SELECT_BUFFER_O_BW-1:0] select_buffer1_do_im;
-  wire signed [SELECT_BUFFER_O_BW-1:0] select_buffer2_do_re;
-  wire signed [SELECT_BUFFER_O_BW-1:0] select_buffer2_do_im;
 
-  select_buffer #(
-      .I_BW(FFT_O_BW),
-      .O_BW(SELECT_BUFFER_O_BW)
-  ) select_buffer0 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .en_i(counter0_do_en),
-      .re_i(counter0_do_re),
-      .im_i(counter0_do_im),
-      .group_idx_i(bit_reversal_count0_in_group_idx),
-      .group_num_i(bit_reversal_count0_group_num),
-      .en_o(select_buffer0_do_en),
-      .re_o(select_buffer0_do_re),
-      .im_o(select_buffer0_do_im),
-      .group_idx_o(select_buffer0_out_group_idx),
-      .group_num_o(select_buffer0_out_group_num)
-  );
-
-  select_buffer #(
-      .I_BW(FFT_O_BW),
-      .O_BW(SELECT_BUFFER_O_BW)
-  ) select_buffer1 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .en_i(counter1_do_en),
-      .re_i(counter1_do_re),
-      .im_i(counter1_do_re),
-      .group_idx_i(bit_reversal_count1_in_group_idx),
-      .group_num_i(bit_reversal_count1_group_num),
-      .en_o(select_buffer1_do_en),
-      .re_o(select_buffer1_do_re),
-      .im_o(select_buffer1_do_im),
-      .group_idx_o(select_buffer1_out_group_idx),
-      .group_num_o(select_buffer1_out_group_num)
-  );
-
-  select_buffer #(
-      .I_BW(FFT_O_BW),
-      .O_BW(SELECT_BUFFER_O_BW)
-  ) select_buffer2 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .en_i(counter2_do_en),
-      .re_i(counter2_do_re),
-      .im_i(counter2_do_re),
-      .group_idx_i(bit_reversal_count2_in_group_idx),
-      .group_num_i(bit_reversal_count2_group_num),
-      .en_o(select_buffer2_do_en),
-      .re_o(select_buffer2_do_re),
-      .im_o(select_buffer2_do_im),
-      .group_idx_o(select_buffer2_out_group_idx),
-      .group_num_o(select_buffer2_out_group_num)
-  );
+  assign select_buffer0_do_en = counter0_do_en & (bit_reversal_count0_in_group_idx <= 512);
+  assign select_buffer1_do_en = counter1_do_en & (bit_reversal_count1_in_group_idx <= 512);
+  assign select_buffer2_do_en = counter2_do_en & (bit_reversal_count2_in_group_idx <= 512);
 
   localparam SQUARED_O_BW = 27;
   wire signed [SQUARED_O_BW-1:0] out_squared0;
   wire signed [SQUARED_O_BW-1:0] out_squared1;
   wire signed [SQUARED_O_BW-1:0] out_squared2;
 
-  assign out_squared0 = select_buffer0_do_re * select_buffer0_do_re + select_buffer0_do_im * select_buffer0_do_im;
-  assign out_squared1 = select_buffer1_do_re * select_buffer1_do_re + select_buffer1_do_im * select_buffer1_do_im;
-  assign out_squared2 = select_buffer2_do_re * select_buffer2_do_re + select_buffer2_do_im * select_buffer2_do_im;
+  assign out_squared0 = counter0_do_re * counter0_do_re + counter0_do_im * counter0_do_im;
+  assign out_squared1 = counter1_do_re * counter1_do_re + counter1_do_im * counter1_do_im;
+  assign out_squared2 = counter2_do_re * counter2_do_re + counter2_do_im * counter2_do_im;
 
 
   localparam MEL_O_BW = 30;
@@ -331,12 +269,12 @@ module log_mel_spectrogram #(
   wire is_mel2_first_in;
   wire is_mel2_last_in;
 
-  assign is_mel0_first_in = (select_buffer0_out_group_idx % 513 == 0);
-  assign is_mel0_last_in  = (select_buffer0_out_group_idx % 513 == 512);
-  assign is_mel1_first_in = (select_buffer1_out_group_idx % 513 == 0);
-  assign is_mel1_last_in  = (select_buffer1_out_group_idx % 513 == 512);
-  assign is_mel2_first_in = (select_buffer2_out_group_idx % 513 == 0);
-  assign is_mel2_last_in  = (select_buffer2_out_group_idx % 513 == 512);
+  assign is_mel0_first_in = (bit_reversal_count0_out_group_idx % 513 == 0);
+  assign is_mel0_last_in  = (bit_reversal_count0_out_group_idx % 513 == 512);
+  assign is_mel1_first_in = (bit_reversal_count1_out_group_idx % 513 == 0);
+  assign is_mel1_last_in  = (bit_reversal_count1_out_group_idx % 513 == 512);
+  assign is_mel2_first_in = (bit_reversal_count2_out_group_idx % 513 == 0);
+  assign is_mel2_last_in  = (bit_reversal_count2_out_group_idx % 513 == 512);
 
   mel_filter #(
       .I_BW(SQUARED_O_BW),
@@ -344,8 +282,8 @@ module log_mel_spectrogram #(
   ) mel0 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .group_idx_i(select_buffer0_out_group_idx),  // 0-512 // 
-      .group_num_i(select_buffer0_out_group_num),  // 0-88 //
+      .group_idx_i(bit_reversal_count0_out_group_idx),  // 0-512 // 
+      .group_num_i(bit_reversal_count0_out_group_num),  // 0-88 //
       .data_i(out_squared0),
       .en_i(select_buffer0_do_en),
       .is_first_i(is_mel0_first_in),  // squared
@@ -361,8 +299,8 @@ module log_mel_spectrogram #(
   ) mel1 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .group_idx_i(select_buffer1_out_group_idx),  // 0-512 // 
-      .group_num_i(select_buffer1_out_group_num),  // 0-88 //
+      .group_idx_i(bit_reversal_count1_out_group_idx),  // 0-512 // 
+      .group_num_i(bit_reversal_count1_out_group_num),  // 0-88 //
       .data_i(out_squared1),
       .en_i(select_buffer1_do_en),
       .is_first_i(is_mel1_first_in),  // squared
@@ -378,8 +316,8 @@ module log_mel_spectrogram #(
   ) mel2 (
       .clk_i(clk_i),
       .rst_i(rst_i),
-      .group_idx_i(select_buffer2_out_group_idx),  // 0-512 //
-      .group_num_i(select_buffer2_out_group_num),  // 0-88 //
+      .group_idx_i(bit_reversal_count2_out_group_idx),  // 0-512 //
+      .group_num_i(bit_reversal_count2_out_group_num),  // 0-88 //
       .data_i(out_squared2),
       .en_i(select_buffer2_do_en),
       .is_first_i(is_mel2_first_in),
