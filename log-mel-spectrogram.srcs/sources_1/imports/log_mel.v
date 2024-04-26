@@ -302,32 +302,10 @@ module log_mel_spectrogram #(
   wire signed [SQUARED_O_BW-1:0] out_squared1;
   wire signed [SQUARED_O_BW-1:0] out_squared2;
 
-  squared #(
-      .I_BW(FFT_O_BW),
-      .O_BW(SQUARED_O_BW)
-  ) power0 (
-      .re_i  (select_buffer0_do_re),
-      .im_i  (select_buffer0_do_im),
-      .data_o(out_squared0)
-  );
+  assign out_squared0 = select_buffer0_do_re * select_buffer0_do_re + select_buffer0_do_im * select_buffer0_do_im;
+  assign out_squared1 = select_buffer1_do_re * select_buffer1_do_re + select_buffer1_do_im * select_buffer1_do_im;
+  assign out_squared2 = select_buffer2_do_re * select_buffer2_do_re + select_buffer2_do_im * select_buffer2_do_im;
 
-  squared #(
-      .I_BW(FFT_O_BW),
-      .O_BW(SQUARED_O_BW)
-  ) power1 (
-      .re_i  (select_buffer1_do_re),
-      .im_i  (select_buffer1_do_im),
-      .data_o(out_squared1)
-  );
-
-  squared #(
-      .I_BW(FFT_O_BW),
-      .O_BW(SQUARED_O_BW)
-  ) power2 (
-      .re_i  (select_buffer2_do_re),
-      .im_i  (select_buffer2_do_im),
-      .data_o(out_squared2)
-  );
 
   localparam MEL_O_BW = 30;
 
