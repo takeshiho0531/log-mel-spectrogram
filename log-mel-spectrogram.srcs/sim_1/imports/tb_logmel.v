@@ -138,11 +138,11 @@ module TB;
     //	Module Instances
     //----------------------------------------------------------------------
     log_mel_spectrogram logmel(
-        .clk(clk),
-        .rst(rst),
-        .di_en(di_en),
+        .clk_i(clk),
+        .rst_i(rst),
+        .en_i(di_en),
         .data_i(data_i),
-        .do_en(do_en),
+        .en_o(do_en),
         .data_o(data_o)
     );
 

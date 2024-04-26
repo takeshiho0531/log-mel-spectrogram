@@ -1,41 +1,40 @@
-`timescale	1ns/1ns
-module select_buffer # (
+`timescale 1ns / 1ns
+module select_buffer #(
     parameter I_BW = 14,
     parameter O_BW = 14
-)(
-    input clk,
-    input rst,
-    input di_en,
-    input signed [I_BW-1:0] di_re,
-    input signed [I_BW-1:0] di_im,
-    input [9:0] in_group_idx, // 0-1023
-    input [6:0] in_group_num, // 0-88
-    output reg do_en,
-    output reg signed [O_BW-1:0] do_re,
-    output reg signed [O_BW-1:0] do_im,
-    output reg [9:0] out_group_idx, // 0-512
-    output reg [6:0] out_group_num
+) (
+    input clk_i,
+    input rst_i,
+    input en_i,
+    input signed [I_BW-1:0] re_i,
+    input signed [I_BW-1:0] im_i,
+    input [9:0] group_idx_i,  // 0-1023
+    input [6:0] group_num_i,  // 0-88
+    output reg en_o,
+    output reg signed [O_BW-1:0] re_o,
+    output reg signed [O_BW-1:0] im_o,
+    output reg [9:0] group_idx_o,  // 0-512
+    output reg [6:0] group_num_o
 );
-    always @(posedge clk or negedge rst) begin
-        if (!rst) begin
-            do_en <= 0;
-            do_re <= 0;
-            do_im <= 0;
-            out_group_idx <= 0;
-            out_group_num <= 0;
-        end
-        else if (di_en & in_group_idx <= 512) begin
-            do_en <= di_en;
-            do_re <= di_re;
-            do_im <= di_im;
-            out_group_idx <= in_group_idx;
-            out_group_num <= out_group_num;
-        end else begin
-            do_en <= 0;
-            do_re <= di_re;
-            do_im <= di_im;
-            out_group_idx <= in_group_idx;
-            out_group_num <= in_group_num;
-        end
+  always @(posedge clk_i or negedge rst_i) begin
+    if (!rst_i) begin
+      en_o <= 0;
+      re_o <= 0;
+      im_o <= 0;
+      group_idx_o <= 0;
+      group_num_o <= 0;
+    end else if (en_i & group_idx_i <= 512) begin
+      en_o <= en_i;
+      re_o <= re_i;
+      im_o <= im_i;
+      group_idx_o <= group_idx_i;
+      group_num_o <= group_num_o;
+    end else begin
+      en_o <= 0;
+      re_o <= re_i;
+      im_o <= im_i;
+      group_idx_o <= group_idx_i;
+      group_num_o <= group_num_i;
     end
+  end
 endmodule
