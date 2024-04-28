@@ -1,7 +1,0 @@
-Running: xsim.dir/t_input_counter_behav/xsimk -simmode gui -wdb t_input_counter_behav.wdb -simrunnum 0 -socket 49121
-Design successfully loaded
-Design Loading Memory Usage: 27760 KB (Peak: 27880 KB)
-Design Loading CPU Usage: 110 ms
-Simulation completed
-Simulation Memory Usage: 103612 KB (Peak: 160884 KB)
-Simulation CPU Usage: 120 ms

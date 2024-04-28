@@ -1,4 +1,0 @@
-Running: xsim.dir/t_hann_window_behav/xsimk -simmode gui -wdb t_hann_window_behav.wdb -simrunnum 0 -socket 33245
-Design successfully loaded
-Design Loading Memory Usage: 28280 KB (Peak: 28280 KB)
-Design Loading CPU Usage: 80 ms
