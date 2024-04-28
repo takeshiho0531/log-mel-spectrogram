@@ -107,8 +107,5 @@ module FFT #(
       .do_im(im_o)        //  o
   );
 
-  always @(posedge clk_i) begin
-    // $display("su1_do_en=%b, su2_do_en=%b, su3_do_en=%b, su4_do_en=%b, do_en=%b", su1_do_en, su2_do_en, su3_do_en, su4_do_en, do_en);
-  end
 
 endmodule
