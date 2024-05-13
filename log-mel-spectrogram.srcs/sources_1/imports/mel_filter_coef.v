@@ -1,534 +1,1562 @@
 `timescale 1ns / 1ns
 module mel_filter_coef #(
-    parameter O_BW = 8
+    parameter O_BW = 27
 ) (
-    input [9:0] filter_v_idx_i,  // 0-512
+    input [9:0] filter_v_i,  // 0-512
+    output [1:0] non_zero_num_o,
     output [5:0] non_zero_idx1_o,
     output [5:0] non_zero_idx2_o,
-    output signed [7:0] non_zero_coef1_o,
-    output signed [7:0] non_zero_coef2_o
+    output signed [26:0] non_zero_data1_o,
+    output signed [26:0] non_zero_data2_o
 );
-  wire [27:0] non_zero_coef_info_rom[0:512];
-  wire [27:0] non_zero_coef_info;
+  wire [67:0] non_zero_info_rom[0:512];
+  wire [67:0] non_zero_info;
 
-  assign non_zero_coef_info = non_zero_coef_info_rom[filter_v_idx_i];
+  assign non_zero_info = non_zero_info_rom[filter_v_i];
 
-  assign non_zero_idx1_o = non_zero_coef_info[27:22];
-  assign non_zero_idx2_o = non_zero_coef_info[21:16];
-  assign non_zero_coef1_o = non_zero_coef_info[15:8];
-  assign non_zero_coef2_o = non_zero_coef_info[7:0];
+  assign non_zero_num_o = non_zero_info[67:66];
+  assign non_zero_idx1_o = non_zero_info[65:60];
+  assign non_zero_idx2_o = non_zero_info[59:54];
+  assign non_zero_data1_o = non_zero_info[53:27];
+  assign non_zero_data2_o = non_zero_info[26:0];
 
-  assign non_zero_coef_info_rom[0] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[1] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[2] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[3] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[4] = {6'd0, 6'bxxxxxx, 8'b000001010, 8'bxxxxxxxx};  // 10
-  assign non_zero_coef_info_rom[5] = {6'd0, 6'bxxxxxx, 8'b001001001, 8'bxxxxxxxx};  // 73
-  assign non_zero_coef_info_rom[6] = {6'd0, 6'bxxxxxx, 8'b010001000, 8'bxxxxxxxx};  // 136
-  assign non_zero_coef_info_rom[7] = {6'd0, 6'd1, 8'b10100100, 8'b00010001};  // 164, 17
-  assign non_zero_coef_info_rom[8] = {6'd0, 6'd1, 8'b01100110, 8'b01010000};  // 102, 80
-  assign non_zero_coef_info_rom[9] = {6'd0, 6'd1, 8'b00100111, 8'b10001111};  // 39, 143
-  assign non_zero_coef_info_rom[10] = {6'd1, 6'd2, 8'b10011101, 8'b00011000};  // 157, 24
-  assign non_zero_coef_info_rom[11] = {6'd1, 6'd2, 8'b01011110, 8'b01010111};  // 94, 87
-  assign non_zero_coef_info_rom[12] = {6'd1, 6'd2, 8'b00011111, 8'b10010110};  // 31, 150
-  assign non_zero_coef_info_rom[13] = {6'd2, 6'd3, 8'b10010110, 8'b00011111};  // 150, 31
-  assign non_zero_coef_info_rom[14] = {6'd2, 6'd3, 8'b01010111, 8'b01011110};  // 87, 94
-  assign non_zero_coef_info_rom[15] = {6'd2, 6'd3, 8'b00011000, 8'b10011101};  // 24, 157
-  assign non_zero_coef_info_rom[16] = {6'd3, 6'd4, 8'b10001111, 8'b00100111};  // 143, 39
-  assign non_zero_coef_info_rom[17] = {6'd3, 6'd4, 8'b01010000, 8'b01100101};  // 80, 101
-  assign non_zero_coef_info_rom[18] = {6'd3, 6'd4, 8'b00010001, 8'b10100100};  // 17, 164
-  assign non_zero_coef_info_rom[19] = {6'd4, 6'd5, 8'b10001000, 8'b00101110};  // 136, 46
-  assign non_zero_coef_info_rom[20] = {6'd4, 6'd5, 8'b01001001, 8'b01101101};  // 73, 109
-  assign non_zero_coef_info_rom[21] = {6'd4, 6'd5, 8'b00001010, 8'b10101100};  // 10, 172
-  assign non_zero_coef_info_rom[22] = {6'd5, 6'd6, 8'b10000001, 8'b00110101};  // 129, 53
-  assign non_zero_coef_info_rom[23] = {6'd5, 6'd6, 8'b01000010, 8'b01110100};  // 66, 116
-  assign non_zero_coef_info_rom[24] = {6'd5, 6'd6, 8'b00000011, 8'b10110011};  // 3, 179
-  assign non_zero_coef_info_rom[25] = {6'd6, 6'd7, 8'b01111010, 8'b00111100};  // 122, 60
-  assign non_zero_coef_info_rom[26] = {6'd6, 6'd7, 8'b00111011, 8'b01111011};  // 59, 123
-  assign non_zero_coef_info_rom[27] = {6'd7, 6'd8, 8'b10110001, 8'b00000100};  // 177, 4
-  assign non_zero_coef_info_rom[28] = {6'd7, 6'd8, 8'b01110011, 8'b01000011};  // 115, 67
-  assign non_zero_coef_info_rom[29] = {6'd7, 6'd8, 8'b00110100, 8'b10000010};  // 52, 130
-  assign non_zero_coef_info_rom[30] = {6'd8, 6'd9, 8'b10101010, 8'b00001011};  // 170, 11
-  assign non_zero_coef_info_rom[31] = {6'd8, 6'd9, 8'b01101011, 8'b01001010};  // 107, 74
-  assign non_zero_coef_info_rom[32] = {6'd8, 6'd9, 8'b00101100, 8'b10001001};  // 44, 137
-  assign non_zero_coef_info_rom[33] = {6'd9, 6'd10, 8'b10100011, 8'b00010010};  // 163, 18
-  assign non_zero_coef_info_rom[34] = {6'd9, 6'd10, 8'b01100100, 8'b01010001};  // 100, 81
-  assign non_zero_coef_info_rom[35] = {6'd9, 6'd10, 8'b00100101, 8'b10010000};  // 37, 144
-  assign non_zero_coef_info_rom[36] = {6'd10, 6'd11, 8'b10011100, 8'b00011010};  // 156, 26
-  assign non_zero_coef_info_rom[37] = {6'd10, 6'd11, 8'b01011101, 8'b01011000};  // 93, 88
-  assign non_zero_coef_info_rom[38] = {6'd10, 6'd11, 8'b00011110, 8'b10010111};  // 30, 151
-  assign non_zero_coef_info_rom[39] = {6'd11, 6'd12, 8'b10010101, 8'b00100001};  // 149, 33
-  assign non_zero_coef_info_rom[40] = {6'd11, 6'd12, 8'b01010110, 8'b01100000};  // 86, 96
-  assign non_zero_coef_info_rom[41] = {6'd11, 6'd12, 8'b00010111, 8'b10011111};  // 23, 159
-  assign non_zero_coef_info_rom[42] = {6'd12, 6'd13, 8'b10001110, 8'b00101000};  // 142, 40
-  assign non_zero_coef_info_rom[43] = {6'd12, 6'd13, 8'b01001111, 8'b01100111};  // 79, 103
-  assign non_zero_coef_info_rom[44] = {6'd12, 6'd13, 8'b00010000, 8'b10100110};  // 16, 166
-  assign non_zero_coef_info_rom[45] = {6'd13, 6'd14, 8'b10000111, 8'b00101111};  // 135, 47
-  assign non_zero_coef_info_rom[46] = {6'd13, 6'd14, 8'b01001000, 8'b01101110};  // 72, 110
-  assign non_zero_coef_info_rom[47] = {6'd13, 6'd14, 8'b00001001, 8'b10101101};  // 9, 173
-  assign non_zero_coef_info_rom[48] = {6'd14, 6'd15, 8'b10000000, 8'b00110110};  // 128, 54
-  assign non_zero_coef_info_rom[49] = {6'd14, 6'd15, 8'b01000001, 8'b01110101};  // 65, 117
-  assign non_zero_coef_info_rom[50] = {6'd14, 6'd15, 8'b00000010, 8'b10110100};  // 2, 180
-  assign non_zero_coef_info_rom[51] = {6'd15, 6'd16, 8'b01111000, 8'b00111101};  // 120, 61
-  assign non_zero_coef_info_rom[52] = {6'd15, 6'd16, 8'b00111010, 8'b01111100};  // 58, 124
-  assign non_zero_coef_info_rom[53] = {6'd16, 6'd17, 8'b10110000, 8'b00000101};  // 176, 5
-  assign non_zero_coef_info_rom[54] = {6'd16, 6'd17, 8'b01110001, 8'b01000100};  // 113, 68
-  assign non_zero_coef_info_rom[55] = {6'd16, 6'd17, 8'b00110010, 8'b10000011};  // 50, 131
-  assign non_zero_coef_info_rom[56] = {6'd17, 6'd18, 8'b10101001, 8'b00001101};  // 169, 13
-  assign non_zero_coef_info_rom[57] = {6'd17, 6'd18, 8'b01101010, 8'b01001011};  // 106, 75
-  assign non_zero_coef_info_rom[58] = {6'd17, 6'd18, 8'b00101011, 8'b10001010};  // 43, 138
-  assign non_zero_coef_info_rom[59] = {6'd18, 6'd19, 8'b10100010, 8'b00010100};  // 162, 20
-  assign non_zero_coef_info_rom[60] = {6'd18, 6'd19, 8'b01100011, 8'b01010010};  // 99, 82
-  assign non_zero_coef_info_rom[61] = {6'd18, 6'd19, 8'b00100100, 8'b10010001};  // 36, 145
-  assign non_zero_coef_info_rom[62] = {6'd19, 6'd20, 8'b10011011, 8'b00011010};  // 155, 26
-  assign non_zero_coef_info_rom[63] = {6'd19, 6'd20, 8'b01011100, 8'b01010110};  // 92, 86
-  assign non_zero_coef_info_rom[64] = {6'd19, 6'd20, 8'b00011110, 8'b10010011};  // 30, 147
-  assign non_zero_coef_info_rom[65] = {6'd20, 6'd21, 8'b10010010, 8'b00011100};  // 146, 28
-  assign non_zero_coef_info_rom[66] = {6'd20, 6'd21, 8'b01011000, 8'b01010011};  // 88, 83
-  assign non_zero_coef_info_rom[67] = {6'd20, 6'd21, 8'b00011111, 8'b10001001};  // 31, 137
-  assign non_zero_coef_info_rom[68] = {6'd21, 6'd22, 8'b10001111, 8'b00010110};  // 143, 22
-  assign non_zero_coef_info_rom[69] = {6'd21, 6'd22, 8'b01011011, 8'b01001000};  // 91, 72
-  assign non_zero_coef_info_rom[70] = {6'd21, 6'd22, 8'b00101000, 8'b01111001};  // 40, 121
-  assign non_zero_coef_info_rom[71] = {6'd22, 6'd23, 8'b10010100, 8'b00001011};  // 148, 11
-  assign non_zero_coef_info_rom[72] = {6'd22, 6'd23, 8'b01100101, 8'b00111000};  // 101, 56
-  assign non_zero_coef_info_rom[73] = {6'd22, 6'd23, 8'b00110110, 8'b01100101};  // 54, 101
-  assign non_zero_coef_info_rom[74] = {6'd22, 6'd23, 8'b00000110, 8'b10010010};  // 6, 146
-  assign non_zero_coef_info_rom[75] = {6'd23, 6'd24, 8'b01110011, 8'b00100100};  // 115, 36
-  assign non_zero_coef_info_rom[76] = {6'd23, 6'd24, 8'b01001000, 8'b01001101};  // 72, 77
-  assign non_zero_coef_info_rom[77] = {6'd23, 6'd24, 8'b00011101, 8'b01110110};  // 29, 118
-  assign non_zero_coef_info_rom[78] = {6'd24, 6'd25, 8'b10000100, 8'b00001101};  // 132, 13
-  assign non_zero_coef_info_rom[79] = {6'd24, 6'd25, 8'b01011101, 8'b00110010};  // 93, 50
-  assign non_zero_coef_info_rom[80] = {6'd24, 6'd25, 8'b00110101, 8'b01011000};  // 53, 88
-  assign non_zero_coef_info_rom[81] = {6'd24, 6'd25, 8'b00001110, 8'b01111101};  // 14, 125
-  assign non_zero_coef_info_rom[82] = {6'd25, 6'd26, 8'b01110100, 8'b00010110};  // 116, 22
-  assign non_zero_coef_info_rom[83] = {6'd25, 6'd26, 8'b01010000, 8'b00111000};  // 80, 56
-  assign non_zero_coef_info_rom[84] = {6'd25, 6'd26, 8'b00101100, 8'b01011010};  // 44, 90
-  assign non_zero_coef_info_rom[85] = {6'd25, 6'd26, 8'b00001000, 8'b01111100};  // 8, 124
-  assign non_zero_coef_info_rom[86] = {6'd26, 6'd27, 8'b01101011, 8'b00011000};  // 107, 24
-  assign non_zero_coef_info_rom[87] = {6'd26, 6'd27, 8'b01001011, 8'b00110111};  // 75, 55
-  assign non_zero_coef_info_rom[88] = {6'd26, 6'd27, 8'b00101010, 8'b01010110};  // 42, 86
-  assign non_zero_coef_info_rom[89] = {6'd26, 6'd27, 8'b00001010, 8'b01110101};  // 10, 117
-  assign non_zero_coef_info_rom[90] = {6'd27, 6'd28, 8'b01101001, 8'b00010100};  // 105, 20
-  assign non_zero_coef_info_rom[91] = {6'd27, 6'd28, 8'b01001100, 8'b00110000};  // 76, 48
-  assign non_zero_coef_info_rom[92] = {6'd27, 6'd28, 8'b00101110, 8'b01001101};  // 46, 77
-  assign non_zero_coef_info_rom[93] = {6'd27, 6'd28, 8'b00010000, 8'b01101001};  // 16, 105
-  assign non_zero_coef_info_rom[94] = {6'd28, 6'd29, 8'b01101100, 8'b00001100};  // 108, 12
-  assign non_zero_coef_info_rom[95] = {6'd28, 6'd29, 8'b01010001, 8'b00100110};  // 81, 38
-  assign non_zero_coef_info_rom[96] = {6'd28, 6'd29, 8'b00110110, 8'b00111111};  // 54, 63
-  assign non_zero_coef_info_rom[97] = {6'd28, 6'd29, 8'b00011011, 8'b01011001};  // 27, 89
-  assign non_zero_coef_info_rom[98] = {6'd29, 6'd30, 8'b01110011, 8'b00000000};  // 115, 0
-  assign non_zero_coef_info_rom[99] = {6'd29, 6'd30, 8'b01011010, 8'b00011000};  // 90, 24
-  assign non_zero_coef_info_rom[100] = {6'd29, 6'd30, 8'b01000010, 8'b00101111};  // 66, 47
-  assign non_zero_coef_info_rom[101] = {6'd29, 6'd30, 8'b00101001, 8'b01000111};  // 41, 71
-  assign non_zero_coef_info_rom[102] = {6'd29, 6'd30, 8'b00010000, 8'b01011110};  // 16, 94
-  assign non_zero_coef_info_rom[103] = {6'd30, 6'd31, 8'b01100110, 8'b00000111};  // 102, 7
-  assign non_zero_coef_info_rom[104] = {6'd30, 6'd31, 8'b01010000, 8'b00011101};  // 80, 29
-  assign non_zero_coef_info_rom[105] = {6'd30, 6'd31, 8'b00111001, 8'b00110010};  // 57, 50
-  assign non_zero_coef_info_rom[106] = {6'd30, 6'd31, 8'b00100011, 8'b01000111};  // 35, 71
-  assign non_zero_coef_info_rom[107] = {6'd30, 6'd31, 8'b00001100, 8'b01011101};  // 12, 93
-  assign non_zero_coef_info_rom[108] = {6'd31, 6'd32, 8'b01100000, 8'b00001001};  // 96, 9
-  assign non_zero_coef_info_rom[109] = {6'd31, 6'd32, 8'b01001011, 8'b00011100};  // 75, 28
-  assign non_zero_coef_info_rom[110] = {6'd31, 6'd32, 8'b00110111, 8'b00110000};  // 55, 48
-  assign non_zero_coef_info_rom[111] = {6'd31, 6'd32, 8'b00100010, 8'b01000011};  // 34, 67
-  assign non_zero_coef_info_rom[112] = {6'd31, 6'd32, 8'b00001110, 8'b01010111};  // 14, 87
-  assign non_zero_coef_info_rom[113] = {6'd32, 6'd33, 8'b01011110, 8'b00000110};  // 94, 6
-  assign non_zero_coef_info_rom[114] = {6'd32, 6'd33, 8'b01001011, 8'b00011000};  // 75, 24
-  assign non_zero_coef_info_rom[115] = {6'd32, 6'd33, 8'b00111001, 8'b00101001};  // 57, 41
-  assign non_zero_coef_info_rom[116] = {6'd32, 6'd33, 8'b00100110, 8'b00111011};  // 38, 59
-  assign non_zero_coef_info_rom[117] = {6'd32, 6'd33, 8'b00010011, 8'b01001101};  // 19, 77
-  assign non_zero_coef_info_rom[118] = {6'd32, 6'd33, 8'b00000001, 8'b01011111};  // 1, 95
-  assign non_zero_coef_info_rom[119] = {6'd33, 6'd34, 8'b01001111, 8'b00010000};  // 79, 16
-  assign non_zero_coef_info_rom[120] = {6'd33, 6'd34, 8'b00111110, 8'b00100000};  // 62, 32
-  assign non_zero_coef_info_rom[121] = {6'd33, 6'd34, 8'b00101101, 8'b00110000};  // 45, 48
-  assign non_zero_coef_info_rom[122] = {6'd33, 6'd34, 8'b00011100, 8'b01000000};  // 28, 64
-  assign non_zero_coef_info_rom[123] = {6'd33, 6'd34, 8'b00001011, 8'b01010000};  // 11, 80
-  assign non_zero_coef_info_rom[124] = {6'd34, 6'd35, 8'b01010110, 8'b00000101};  // 86, 5
-  assign non_zero_coef_info_rom[125] = {6'd34, 6'd35, 8'b01000110, 8'b00010100};  // 70, 20
-  assign non_zero_coef_info_rom[126] = {6'd34, 6'd35, 8'b00110111, 8'b00100011};  // 55, 35
-  assign non_zero_coef_info_rom[127] = {6'd34, 6'd35, 8'b00100111, 8'b00110001};  // 39, 49
-  assign non_zero_coef_info_rom[128] = {6'd34, 6'd35, 8'b00011000, 8'b01000000};  // 24, 64
-  assign non_zero_coef_info_rom[129] = {6'd34, 6'd35, 8'b00001000, 8'b01001111};  // 8, 79
-  assign non_zero_coef_info_rom[130] = {6'd35, 6'd36, 8'b01010001, 8'b00000110};  // 81, 6
-  assign non_zero_coef_info_rom[131] = {6'd35, 6'd36, 8'b01000010, 8'b00010100};  // 66, 20
-  assign non_zero_coef_info_rom[132] = {6'd35, 6'd36, 8'b00110100, 8'b00100001};  // 52, 33
-  assign non_zero_coef_info_rom[133] = {6'd35, 6'd36, 8'b00100110, 8'b00101110};  // 38, 46
-  assign non_zero_coef_info_rom[134] = {6'd35, 6'd36, 8'b00011000, 8'b00111100};  // 24, 60
-  assign non_zero_coef_info_rom[135] = {6'd35, 6'd36, 8'b00001010, 8'b01001001};  // 10, 73
-  assign non_zero_coef_info_rom[136] = {6'd36, 6'd37, 8'b01001111, 8'b00000011};  // 79, 3
-  assign non_zero_coef_info_rom[137] = {6'd36, 6'd37, 8'b01000011, 8'b00010000};  // 67, 16
-  assign non_zero_coef_info_rom[138] = {6'd36, 6'd37, 8'b00110110, 8'b00011100};  // 54, 28
-  assign non_zero_coef_info_rom[139] = {6'd36, 6'd37, 8'b00101001, 8'b00101000};  // 41, 40
-  assign non_zero_coef_info_rom[140] = {6'd36, 6'd37, 8'b00011100, 8'b00110101};  // 28, 53
-  assign non_zero_coef_info_rom[141] = {6'd36, 6'd37, 8'b00001111, 8'b01000001};  // 15, 65
-  assign non_zero_coef_info_rom[142] = {6'd36, 6'd37, 8'b00000010, 8'b01001101};  // 2, 77
-  assign non_zero_coef_info_rom[143] = {6'd37, 6'd38, 8'b01000110, 8'b00001001};  // 70, 9
-  assign non_zero_coef_info_rom[144] = {6'd37, 6'd38, 8'b00111010, 8'b00010100};  // 58, 20
-  assign non_zero_coef_info_rom[145] = {6'd37, 6'd38, 8'b00101110, 8'b00100000};  // 46, 32
-  assign non_zero_coef_info_rom[146] = {6'd37, 6'd38, 8'b00100011, 8'b00101011};  // 35, 43
-  assign non_zero_coef_info_rom[147] = {6'd37, 6'd38, 8'b00010111, 8'b00110110};  // 23, 54
-  assign non_zero_coef_info_rom[148] = {6'd37, 6'd38, 8'b00001011, 8'b01000001};  // 11, 65
-  assign non_zero_coef_info_rom[149] = {6'd38, 6'd39, 8'b01001011, 8'b00000001};  // 75, 1
-  assign non_zero_coef_info_rom[150] = {6'd38, 6'd39, 8'b01000000, 8'b00001011};  // 64, 11
-  assign non_zero_coef_info_rom[151] = {6'd38, 6'd39, 8'b00110110, 8'b00010101};  // 54, 21
-  assign non_zero_coef_info_rom[152] = {6'd38, 6'd39, 8'b00101011, 8'b00011111};  // 43, 31
-  assign non_zero_coef_info_rom[153] = {6'd38, 6'd39, 8'b00100000, 8'b00101001};  // 32, 41
-  assign non_zero_coef_info_rom[154] = {6'd38, 6'd39, 8'b00010110, 8'b00110011};  // 22, 51
-  assign non_zero_coef_info_rom[155] = {6'd38, 6'd39, 8'b00001011, 8'b00111110};  // 11, 62
-  assign non_zero_coef_info_rom[156] = {6'd38, 6'd39, 8'b00000000, 8'b01001000};  // 0, 72
-  assign non_zero_coef_info_rom[157] = {6'd39, 6'd40, 8'b00111111, 8'b00001001};  // 63, 9
-  assign non_zero_coef_info_rom[158] = {6'd39, 6'd40, 8'b00110101, 8'b00010010};  // 53, 18
-  assign non_zero_coef_info_rom[159] = {6'd39, 6'd40, 8'b00101011, 8'b00011011};  // 43, 27
-  assign non_zero_coef_info_rom[160] = {6'd39, 6'd40, 8'b00100010, 8'b00100101};  // 34, 37
-  assign non_zero_coef_info_rom[161] = {6'd39, 6'd40, 8'b00011000, 8'b00101110};  // 24, 46
-  assign non_zero_coef_info_rom[162] = {6'd39, 6'd40, 8'b00001110, 8'b00110111};  // 14, 55
-  assign non_zero_coef_info_rom[163] = {6'd39, 6'd40, 8'b00000101, 8'b01000001};  // 5, 65
-  assign non_zero_coef_info_rom[164] = {6'd40, 6'd41, 8'b01000000, 8'b00000100};  // 64, 4
-  assign non_zero_coef_info_rom[165] = {6'd40, 6'd41, 8'b00110111, 8'b00001101};  // 55, 13
-  assign non_zero_coef_info_rom[166] = {6'd40, 6'd41, 8'b00101111, 8'b00010101};  // 47, 21
-  assign non_zero_coef_info_rom[167] = {6'd40, 6'd41, 8'b00100110, 8'b00011110};  // 38, 30
-  assign non_zero_coef_info_rom[168] = {6'd40, 6'd41, 8'b00011101, 8'b00100110};  // 29, 38
-  assign non_zero_coef_info_rom[169] = {6'd40, 6'd41, 8'b00010100, 8'b00101111};  // 20, 47
-  assign non_zero_coef_info_rom[170] = {6'd40, 6'd41, 8'b00001011, 8'b00110111};  // 11, 55
-  assign non_zero_coef_info_rom[171] = {6'd40, 6'd41, 8'b00000010, 8'b01000000};  // 2, 64
-  assign non_zero_coef_info_rom[172] = {6'd41, 6'd42, 8'b00111100, 8'b00000110};  // 60, 6
-  assign non_zero_coef_info_rom[173] = {6'd41, 6'd42, 8'b00110100, 8'b00001101};  // 52, 13
-  assign non_zero_coef_info_rom[174] = {6'd41, 6'd42, 8'b00101100, 8'b00010101};  // 44, 21
-  assign non_zero_coef_info_rom[175] = {6'd41, 6'd42, 8'b00100100, 8'b00011101};  // 36, 29
-  assign non_zero_coef_info_rom[176] = {6'd41, 6'd42, 8'b00011011, 8'b00100101};  // 27, 37
-  assign non_zero_coef_info_rom[177] = {6'd41, 6'd42, 8'b00010011, 8'b00101100};  // 19, 44
-  assign non_zero_coef_info_rom[178] = {6'd41, 6'd42, 8'b00001011, 8'b00110100};  // 11, 52
-  assign non_zero_coef_info_rom[179] = {6'd41, 6'd42, 8'b00000011, 8'b00111100};  // 3, 60
-  assign non_zero_coef_info_rom[180] = {6'd42, 6'd43, 8'b00111010, 8'b00000100};  // 58, 4
-  assign non_zero_coef_info_rom[181] = {6'd42, 6'd43, 8'b00110011, 8'b00001011};  // 51, 11
-  assign non_zero_coef_info_rom[182] = {6'd42, 6'd43, 8'b00101100, 8'b00010010};  // 44, 18
-  assign non_zero_coef_info_rom[183] = {6'd42, 6'd43, 8'b00100100, 8'b00011001};  // 36, 25
-  assign non_zero_coef_info_rom[184] = {6'd42, 6'd43, 8'b00011101, 8'b00100000};  // 29, 32
-  assign non_zero_coef_info_rom[185] = {6'd42, 6'd43, 8'b00010110, 8'b00100111};  // 22, 39
-  assign non_zero_coef_info_rom[186] = {6'd42, 6'd43, 8'b00001110, 8'b00101110};  // 14, 46
-  assign non_zero_coef_info_rom[187] = {6'd42, 6'd43, 8'b00000111, 8'b00110101};  // 7, 53
-  assign non_zero_coef_info_rom[188] = {6'd43, 6'd44, 8'b00111100, 8'b00000000};  // 60, 0
-  assign non_zero_coef_info_rom[189] = {6'd43, 6'd44, 8'b00110101, 8'b00000111};  // 53, 7
-  assign non_zero_coef_info_rom[190] = {6'd43, 6'd44, 8'b00101110, 8'b00001101};  // 46, 13
-  assign non_zero_coef_info_rom[191] = {6'd43, 6'd44, 8'b00101000, 8'b00010100};  // 40, 20
-  assign non_zero_coef_info_rom[192] = {6'd43, 6'd44, 8'b00100001, 8'b00011010};  // 33, 26
-  assign non_zero_coef_info_rom[193] = {6'd43, 6'd44, 8'b00011010, 8'b00100000};  // 26, 32
-  assign non_zero_coef_info_rom[194] = {6'd43, 6'd44, 8'b00010011, 8'b00100111};  // 19, 39
-  assign non_zero_coef_info_rom[195] = {6'd43, 6'd44, 8'b00001101, 8'b00101101};  // 13, 45
-  assign non_zero_coef_info_rom[196] = {6'd43, 6'd44, 8'b00000110, 8'b00110011};  // 6, 51
-  assign non_zero_coef_info_rom[197] = {6'd44, 6'd45, 8'b00111001, 8'b00000001};  // 57, 1
-  assign non_zero_coef_info_rom[198] = {6'd44, 6'd45, 8'b00110011, 8'b00000110};  // 51, 6
-  assign non_zero_coef_info_rom[199] = {6'd44, 6'd45, 8'b00101100, 8'b00001100};  // 44, 12
-  assign non_zero_coef_info_rom[200] = {6'd44, 6'd45, 8'b00100110, 8'b00010010};  // 38, 18
-  assign non_zero_coef_info_rom[201] = {6'd44, 6'd45, 8'b00100000, 8'b00011000};  // 32, 24
-  assign non_zero_coef_info_rom[202] = {6'd44, 6'd45, 8'b00011010, 8'b00011110};  // 26, 30
-  assign non_zero_coef_info_rom[203] = {6'd44, 6'd45, 8'b00010100, 8'b00100100};  // 20, 36
-  assign non_zero_coef_info_rom[204] = {6'd44, 6'd45, 8'b00001110, 8'b00101001};  // 14, 41
-  assign non_zero_coef_info_rom[205] = {6'd44, 6'd45, 8'b00001000, 8'b00101111};  // 8, 47
-  assign non_zero_coef_info_rom[206] = {6'd44, 6'd45, 8'b00000010, 8'b00110101};  // 2, 53
-  assign non_zero_coef_info_rom[207] = {6'd45, 6'd46, 8'b00110011, 8'b00000100};  // 51, 4
-  assign non_zero_coef_info_rom[208] = {6'd45, 6'd46, 8'b00101101, 8'b00001001};  // 45, 9
-  assign non_zero_coef_info_rom[209] = {6'd45, 6'd46, 8'b00100111, 8'b00001110};  // 39, 14
-  assign non_zero_coef_info_rom[210] = {6'd45, 6'd46, 8'b00100010, 8'b00010100};  // 34, 20
-  assign non_zero_coef_info_rom[211] = {6'd45, 6'd46, 8'b00011100, 8'b00011001};  // 28, 25
-  assign non_zero_coef_info_rom[212] = {6'd45, 6'd46, 8'b00010111, 8'b00011110};  // 23, 30
-  assign non_zero_coef_info_rom[213] = {6'd45, 6'd46, 8'b00010001, 8'b00100100};  // 17, 36
-  assign non_zero_coef_info_rom[214] = {6'd45, 6'd46, 8'b00001100, 8'b00101001};  // 12, 41
-  assign non_zero_coef_info_rom[215] = {6'd45, 6'd46, 8'b00000110, 8'b00101110};  // 6, 46
-  assign non_zero_coef_info_rom[216] = {6'd45, 6'd46, 8'b00000001, 8'b00110100};  // 1, 52
-  assign non_zero_coef_info_rom[217] = {6'd46, 6'd47, 8'b00110000, 8'b00000100};  // 48, 4
-  assign non_zero_coef_info_rom[218] = {6'd46, 6'd47, 8'b00101010, 8'b00001001};  // 42, 9
-  assign non_zero_coef_info_rom[219] = {6'd46, 6'd47, 8'b00100101, 8'b00001110};  // 37, 14
-  assign non_zero_coef_info_rom[220] = {6'd46, 6'd47, 8'b00100000, 8'b00010011};  // 32, 19
-  assign non_zero_coef_info_rom[221] = {6'd46, 6'd47, 8'b00011011, 8'b00011000};  // 27, 24
-  assign non_zero_coef_info_rom[222] = {6'd46, 6'd47, 8'b00010110, 8'b00011101};  // 22, 29
-  assign non_zero_coef_info_rom[223] = {6'd46, 6'd47, 8'b00010001, 8'b00100001};  // 17, 33
-  assign non_zero_coef_info_rom[224] = {6'd46, 6'd47, 8'b00001100, 8'b00100110};  // 12, 38
-  assign non_zero_coef_info_rom[225] = {6'd46, 6'd47, 8'b00000111, 8'b00101011};  // 7, 43
-  assign non_zero_coef_info_rom[226] = {6'd46, 6'd47, 8'b00000010, 8'b00110000};  // 2, 48
-  assign non_zero_coef_info_rom[227] = {6'd47, 6'd48, 8'b00101111, 8'b00000011};  // 47, 3
-  assign non_zero_coef_info_rom[228] = {6'd47, 6'd48, 8'b00101010, 8'b00000111};  // 42, 7
-  assign non_zero_coef_info_rom[229] = {6'd47, 6'd48, 8'b00100110, 8'b00001100};  // 38, 12
-  assign non_zero_coef_info_rom[230] = {6'd47, 6'd48, 8'b00100001, 8'b00010000};  // 33, 16
-  assign non_zero_coef_info_rom[231] = {6'd47, 6'd48, 8'b00011100, 8'b00010100};  // 28, 20
-  assign non_zero_coef_info_rom[232] = {6'd47, 6'd48, 8'b00011000, 8'b00011001};  // 24, 25
-  assign non_zero_coef_info_rom[233] = {6'd47, 6'd48, 8'b00010011, 8'b00011101};  // 19, 29
-  assign non_zero_coef_info_rom[234] = {6'd47, 6'd48, 8'b00001111, 8'b00100010};  // 15, 34
-  assign non_zero_coef_info_rom[235] = {6'd47, 6'd48, 8'b00001010, 8'b00100110};  // 10, 38
-  assign non_zero_coef_info_rom[236] = {6'd47, 6'd48, 8'b00000101, 8'b00101010};  // 5, 42
-  assign non_zero_coef_info_rom[237] = {6'd47, 6'd48, 8'b00000001, 8'b00101111};  // 1, 47
-  assign non_zero_coef_info_rom[238] = {6'd48, 6'd49, 8'b00101100, 8'b00000011};  // 44, 3
-  assign non_zero_coef_info_rom[239] = {6'd48, 6'd49, 8'b00101000, 8'b00000111};  // 40, 7
-  assign non_zero_coef_info_rom[240] = {6'd48, 6'd49, 8'b00100100, 8'b00001011};  // 36, 11
-  assign non_zero_coef_info_rom[241] = {6'd48, 6'd49, 8'b00011111, 8'b00001111};  // 31, 15
-  assign non_zero_coef_info_rom[242] = {6'd48, 6'd49, 8'b00011011, 8'b00010011};  // 27, 19
-  assign non_zero_coef_info_rom[243] = {6'd48, 6'd49, 8'b00010111, 8'b00010111};  // 23, 23
-  assign non_zero_coef_info_rom[244] = {6'd48, 6'd49, 8'b00010011, 8'b00011011};  // 19, 27
-  assign non_zero_coef_info_rom[245] = {6'd48, 6'd49, 8'b00001111, 8'b00011111};  // 15, 31
-  assign non_zero_coef_info_rom[246] = {6'd48, 6'd49, 8'b00001010, 8'b00100011};  // 10, 35
-  assign non_zero_coef_info_rom[247] = {6'd48, 6'd49, 8'b00000110, 8'b00100111};  // 6, 39
-  assign non_zero_coef_info_rom[248] = {6'd48, 6'd49, 8'b00000010, 8'b00101100};  // 2, 44
-  assign non_zero_coef_info_rom[249] = {6'd49, 6'd50, 8'b00101011, 8'b00000010};  // 43, 2
-  assign non_zero_coef_info_rom[250] = {6'd49, 6'd50, 8'b00100111, 8'b00000110};  // 39, 6
-  assign non_zero_coef_info_rom[251] = {6'd49, 6'd50, 8'b00100100, 8'b00001001};  // 36, 9
-  assign non_zero_coef_info_rom[252] = {6'd49, 6'd50, 8'b00100000, 8'b00001101};  // 32, 13
-  assign non_zero_coef_info_rom[253] = {6'd49, 6'd50, 8'b00011100, 8'b00010001};  // 28, 17
-  assign non_zero_coef_info_rom[254] = {6'd49, 6'd50, 8'b00011000, 8'b00010100};  // 24, 20
-  assign non_zero_coef_info_rom[255] = {6'd49, 6'd50, 8'b00010100, 8'b00011000};  // 20, 24
-  assign non_zero_coef_info_rom[256] = {6'd49, 6'd50, 8'b00010000, 8'b00011100};  // 16, 28
-  assign non_zero_coef_info_rom[257] = {6'd49, 6'd50, 8'b00001101, 8'b00011111};  // 13, 31
-  assign non_zero_coef_info_rom[258] = {6'd49, 6'd50, 8'b00001001, 8'b00100011};  // 9, 35
-  assign non_zero_coef_info_rom[259] = {6'd49, 6'd50, 8'b00000101, 8'b00100111};  // 5, 39
-  assign non_zero_coef_info_rom[260] = {6'd49, 6'd50, 8'b00000001, 8'b00101010};  // 1, 42
-  assign non_zero_coef_info_rom[261] = {6'd50, 6'd51, 8'b00101001, 8'b00000010};  // 41, 2
-  assign non_zero_coef_info_rom[262] = {6'd50, 6'd51, 8'b00100101, 8'b00000110};  // 37, 6
-  assign non_zero_coef_info_rom[263] = {6'd50, 6'd51, 8'b00100010, 8'b00001001};  // 34, 9
-  assign non_zero_coef_info_rom[264] = {6'd50, 6'd51, 8'b00011110, 8'b00001100};  // 30, 12
-  assign non_zero_coef_info_rom[265] = {6'd50, 6'd51, 8'b00011011, 8'b00010000};  // 27, 16
-  assign non_zero_coef_info_rom[266] = {6'd50, 6'd51, 8'b00010111, 8'b00010011};  // 23, 19
-  assign non_zero_coef_info_rom[267] = {6'd50, 6'd51, 8'b00010100, 8'b00010110};  // 20, 22
-  assign non_zero_coef_info_rom[268] = {6'd50, 6'd51, 8'b00010000, 8'b00011010};  // 16, 26
-  assign non_zero_coef_info_rom[269] = {6'd50, 6'd51, 8'b00001101, 8'b00011101};  // 13, 29
-  assign non_zero_coef_info_rom[270] = {6'd50, 6'd51, 8'b00001001, 8'b00100000};  // 9, 32
-  assign non_zero_coef_info_rom[271] = {6'd50, 6'd51, 8'b00000110, 8'b00100100};  // 6, 36
-  assign non_zero_coef_info_rom[272] = {6'd50, 6'd51, 8'b00000010, 8'b00100111};  // 2, 39
-  assign non_zero_coef_info_rom[273] = {6'd51, 6'd52, 8'b00101000, 8'b00000001};  // 40, 1
-  assign non_zero_coef_info_rom[274] = {6'd51, 6'd52, 8'b00100101, 8'b00000100};  // 37, 4
-  assign non_zero_coef_info_rom[275] = {6'd51, 6'd52, 8'b00100010, 8'b00000111};  // 34, 7
-  assign non_zero_coef_info_rom[276] = {6'd51, 6'd52, 8'b00011111, 8'b00001010};  // 31, 10
-  assign non_zero_coef_info_rom[277] = {6'd51, 6'd52, 8'b00011100, 8'b00001101};  // 28, 13
-  assign non_zero_coef_info_rom[278] = {6'd51, 6'd52, 8'b00011000, 8'b00010000};  // 24, 16
-  assign non_zero_coef_info_rom[279] = {6'd51, 6'd52, 8'b00010101, 8'b00010011};  // 21, 19
-  assign non_zero_coef_info_rom[280] = {6'd51, 6'd52, 8'b00010010, 8'b00010110};  // 18, 22
-  assign non_zero_coef_info_rom[281] = {6'd51, 6'd52, 8'b00001111, 8'b00011001};  // 15, 25
-  assign non_zero_coef_info_rom[282] = {6'd51, 6'd52, 8'b00001100, 8'b00011100};  // 12, 28
-  assign non_zero_coef_info_rom[283] = {6'd51, 6'd52, 8'b00001000, 8'b00011111};  // 8, 31
-  assign non_zero_coef_info_rom[284] = {6'd51, 6'd52, 8'b00000101, 8'b00100010};  // 5, 34
-  assign non_zero_coef_info_rom[285] = {6'd51, 6'd52, 8'b00000010, 8'b00100101};  // 2, 37
-  assign non_zero_coef_info_rom[286] = {6'd52, 6'd53, 8'b00100110, 8'b00000001};  // 38, 1
-  assign non_zero_coef_info_rom[287] = {6'd52, 6'd53, 8'b00100100, 8'b00000100};  // 36, 4
-  assign non_zero_coef_info_rom[288] = {6'd52, 6'd53, 8'b00100001, 8'b00000110};  // 33, 6
-  assign non_zero_coef_info_rom[289] = {6'd52, 6'd53, 8'b00011110, 8'b00001001};  // 30, 9
-  assign non_zero_coef_info_rom[290] = {6'd52, 6'd53, 8'b00011011, 8'b00001100};  // 27, 12
-  assign non_zero_coef_info_rom[291] = {6'd52, 6'd53, 8'b00011000, 8'b00001111};  // 24, 15
-  assign non_zero_coef_info_rom[292] = {6'd52, 6'd53, 8'b00010101, 8'b00010010};  // 21, 18
-  assign non_zero_coef_info_rom[293] = {6'd52, 6'd53, 8'b00010010, 8'b00010100};  // 18, 20
-  assign non_zero_coef_info_rom[294] = {6'd52, 6'd53, 8'b00001111, 8'b00010111};  // 15, 23
-  assign non_zero_coef_info_rom[295] = {6'd52, 6'd53, 8'b00001100, 8'b00011010};  // 12, 26
-  assign non_zero_coef_info_rom[296] = {6'd52, 6'd53, 8'b00001001, 8'b00011101};  // 9, 29
-  assign non_zero_coef_info_rom[297] = {6'd52, 6'd53, 8'b00000111, 8'b00011111};  // 7, 31
-  assign non_zero_coef_info_rom[298] = {6'd52, 6'd53, 8'b00000100, 8'b00100010};  // 4, 34
-  assign non_zero_coef_info_rom[299] = {6'd52, 6'd53, 8'b00000001, 8'b00100101};  // 1, 37
-  assign non_zero_coef_info_rom[300] = {6'd53, 6'd54, 8'b00100100, 8'b00000010};  // 36, 2
-  assign non_zero_coef_info_rom[301] = {6'd53, 6'd54, 8'b00100001, 8'b00000100};  // 33, 4
-  assign non_zero_coef_info_rom[302] = {6'd53, 6'd54, 8'b00011110, 8'b00000111};  // 30, 7
-  assign non_zero_coef_info_rom[303] = {6'd53, 6'd54, 8'b00011100, 8'b00001001};  // 28, 9
-  assign non_zero_coef_info_rom[304] = {6'd53, 6'd54, 8'b00011001, 8'b00001100};  // 25, 12
-  assign non_zero_coef_info_rom[305] = {6'd53, 6'd54, 8'b00010110, 8'b00001110};  // 22, 14
-  assign non_zero_coef_info_rom[306] = {6'd53, 6'd54, 8'b00010100, 8'b00010001};  // 20, 17
-  assign non_zero_coef_info_rom[307] = {6'd53, 6'd54, 8'b00010001, 8'b00010100};  // 17, 20
-  assign non_zero_coef_info_rom[308] = {6'd53, 6'd54, 8'b00001111, 8'b00010110};  // 15, 22
-  assign non_zero_coef_info_rom[309] = {6'd53, 6'd54, 8'b00001100, 8'b00011001};  // 12, 25
-  assign non_zero_coef_info_rom[310] = {6'd53, 6'd54, 8'b00001001, 8'b00011011};  // 9, 27
-  assign non_zero_coef_info_rom[311] = {6'd53, 6'd54, 8'b00000111, 8'b00011110};  // 7, 30
-  assign non_zero_coef_info_rom[312] = {6'd53, 6'd54, 8'b00000100, 8'b00100000};  // 4, 32
-  assign non_zero_coef_info_rom[313] = {6'd53, 6'd54, 8'b00000001, 8'b00100011};  // 1, 35
-  assign non_zero_coef_info_rom[314] = {6'd54, 6'd55, 8'b00100011, 8'b00000001};  // 35, 1
-  assign non_zero_coef_info_rom[315] = {6'd54, 6'd55, 8'b00100000, 8'b00000011};  // 32, 3
-  assign non_zero_coef_info_rom[316] = {6'd54, 6'd55, 8'b00011110, 8'b00000110};  // 30, 6
-  assign non_zero_coef_info_rom[317] = {6'd54, 6'd55, 8'b00011100, 8'b00001000};  // 28, 8
-  assign non_zero_coef_info_rom[318] = {6'd54, 6'd55, 8'b00011001, 8'b00001010};  // 25, 10
-  assign non_zero_coef_info_rom[319] = {6'd54, 6'd55, 8'b00010111, 8'b00001101};  // 23, 13
-  assign non_zero_coef_info_rom[320] = {6'd54, 6'd55, 8'b00010100, 8'b00001111};  // 20, 15
-  assign non_zero_coef_info_rom[321] = {6'd54, 6'd55, 8'b00010010, 8'b00010001};  // 18, 17
-  assign non_zero_coef_info_rom[322] = {6'd54, 6'd55, 8'b00010000, 8'b00010011};  // 16, 19
-  assign non_zero_coef_info_rom[323] = {6'd54, 6'd55, 8'b00001101, 8'b00010110};  // 13, 22
-  assign non_zero_coef_info_rom[324] = {6'd54, 6'd55, 8'b00001011, 8'b00011000};  // 11, 24
-  assign non_zero_coef_info_rom[325] = {6'd54, 6'd55, 8'b00001000, 8'b00011010};  // 8, 26
-  assign non_zero_coef_info_rom[326] = {6'd54, 6'd55, 8'b00000110, 8'b00011101};  // 6, 29
-  assign non_zero_coef_info_rom[327] = {6'd54, 6'd55, 8'b00000011, 8'b00011111};  // 3, 31
-  assign non_zero_coef_info_rom[328] = {6'd54, 6'd55, 8'b00000001, 8'b00100001};  // 1, 33
-  assign non_zero_coef_info_rom[329] = {6'd55, 6'd56, 8'b00100001, 8'b00000001};  // 33, 1
-  assign non_zero_coef_info_rom[330] = {6'd55, 6'd56, 8'b00011111, 8'b00000011};  // 31, 3
-  assign non_zero_coef_info_rom[331] = {6'd55, 6'd56, 8'b00011101, 8'b00000101};  // 29, 5
-  assign non_zero_coef_info_rom[332] = {6'd55, 6'd56, 8'b00011011, 8'b00000111};  // 27, 7
-  assign non_zero_coef_info_rom[333] = {6'd55, 6'd56, 8'b00011000, 8'b00001010};  // 24, 10
-  assign non_zero_coef_info_rom[334] = {6'd55, 6'd56, 8'b00010110, 8'b00001100};  // 22, 12
-  assign non_zero_coef_info_rom[335] = {6'd55, 6'd56, 8'b00010100, 8'b00001110};  // 20, 14
-  assign non_zero_coef_info_rom[336] = {6'd55, 6'd56, 8'b00010010, 8'b00010000};  // 18, 16
-  assign non_zero_coef_info_rom[337] = {6'd55, 6'd56, 8'b00010000, 8'b00010010};  // 16, 18
-  assign non_zero_coef_info_rom[338] = {6'd55, 6'd56, 8'b00001101, 8'b00010100};  // 13, 20
-  assign non_zero_coef_info_rom[339] = {6'd55, 6'd56, 8'b00001011, 8'b00010110};  // 11, 22
-  assign non_zero_coef_info_rom[340] = {6'd55, 6'd56, 8'b00001001, 8'b00011000};  // 9, 24
-  assign non_zero_coef_info_rom[341] = {6'd55, 6'd56, 8'b00000111, 8'b00011010};  // 7, 26
-  assign non_zero_coef_info_rom[342] = {6'd55, 6'd56, 8'b00000101, 8'b00011100};  // 5, 28
-  assign non_zero_coef_info_rom[343] = {6'd55, 6'd56, 8'b00000010, 8'b00011110};  // 2, 30
-  assign non_zero_coef_info_rom[344] = {6'd55, 6'd56, 8'b00000000, 8'b00100001};  // 0, 33
-  assign non_zero_coef_info_rom[345] = {6'd56, 6'd57, 8'b00011111, 8'b00000010};  // 31, 2
-  assign non_zero_coef_info_rom[346] = {6'd56, 6'd57, 8'b00011101, 8'b00000100};  // 29, 4
-  assign non_zero_coef_info_rom[347] = {6'd56, 6'd57, 8'b00011011, 8'b00000110};  // 27, 6
-  assign non_zero_coef_info_rom[348] = {6'd56, 6'd57, 8'b00011001, 8'b00000111};  // 25, 7
-  assign non_zero_coef_info_rom[349] = {6'd56, 6'd57, 8'b00010111, 8'b00001001};  // 23, 9
-  assign non_zero_coef_info_rom[350] = {6'd56, 6'd57, 8'b00010101, 8'b00001011};  // 21, 11
-  assign non_zero_coef_info_rom[351] = {6'd56, 6'd57, 8'b00010011, 8'b00001101};  // 19, 13
-  assign non_zero_coef_info_rom[352] = {6'd56, 6'd57, 8'b00010001, 8'b00001111};  // 17, 15
-  assign non_zero_coef_info_rom[353] = {6'd56, 6'd57, 8'b00001111, 8'b00010001};  // 15, 17
-  assign non_zero_coef_info_rom[354] = {6'd56, 6'd57, 8'b00001101, 8'b00010011};  // 13, 19
-  assign non_zero_coef_info_rom[355] = {6'd56, 6'd57, 8'b00001011, 8'b00010101};  // 11, 21
-  assign non_zero_coef_info_rom[356] = {6'd56, 6'd57, 8'b00001001, 8'b00010111};  // 9, 23
-  assign non_zero_coef_info_rom[357] = {6'd56, 6'd57, 8'b00000111, 8'b00011001};  // 7, 25
-  assign non_zero_coef_info_rom[358] = {6'd56, 6'd57, 8'b00000101, 8'b00011011};  // 5, 27
-  assign non_zero_coef_info_rom[359] = {6'd56, 6'd57, 8'b00000011, 8'b00011100};  // 3, 28
-  assign non_zero_coef_info_rom[360] = {6'd56, 6'd57, 8'b00000001, 8'b00011110};  // 1, 30
-  assign non_zero_coef_info_rom[361] = {6'd57, 6'd58, 8'b00011110, 8'b00000001};  // 30, 1
-  assign non_zero_coef_info_rom[362] = {6'd57, 6'd58, 8'b00011100, 8'b00000011};  // 28, 3
-  assign non_zero_coef_info_rom[363] = {6'd57, 6'd58, 8'b00011011, 8'b00000100};  // 27, 4
-  assign non_zero_coef_info_rom[364] = {6'd57, 6'd58, 8'b00011001, 8'b00000110};  // 25, 6
-  assign non_zero_coef_info_rom[365] = {6'd57, 6'd58, 8'b00010111, 8'b00001000};  // 23, 8
-  assign non_zero_coef_info_rom[366] = {6'd57, 6'd58, 8'b00010101, 8'b00001010};  // 21, 10
-  assign non_zero_coef_info_rom[367] = {6'd57, 6'd58, 8'b00010011, 8'b00001011};  // 19, 11
-  assign non_zero_coef_info_rom[368] = {6'd57, 6'd58, 8'b00010010, 8'b00001101};  // 18, 13
-  assign non_zero_coef_info_rom[369] = {6'd57, 6'd58, 8'b00010000, 8'b00001111};  // 16, 15
-  assign non_zero_coef_info_rom[370] = {6'd57, 6'd58, 8'b00001110, 8'b00010001};  // 14, 17
-  assign non_zero_coef_info_rom[371] = {6'd57, 6'd58, 8'b00001100, 8'b00010010};  // 12, 18
-  assign non_zero_coef_info_rom[372] = {6'd57, 6'd58, 8'b00001010, 8'b00010100};  // 10, 20
-  assign non_zero_coef_info_rom[373] = {6'd57, 6'd58, 8'b00001000, 8'b00010110};  // 8, 22
-  assign non_zero_coef_info_rom[374] = {6'd57, 6'd58, 8'b00000111, 8'b00011000};  // 7, 24
-  assign non_zero_coef_info_rom[375] = {6'd57, 6'd58, 8'b00000101, 8'b00011001};  // 5, 25
-  assign non_zero_coef_info_rom[376] = {6'd57, 6'd58, 8'b00000011, 8'b00011011};  // 3, 27
-  assign non_zero_coef_info_rom[377] = {6'd57, 6'd58, 8'b00000001, 8'b00011101};  // 1, 29
-  assign non_zero_coef_info_rom[378] = {6'd58, 6'd59, 8'b00011101, 8'b00000001};  // 29, 1
-  assign non_zero_coef_info_rom[379] = {6'd58, 6'd59, 8'b00011100, 8'b00000010};  // 28, 2
-  assign non_zero_coef_info_rom[380] = {6'd58, 6'd59, 8'b00011010, 8'b00000100};  // 26, 4
-  assign non_zero_coef_info_rom[381] = {6'd58, 6'd59, 8'b00011000, 8'b00000101};  // 24, 5
-  assign non_zero_coef_info_rom[382] = {6'd58, 6'd59, 8'b00010111, 8'b00000111};  // 23, 7
-  assign non_zero_coef_info_rom[383] = {6'd58, 6'd59, 8'b00010101, 8'b00001001};  // 21, 9
-  assign non_zero_coef_info_rom[384] = {6'd58, 6'd59, 8'b00010011, 8'b00001010};  // 19, 10
-  assign non_zero_coef_info_rom[385] = {6'd58, 6'd59, 8'b00010010, 8'b00001100};  // 18, 12
-  assign non_zero_coef_info_rom[386] = {6'd58, 6'd59, 8'b00010000, 8'b00001101};  // 16, 13
-  assign non_zero_coef_info_rom[387] = {6'd58, 6'd59, 8'b00001110, 8'b00001111};  // 14, 15
-  assign non_zero_coef_info_rom[388] = {6'd58, 6'd59, 8'b00001101, 8'b00010000};  // 13, 16
-  assign non_zero_coef_info_rom[389] = {6'd58, 6'd59, 8'b00001011, 8'b00010010};  // 11, 18
-  assign non_zero_coef_info_rom[390] = {6'd58, 6'd59, 8'b00001001, 8'b00010100};  // 9, 20
-  assign non_zero_coef_info_rom[391] = {6'd58, 6'd59, 8'b00001000, 8'b00010101};  // 8, 21
-  assign non_zero_coef_info_rom[392] = {6'd58, 6'd59, 8'b00000110, 8'b00010111};  // 6, 23
-  assign non_zero_coef_info_rom[393] = {6'd58, 6'd59, 8'b00000100, 8'b00011000};  // 4, 24
-  assign non_zero_coef_info_rom[394] = {6'd58, 6'd59, 8'b00000011, 8'b00011010};  // 3, 26
-  assign non_zero_coef_info_rom[395] = {6'd58, 6'd59, 8'b00000001, 8'b00011100};  // 1, 28
-  assign non_zero_coef_info_rom[396] = {6'd59, 6'd60, 8'b00011100, 8'b00000001};  // 28, 1
-  assign non_zero_coef_info_rom[397] = {6'd59, 6'd60, 8'b00011010, 8'b00000010};  // 26, 2
-  assign non_zero_coef_info_rom[398] = {6'd59, 6'd60, 8'b00011001, 8'b00000011};  // 25, 3
-  assign non_zero_coef_info_rom[399] = {6'd59, 6'd60, 8'b00010111, 8'b00000101};  // 23, 5
-  assign non_zero_coef_info_rom[400] = {6'd59, 6'd60, 8'b00010110, 8'b00000110};  // 22, 6
-  assign non_zero_coef_info_rom[401] = {6'd59, 6'd60, 8'b00010100, 8'b00001000};  // 20, 8
-  assign non_zero_coef_info_rom[402] = {6'd59, 6'd60, 8'b00010011, 8'b00001001};  // 19, 9
-  assign non_zero_coef_info_rom[403] = {6'd59, 6'd60, 8'b00010001, 8'b00001011};  // 17, 11
-  assign non_zero_coef_info_rom[404] = {6'd59, 6'd60, 8'b00010000, 8'b00001100};  // 16, 12
-  assign non_zero_coef_info_rom[405] = {6'd59, 6'd60, 8'b00001110, 8'b00001110};  // 14, 14
-  assign non_zero_coef_info_rom[406] = {6'd59, 6'd60, 8'b00001101, 8'b00001111};  // 13, 15
-  assign non_zero_coef_info_rom[407] = {6'd59, 6'd60, 8'b00001011, 8'b00010000};  // 11, 16
-  assign non_zero_coef_info_rom[408] = {6'd59, 6'd60, 8'b00001010, 8'b00010010};  // 10, 18
-  assign non_zero_coef_info_rom[409] = {6'd59, 6'd60, 8'b00001000, 8'b00010011};  // 8, 19
-  assign non_zero_coef_info_rom[410] = {6'd59, 6'd60, 8'b00000111, 8'b00010101};  // 7, 21
-  assign non_zero_coef_info_rom[411] = {6'd59, 6'd60, 8'b00000101, 8'b00010110};  // 5, 22
-  assign non_zero_coef_info_rom[412] = {6'd59, 6'd60, 8'b00000100, 8'b00011000};  // 4, 24
-  assign non_zero_coef_info_rom[413] = {6'd59, 6'd60, 8'b00000010, 8'b00011001};  // 2, 25
-  assign non_zero_coef_info_rom[414] = {6'd59, 6'd60, 8'b00000001, 8'b00011011};  // 1, 27
-  assign non_zero_coef_info_rom[415] = {6'd60, 6'd61, 8'b00011010, 8'b00000001};  // 26, 1
-  assign non_zero_coef_info_rom[416] = {6'd60, 6'd61, 8'b00011001, 8'b00000010};  // 25, 2
-  assign non_zero_coef_info_rom[417] = {6'd60, 6'd61, 8'b00011000, 8'b00000011};  // 24, 3
-  assign non_zero_coef_info_rom[418] = {6'd60, 6'd61, 8'b00010110, 8'b00000101};  // 22, 5
-  assign non_zero_coef_info_rom[419] = {6'd60, 6'd61, 8'b00010101, 8'b00000110};  // 21, 6
-  assign non_zero_coef_info_rom[420] = {6'd60, 6'd61, 8'b00010100, 8'b00000111};  // 20, 7
-  assign non_zero_coef_info_rom[421] = {6'd60, 6'd61, 8'b00010010, 8'b00001001};  // 18, 9
-  assign non_zero_coef_info_rom[422] = {6'd60, 6'd61, 8'b00010001, 8'b00001010};  // 17, 10
-  assign non_zero_coef_info_rom[423] = {6'd60, 6'd61, 8'b00001111, 8'b00001011};  // 15, 11
-  assign non_zero_coef_info_rom[424] = {6'd60, 6'd61, 8'b00001110, 8'b00001101};  // 14, 13
-  assign non_zero_coef_info_rom[425] = {6'd60, 6'd61, 8'b00001101, 8'b00001110};  // 13, 14
-  assign non_zero_coef_info_rom[426] = {6'd60, 6'd61, 8'b00001011, 8'b00001111};  // 11, 15
-  assign non_zero_coef_info_rom[427] = {6'd60, 6'd61, 8'b00001010, 8'b00010001};  // 10, 17
-  assign non_zero_coef_info_rom[428] = {6'd60, 6'd61, 8'b00001001, 8'b00010010};  // 9, 18
-  assign non_zero_coef_info_rom[429] = {6'd60, 6'd61, 8'b00000111, 8'b00010011};  // 7, 19
-  assign non_zero_coef_info_rom[430] = {6'd60, 6'd61, 8'b00000110, 8'b00010100};  // 6, 20
-  assign non_zero_coef_info_rom[431] = {6'd60, 6'd61, 8'b00000100, 8'b00010110};  // 4, 22
-  assign non_zero_coef_info_rom[432] = {6'd60, 6'd61, 8'b00000011, 8'b00010111};  // 3, 23
-  assign non_zero_coef_info_rom[433] = {6'd60, 6'd61, 8'b00000010, 8'b00011000};  // 2, 24
-  assign non_zero_coef_info_rom[434] = {6'd60, 6'd61, 8'b00000000, 8'b00011010};  // 0, 26
-  assign non_zero_coef_info_rom[435] = {6'd61, 6'd62, 8'b00011001, 8'b00000001};  // 25, 1
-  assign non_zero_coef_info_rom[436] = {6'd61, 6'd62, 8'b00011000, 8'b00000010};  // 24, 2
-  assign non_zero_coef_info_rom[437] = {6'd61, 6'd62, 8'b00010110, 8'b00000011};  // 22, 3
-  assign non_zero_coef_info_rom[438] = {6'd61, 6'd62, 8'b00010101, 8'b00000101};  // 21, 5
-  assign non_zero_coef_info_rom[439] = {6'd61, 6'd62, 8'b00010100, 8'b00000110};  // 20, 6
-  assign non_zero_coef_info_rom[440] = {6'd61, 6'd62, 8'b00010011, 8'b00000111};  // 19, 7
-  assign non_zero_coef_info_rom[441] = {6'd61, 6'd62, 8'b00010001, 8'b00001000};  // 17, 8
-  assign non_zero_coef_info_rom[442] = {6'd61, 6'd62, 8'b00010000, 8'b00001001};  // 16, 9
-  assign non_zero_coef_info_rom[443] = {6'd61, 6'd62, 8'b00001111, 8'b00001011};  // 15, 11
-  assign non_zero_coef_info_rom[444] = {6'd61, 6'd62, 8'b00001110, 8'b00001100};  // 14, 12
-  assign non_zero_coef_info_rom[445] = {6'd61, 6'd62, 8'b00001100, 8'b00001101};  // 12, 13
-  assign non_zero_coef_info_rom[446] = {6'd61, 6'd62, 8'b00001011, 8'b00001110};  // 11, 14
-  assign non_zero_coef_info_rom[447] = {6'd61, 6'd62, 8'b00001010, 8'b00001111};  // 10, 15
-  assign non_zero_coef_info_rom[448] = {6'd61, 6'd62, 8'b00001001, 8'b00010001};  // 9, 17
-  assign non_zero_coef_info_rom[449] = {6'd61, 6'd62, 8'b00000111, 8'b00010010};  // 7, 18
-  assign non_zero_coef_info_rom[450] = {6'd61, 6'd62, 8'b00000110, 8'b00010011};  // 6, 19
-  assign non_zero_coef_info_rom[451] = {6'd61, 6'd62, 8'b00000101, 8'b00010100};  // 5, 20
-  assign non_zero_coef_info_rom[452] = {6'd61, 6'd62, 8'b00000100, 8'b00010101};  // 4, 21
-  assign non_zero_coef_info_rom[453] = {6'd61, 6'd62, 8'b00000010, 8'b00010111};  // 2, 23
-  assign non_zero_coef_info_rom[454] = {6'd61, 6'd62, 8'b00000001, 8'b00011000};  // 1, 24
-  assign non_zero_coef_info_rom[455] = {6'd62, 6'd63, 8'b00011001, 8'b00000000};  // 25, 0
-  assign non_zero_coef_info_rom[456] = {6'd62, 6'd63, 8'b00010111, 8'b00000001};  // 23, 1
-  assign non_zero_coef_info_rom[457] = {6'd62, 6'd63, 8'b00010110, 8'b00000010};  // 22, 2
-  assign non_zero_coef_info_rom[458] = {6'd62, 6'd63, 8'b00010101, 8'b00000011};  // 21, 3
-  assign non_zero_coef_info_rom[459] = {6'd62, 6'd63, 8'b00010100, 8'b00000101};  // 20, 5
-  assign non_zero_coef_info_rom[460] = {6'd62, 6'd63, 8'b00010011, 8'b00000110};  // 19, 6
-  assign non_zero_coef_info_rom[461] = {6'd62, 6'd63, 8'b00010010, 8'b00000111};  // 18, 7
-  assign non_zero_coef_info_rom[462] = {6'd62, 6'd63, 8'b00010001, 8'b00001000};  // 17, 8
-  assign non_zero_coef_info_rom[463] = {6'd62, 6'd63, 8'b00001111, 8'b00001001};  // 15, 9
-  assign non_zero_coef_info_rom[464] = {6'd62, 6'd63, 8'b00001110, 8'b00001010};  // 14, 10
-  assign non_zero_coef_info_rom[465] = {6'd62, 6'd63, 8'b00001101, 8'b00001011};  // 13, 11
-  assign non_zero_coef_info_rom[466] = {6'd62, 6'd63, 8'b00001100, 8'b00001100};  // 12, 12
-  assign non_zero_coef_info_rom[467] = {6'd62, 6'd63, 8'b00001011, 8'b00001101};  // 11, 13
-  assign non_zero_coef_info_rom[468] = {6'd62, 6'd63, 8'b00001010, 8'b00001110};  // 10, 14
-  assign non_zero_coef_info_rom[469] = {6'd62, 6'd63, 8'b00001001, 8'b00001111};  // 9, 15
-  assign non_zero_coef_info_rom[470] = {6'd62, 6'd63, 8'b00000111, 8'b00010001};  // 7, 17
-  assign non_zero_coef_info_rom[471] = {6'd62, 6'd63, 8'b00000110, 8'b00010010};  // 6, 18
-  assign non_zero_coef_info_rom[472] = {6'd62, 6'd63, 8'b00000101, 8'b00010011};  // 5, 19
-  assign non_zero_coef_info_rom[473] = {6'd62, 6'd63, 8'b00000100, 8'b00010100};  // 4, 20
-  assign non_zero_coef_info_rom[474] = {6'd62, 6'd63, 8'b00000011, 8'b00010101};  // 3, 21
-  assign non_zero_coef_info_rom[475] = {6'd62, 6'd63, 8'b00000010, 8'b00010110};  // 2, 22
-  assign non_zero_coef_info_rom[476] = {6'd62, 6'd63, 8'b00000001, 8'b00010111};  // 1, 23
-  assign non_zero_coef_info_rom[477] = {6'd63, 6'bxxxxxx, 8'b000010111, 8'bxxxxxxxx};  // 23
-  assign non_zero_coef_info_rom[478] = {6'd63, 6'bxxxxxx, 8'b000010110, 8'bxxxxxxxx};  // 22
-  assign non_zero_coef_info_rom[479] = {6'd63, 6'bxxxxxx, 8'b000010101, 8'bxxxxxxxx};  // 21
-  assign non_zero_coef_info_rom[480] = {6'd63, 6'bxxxxxx, 8'b000010100, 8'bxxxxxxxx};  // 20
-  assign non_zero_coef_info_rom[481] = {6'd63, 6'bxxxxxx, 8'b000010011, 8'bxxxxxxxx};  // 19
-  assign non_zero_coef_info_rom[482] = {6'd63, 6'bxxxxxx, 8'b000010010, 8'bxxxxxxxx};  // 18
-  assign non_zero_coef_info_rom[483] = {6'd63, 6'bxxxxxx, 8'b000010001, 8'bxxxxxxxx};  // 17
-  assign non_zero_coef_info_rom[484] = {6'd63, 6'bxxxxxx, 8'b000010000, 8'bxxxxxxxx};  // 16
-  assign non_zero_coef_info_rom[485] = {6'd63, 6'bxxxxxx, 8'b000001111, 8'bxxxxxxxx};  // 15
-  assign non_zero_coef_info_rom[486] = {6'd63, 6'bxxxxxx, 8'b000001110, 8'bxxxxxxxx};  // 14
-  assign non_zero_coef_info_rom[487] = {6'd63, 6'bxxxxxx, 8'b000001101, 8'bxxxxxxxx};  // 13
-  assign non_zero_coef_info_rom[488] = {6'd63, 6'bxxxxxx, 8'b000001100, 8'bxxxxxxxx};  // 12
-  assign non_zero_coef_info_rom[489] = {6'd63, 6'bxxxxxx, 8'b000001011, 8'bxxxxxxxx};  // 11
-  assign non_zero_coef_info_rom[490] = {6'd63, 6'bxxxxxx, 8'b000001010, 8'bxxxxxxxx};  // 10
-  assign non_zero_coef_info_rom[491] = {6'd63, 6'bxxxxxx, 8'b000001001, 8'bxxxxxxxx};  // 9
-  assign non_zero_coef_info_rom[492] = {6'd63, 6'bxxxxxx, 8'b000001000, 8'bxxxxxxxx};  // 8
-  assign non_zero_coef_info_rom[493] = {6'd63, 6'bxxxxxx, 8'b000000110, 8'bxxxxxxxx};  // 6
-  assign non_zero_coef_info_rom[494] = {6'd63, 6'bxxxxxx, 8'b000000101, 8'bxxxxxxxx};  // 5
-  assign non_zero_coef_info_rom[495] = {6'd63, 6'bxxxxxx, 8'b000000100, 8'bxxxxxxxx};  // 4
-  assign non_zero_coef_info_rom[496] = {6'd63, 6'bxxxxxx, 8'b000000011, 8'bxxxxxxxx};  // 3
-  assign non_zero_coef_info_rom[497] = {6'd63, 6'bxxxxxx, 8'b000000010, 8'bxxxxxxxx};  // 2
-  assign non_zero_coef_info_rom[498] = {6'd63, 6'bxxxxxx, 8'b000000001, 8'bxxxxxxxx};  // 1
-  assign non_zero_coef_info_rom[499] = {6'd63, 6'bxxxxxx, 8'b000000000, 8'bxxxxxxxx};  // 0
-  assign non_zero_coef_info_rom[500] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[501] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[502] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[503] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[504] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[505] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[506] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[507] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[508] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[509] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[510] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[511] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
-  assign non_zero_coef_info_rom[512] = {6'bxxxxxx, 6'bxxxxxx, 8'bxxxxxxxx, 8'bxxxxxxxx};  // 
+  assign non_zero_info_rom[0] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[1] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[2] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[3] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[4] = {
+    2'd1, 6'd0, 6'bxxxxxx, 27'b000000000010100001000100001, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 82465
+  assign non_zero_info_rom[5] = {
+    2'd1, 6'd0, 6'bxxxxxx, 27'b000000010010001111101110000, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 597872
+  assign non_zero_info_rom[6] = {
+    2'd1, 6'd0, 6'bxxxxxx, 27'b000000100001111110010111111, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 1113279
+  assign non_zero_info_rom[7] = {
+    2'd2, 6'd0, 6'd1, 27'b000000101001000110110101010, 27'b000000000100010011000110010
+  };  // 1346986, 140850
+  assign non_zero_info_rom[8] = {
+    2'd2, 6'd0, 6'd1, 27'b000000011001011000001011011, 27'b000000010100000001110000001
+  };  // 831579, 656257
+  assign non_zero_info_rom[9] = {
+    2'd2, 6'd0, 6'd1, 27'b000000001001101001100001100, 27'b000000100011110000011010000
+  };  // 316172, 1171664
+  assign non_zero_info_rom[10] = {
+    2'd2, 6'd1, 6'd2, 27'b000000100111010100110011001, 27'b000000000110000101001000011
+  };  // 1288601, 199235
+  assign non_zero_info_rom[11] = {
+    2'd2, 6'd1, 6'd2, 27'b000000010111100110001001010, 27'b000000010101110011110010010
+  };  // 773194, 714642
+  assign non_zero_info_rom[12] = {
+    2'd2, 6'd1, 6'd2, 27'b000000000111110111011111100, 27'b000000100101100010011100000
+  };  // 257788, 1230048
+  assign non_zero_info_rom[13] = {
+    2'd2, 6'd2, 6'd3, 27'b000000100101100010110001001, 27'b000000000111110111001010011
+  };  // 1230217, 257619
+  assign non_zero_info_rom[14] = {
+    2'd2, 6'd2, 6'd3, 27'b000000010101110100000111010, 27'b000000010111100101110100010
+  };  // 714810, 773026
+  assign non_zero_info_rom[15] = {
+    2'd2, 6'd2, 6'd3, 27'b000000000110000101011101011, 27'b000000100111010100011110001
+  };  // 199403, 1288433
+  assign non_zero_info_rom[16] = {
+    2'd2, 6'd3, 6'd4, 27'b000000100011110000101111000, 27'b000000001001101001001100100
+  };  // 1171832, 316004
+  assign non_zero_info_rom[17] = {
+    2'd2, 6'd3, 6'd4, 27'b000000010100000010000101001, 27'b000000011001010111110110011
+  };  // 656425, 831411
+  assign non_zero_info_rom[18] = {
+    2'd2, 6'd3, 6'd4, 27'b000000000100010011011011010, 27'b000000101001000110100000010
+  };  // 141018, 1346818
+  assign non_zero_info_rom[19] = {
+    2'd2, 6'd4, 6'd5, 27'b000000100001111110101100111, 27'b000000001011011011001110101
+  };  // 1113447, 374389
+  assign non_zero_info_rom[20] = {
+    2'd2, 6'd4, 6'd5, 27'b000000010010010000000011000, 27'b000000011011001001111000100
+  };  // 598040, 889796
+  assign non_zero_info_rom[21] = {
+    2'd2, 6'd4, 6'd5, 27'b000000000010100001011001001, 27'b000000101010111000100010011
+  };  // 82633, 1405203
+  assign non_zero_info_rom[22] = {
+    2'd2, 6'd5, 6'd6, 27'b000000100000001100101010110, 27'b000000001101001101010000110
+  };  // 1055062, 432774
+  assign non_zero_info_rom[23] = {
+    2'd2, 6'd5, 6'd6, 27'b000000010000011110000000111, 27'b000000011100111011111010100
+  };  // 539655, 948180
+  assign non_zero_info_rom[24] = {
+    2'd2, 6'd5, 6'd6, 27'b000000000000101111010111001, 27'b000000101100101010100100100
+  };  // 24249, 1463588
+  assign non_zero_info_rom[25] = {
+    2'd2, 6'd6, 6'd7, 27'b000000011110011010101000110, 27'b000000001110111111010010110
+  };  // 996678, 491158
+  assign non_zero_info_rom[26] = {
+    2'd2, 6'd6, 6'd7, 27'b000000001110101011111110111, 27'b000000011110101101111100101
+  };  // 481271, 1006565
+  assign non_zero_info_rom[27] = {
+    2'd2, 6'd7, 6'd8, 27'b000000101100010111010000100, 27'b000000000001000010101011000
+  };  // 1453700, 34136
+  assign non_zero_info_rom[28] = {
+    2'd2, 6'd7, 6'd8, 27'b000000011100101000100110101, 27'b000000010000110001010100111
+  };  // 938293, 549543
+  assign non_zero_info_rom[29] = {
+    2'd2, 6'd7, 6'd8, 27'b000000001100111001111100110, 27'b000000100000011111111110110
+  };  // 422886, 1064950
+  assign non_zero_info_rom[30] = {
+    2'd2, 6'd8, 6'd9, 27'b000000101010100101001110011, 27'b000000000010110100101101001
+  };  // 1395315, 92521
+  assign non_zero_info_rom[31] = {
+    2'd2, 6'd8, 6'd9, 27'b000000011010110110100100100, 27'b000000010010100011010111000
+  };  // 879908, 607928
+  assign non_zero_info_rom[32] = {
+    2'd2, 6'd8, 6'd9, 27'b000000001011000111111010101, 27'b000000100010010010000000111
+  };  // 364501, 1123335
+  assign non_zero_info_rom[33] = {
+    2'd2, 6'd9, 6'd10, 27'b000000101000110011001100010, 27'b000000000100100110101111010
+  };  // 1336930, 150906
+  assign non_zero_info_rom[34] = {
+    2'd2, 6'd9, 6'd10, 27'b000000011001000100100010011, 27'b000000010100010101011001001
+  };  // 821523, 666313
+  assign non_zero_info_rom[35] = {
+    2'd2, 6'd9, 6'd10, 27'b000000001001010101111000100, 27'b000000100100000100000011000
+  };  // 306116, 1181720
+  assign non_zero_info_rom[36] = {
+    2'd2, 6'd10, 6'd11, 27'b000000100111000001001010001, 27'b000000000110011000110001010
+  };  // 1278545, 209290
+  assign non_zero_info_rom[37] = {
+    2'd2, 6'd10, 6'd11, 27'b000000010111010010100000011, 27'b000000010110000111011011001
+  };  // 763139, 724697
+  assign non_zero_info_rom[38] = {
+    2'd2, 6'd10, 6'd11, 27'b000000000111100011110110100, 27'b000000100101110110000101000
+  };  // 247732, 1240104
+  assign non_zero_info_rom[39] = {
+    2'd2, 6'd11, 6'd12, 27'b000000100101001111001000001, 27'b000000001000001010110011011
+  };  // 1220161, 267675
+  assign non_zero_info_rom[40] = {
+    2'd2, 6'd11, 6'd12, 27'b000000010101100000011110010, 27'b000000010111111001011101010
+  };  // 704754, 783082
+  assign non_zero_info_rom[41] = {
+    2'd2, 6'd11, 6'd12, 27'b000000000101110001110100011, 27'b000000100111101000000111001
+  };  // 189347, 1298489
+  assign non_zero_info_rom[42] = {
+    2'd2, 6'd12, 6'd13, 27'b000000100011011101000110000, 27'b000000001001111100110101100
+  };  // 1161776, 326060
+  assign non_zero_info_rom[43] = {
+    2'd2, 6'd12, 6'd13, 27'b000000010011101110011100001, 27'b000000011001101011011111011
+  };  // 646369, 841467
+  assign non_zero_info_rom[44] = {
+    2'd2, 6'd12, 6'd13, 27'b000000000011111111110010010, 27'b000000101001011010001001010
+  };  // 130962, 1356874
+  assign non_zero_info_rom[45] = {
+    2'd2, 6'd13, 6'd14, 27'b000000100001101011000011111, 27'b000000001011101110110111101
+  };  // 1103391, 384445
+  assign non_zero_info_rom[46] = {
+    2'd2, 6'd13, 6'd14, 27'b000000010001111100011010000, 27'b000000011011011101100001100
+  };  // 587984, 899852
+  assign non_zero_info_rom[47] = {
+    2'd2, 6'd13, 6'd14, 27'b000000000010001101110000001, 27'b000000101011001100001011010
+  };  // 72577, 1415258
+  assign non_zero_info_rom[48] = {
+    2'd2, 6'd14, 6'd15, 27'b000000011111111001000001110, 27'b000000001101100000111001110
+  };  // 1045006, 442830
+  assign non_zero_info_rom[49] = {
+    2'd2, 6'd14, 6'd15, 27'b000000010000001010011000000, 27'b000000011101001111100011100
+  };  // 529600, 958236
+  assign non_zero_info_rom[50] = {
+    2'd2, 6'd14, 6'd15, 27'b000000000000011011101110001, 27'b000000101100111110001101011
+  };  // 14193, 1473643
+  assign non_zero_info_rom[51] = {
+    2'd2, 6'd15, 6'd16, 27'b000000011110000110111111110, 27'b000000001111010010111011110
+  };  // 986622, 501214
+  assign non_zero_info_rom[52] = {
+    2'd2, 6'd15, 6'd16, 27'b000000001110011000010101111, 27'b000000011111000001100101101
+  };  // 471215, 1016621
+  assign non_zero_info_rom[53] = {
+    2'd2, 6'd16, 6'd17, 27'b000000101100000011100111100, 27'b000000000001010110010100000
+  };  // 1443644, 44192
+  assign non_zero_info_rom[54] = {
+    2'd2, 6'd16, 6'd17, 27'b000000011100010100111101101, 27'b000000010001000100111101111
+  };  // 928237, 559599
+  assign non_zero_info_rom[55] = {
+    2'd2, 6'd16, 6'd17, 27'b000000001100100110010011110, 27'b000000100000110011100111110
+  };  // 412830, 1075006
+  assign non_zero_info_rom[56] = {
+    2'd2, 6'd17, 6'd18, 27'b000000101010010001100101011, 27'b000000000011001000010110001
+  };  // 1385259, 102577
+  assign non_zero_info_rom[57] = {
+    2'd2, 6'd17, 6'd18, 27'b000000011010100010111011100, 27'b000000010010110111000000000
+  };  // 869852, 617984
+  assign non_zero_info_rom[58] = {
+    2'd2, 6'd17, 6'd18, 27'b000000001010110100010001101, 27'b000000100010100101101001111
+  };  // 354445, 1133391
+  assign non_zero_info_rom[59] = {
+    2'd2, 6'd18, 6'd19, 27'b000000101000011111100011010, 27'b000000000100111001011111111
+  };  // 1326874, 160511
+  assign non_zero_info_rom[60] = {
+    2'd2, 6'd18, 6'd19, 27'b000000011000110000111001011, 27'b000000010100100101010101101
+  };  // 811467, 674477
+  assign non_zero_info_rom[61] = {
+    2'd2, 6'd18, 6'd19, 27'b000000001001000010001111101, 27'b000000100100010001001011010
+  };  // 296061, 1188442
+  assign non_zero_info_rom[62] = {
+    2'd2, 6'd19, 6'd20, 27'b000000100110101000111110010, 27'b000000000110011011110010100
+  };  // 1266162, 210836
+  assign non_zero_info_rom[63] = {
+    2'd2, 6'd19, 6'd20, 27'b000000010111000010101111000, 27'b000000010101100011011000110
+  };  // 755064, 706246
+  assign non_zero_info_rom[64] = {
+    2'd2, 6'd19, 6'd20, 27'b000000000111011100011111110, 27'b000000100100101010111111000
+  };  // 243966, 1201656
+  assign non_zero_info_rom[65] = {
+    2'd2, 6'd20, 6'd21, 27'b000000100100011010101010010, 27'b000000000111000110010111000
+  };  // 1193298, 232632
+  assign non_zero_info_rom[66] = {
+    2'd2, 6'd20, 6'd21, 27'b000000010110000111101111100, 27'b000000010100101011101011010
+  };  // 724860, 677722
+  assign non_zero_info_rom[67] = {
+    2'd2, 6'd20, 6'd21, 27'b000000000111110100110100110, 27'b000000100010010000111111100
+  };  // 256422, 1122812
+  assign non_zero_info_rom[68] = {
+    2'd2, 6'd21, 6'd22, 27'b000000100011110101010010000, 27'b000000000101100110100000001
+  };  // 1174160, 183553
+  assign non_zero_info_rom[69] = {
+    2'd2, 6'd21, 6'd22, 27'b000000010110110111011110100, 27'b000000010001111110100101111
+  };  // 749300, 589103
+  assign non_zero_info_rom[70] = {
+    2'd2, 6'd21, 6'd22, 27'b000000001001111001101011000, 27'b000000011110010110101011101
+  };  // 324440, 994653
+  assign non_zero_info_rom[71] = {
+    2'd2, 6'd22, 6'd23, 27'b000000100101000000110101111, 27'b000000000010101010100101101
+  };  // 1212847, 87341
+  assign non_zero_info_rom[72] = {
+    2'd2, 6'd22, 6'd23, 27'b000000011001001100110000001, 27'b000000001101111100010100000
+  };  // 825729, 456864
+  assign non_zero_info_rom[73] = {
+    2'd2, 6'd22, 6'd23, 27'b000000001101011000101010100, 27'b000000011001001110000010011
+  };  // 438612, 826387
+  assign non_zero_info_rom[74] = {
+    2'd2, 6'd22, 6'd23, 27'b000000000001100100100100110, 27'b000000100100011111110000110
+  };  // 51494, 1195910
+  assign non_zero_info_rom[75] = {
+    2'd2, 6'd23, 6'd24, 27'b000000011100101010011110111, 27'b000000001000111010001000101
+  };  // 939255, 291909
+  assign non_zero_info_rom[76] = {
+    2'd2, 6'd23, 6'd24, 27'b000000010001111001100011111, 27'b000000010011001011101111110
+  };  // 586527, 628606
+  assign non_zero_info_rom[77] = {
+    2'd2, 6'd23, 6'd24, 27'b000000000111001000101000111, 27'b000000011101011101010110110
+  };  // 233799, 965302
+  assign non_zero_info_rom[78] = {
+    2'd2, 6'd24, 6'd25, 27'b000000100000111101100101111, 27'b000000000011001010000001110
+  };  // 1080111, 103438
+  assign non_zero_info_rom[79] = {
+    2'd2, 6'd24, 6'd25, 27'b000000010111001001110111110, 27'b000000001100100001001110000
+  };  // 758718, 410224
+  assign non_zero_info_rom[80] = {
+    2'd2, 6'd24, 6'd25, 27'b000000001101010110001001101, 27'b000000010101111000011010010
+  };  // 437325, 717010
+  assign non_zero_info_rom[81] = {
+    2'd2, 6'd24, 6'd25, 27'b000000000011100010011011011, 27'b000000011111001111100110100
+  };  // 115931, 1023796
+  assign non_zero_info_rom[82] = {
+    2'd2, 6'd25, 6'd26, 27'b000000011100111010000110000, 27'b000000000101011101000001101
+  };  // 947248, 178701
+  assign non_zero_info_rom[83] = {
+    2'd2, 6'd25, 6'd26, 27'b000000010011111110001000110, 27'b000000001101111110111111001
+  };  // 654406, 458233
+  assign non_zero_info_rom[84] = {
+    2'd2, 6'd25, 6'd26, 27'b000000001011000010001011100, 27'b000000010110100000111100110
+  };  // 361564, 737766
+  assign non_zero_info_rom[85] = {
+    2'd2, 6'd25, 6'd26, 27'b000000000010000110001110010, 27'b000000011111000010111010010
+  };  // 68722, 1017298
+  assign non_zero_info_rom[86] = {
+    2'd2, 6'd26, 6'd27, 27'b000000011010110100001011110, 27'b000000000101111100101110001
+  };  // 878686, 194929
+  assign non_zero_info_rom[87] = {
+    2'd2, 6'd26, 6'd27, 27'b000000010010101011000010010, 27'b000000001101101110001011101
+  };  // 611858, 449629
+  assign non_zero_info_rom[88] = {
+    2'd2, 6'd26, 6'd27, 27'b000000001010100001111000111, 27'b000000010101011111101001010
+  };  // 345031, 704330
+  assign non_zero_info_rom[89] = {
+    2'd2, 6'd26, 6'd27, 27'b000000000010011000101111011, 27'b000000011101010001000110110
+  };  // 78203, 959030
+  assign non_zero_info_rom[90] = {
+    2'd2, 6'd27, 6'd28, 27'b000000011010010011001110010, 27'b000000000101000000011011001
+  };  // 861810, 164057
+  assign non_zero_info_rom[91] = {
+    2'd2, 6'd27, 6'd28, 27'b000000010010111000010111110, 27'b000000001100000101101100010
+  };  // 618686, 396130
+  assign non_zero_info_rom[92] = {
+    2'd2, 6'd27, 6'd28, 27'b000000001011011101100001010, 27'b000000010011001010111101100
+  };  // 375562, 628204
+  assign non_zero_info_rom[93] = {
+    2'd2, 6'd27, 6'd28, 27'b000000000100000010101010111, 27'b000000011010010000001110110
+  };  // 132439, 860278
+  assign non_zero_info_rom[94] = {
+    2'd2, 6'd28, 6'd29, 27'b000000011011000010001010101, 27'b000000000010111100000001101
+  };  // 885845, 96269
+  assign non_zero_info_rom[95] = {
+    2'd2, 6'd28, 6'd29, 27'b000000010100010001011111111, 27'b000000001001011001000001110
+  };  // 664319, 307726
+  assign non_zero_info_rom[96] = {
+    2'd2, 6'd28, 6'd29, 27'b000000001101100000110101001, 27'b000000001111110110000010000
+  };  // 442793, 519184
+  assign non_zero_info_rom[97] = {
+    2'd2, 6'd28, 6'd29, 27'b000000000110110000001010011, 27'b000000010110010011000010001
+  };  // 221267, 730641
+  assign non_zero_info_rom[98] = {
+    2'd2, 6'd29, 6'd30, 27'b000000011100101111000101111, 27'b000000000000000000011100001
+  };  // 941615, 225
+  assign non_zero_info_rom[99] = {
+    2'd2, 6'd29, 6'd30, 27'b000000010110100100110111001, 27'b000000000101111000110000010
+  };  // 739769, 192898
+  assign non_zero_info_rom[100] = {
+    2'd2, 6'd29, 6'd30, 27'b000000010000011010101000010, 27'b000000001011110001000100011
+  };  // 537922, 385571
+  assign non_zero_info_rom[101] = {
+    2'd2, 6'd29, 6'd30, 27'b000000001010010000011001011, 27'b000000010001101001011000011
+  };  // 336075, 578243
+  assign non_zero_info_rom[102] = {
+    2'd2, 6'd29, 6'd30, 27'b000000000100000110001010101, 27'b000000010111100001101100100
+  };  // 134229, 770916
+  assign non_zero_info_rom[103] = {
+    2'd2, 6'd30, 6'd31, 27'b000000011001100011100111001, 27'b000000000001110010110111011
+  };  // 837433, 58811
+  assign non_zero_info_rom[104] = {
+    2'd2, 6'd30, 6'd31, 27'b000000010011111100011001101, 27'b000000000111001001101111111
+  };  // 653517, 234367
+  assign non_zero_info_rom[105] = {
+    2'd2, 6'd30, 6'd31, 27'b000000001110010101001100010, 27'b000000001100100000101000100
+  };  // 469602, 409924
+  assign non_zero_info_rom[106] = {
+    2'd2, 6'd30, 6'd31, 27'b000000001000101101111110110, 27'b000000010001110111100001000
+  };  // 285686, 585480
+  assign non_zero_info_rom[107] = {
+    2'd2, 6'd30, 6'd31, 27'b000000000011000110110001010, 27'b000000010111001110011001101
+  };  // 101770, 761037
+  assign non_zero_info_rom[108] = {
+    2'd2, 6'd31, 6'd32, 27'b000000010111111001111100110, 27'b000000000010001011100010110
+  };  // 783334, 71446
+  assign non_zero_info_rom[109] = {
+    2'd2, 6'd31, 6'd32, 27'b000000010010110010101001101, 27'b000000000111000011111101111
+  };  // 615757, 231407
+  assign non_zero_info_rom[110] = {
+    2'd2, 6'd31, 6'd32, 27'b000000001101101011010110011, 27'b000000001011111100011001000
+  };  // 448179, 391368
+  assign non_zero_info_rom[111] = {
+    2'd2, 6'd31, 6'd32, 27'b000000001000100100000011010, 27'b000000010000110100110100000
+  };  // 280602, 551328
+  assign non_zero_info_rom[112] = {
+    2'd2, 6'd31, 6'd32, 27'b000000000011011100110000001, 27'b000000010101101101001111001
+  };  // 113025, 711289
+  assign non_zero_info_rom[113] = {
+    2'd2, 6'd32, 6'd33, 27'b000000010111011110110111110, 27'b000000000001011100101010111
+  };  // 769470, 47447
+  assign non_zero_info_rom[114] = {
+    2'd2, 6'd32, 6'd33, 27'b000000010010110100101001100, 27'b000000000101111001010101110
+  };  // 616780, 193198
+  assign non_zero_info_rom[115] = {
+    2'd2, 6'd32, 6'd33, 27'b000000001110001010011011001, 27'b000000001010010110000000101
+  };  // 464089, 338949
+  assign non_zero_info_rom[116] = {
+    2'd2, 6'd32, 6'd33, 27'b000000001001100000001100111, 27'b000000001110110010101011100
+  };  // 311399, 484700
+  assign non_zero_info_rom[117] = {
+    2'd2, 6'd32, 6'd33, 27'b000000000100110101111110100, 27'b000000010011001111010110010
+  };  // 158708, 630450
+  assign non_zero_info_rom[118] = {
+    2'd2, 6'd32, 6'd33, 27'b000000000000001011110000001, 27'b000000010111101100000001001
+  };  // 6017, 776201
+  assign non_zero_info_rom[119] = {
+    2'd2, 6'd33, 6'd34, 27'b000000010011110010001101110, 27'b000000000011111001001010001
+  };  // 648302, 127569
+  assign non_zero_info_rom[120] = {
+    2'd2, 6'd33, 6'd34, 27'b000000001111100010011110111, 27'b000000000111111100100010100
+  };  // 509175, 260372
+  assign non_zero_info_rom[121] = {
+    2'd2, 6'd33, 6'd34, 27'b000000001011010010110000001, 27'b000000001011111111111010111
+  };  // 370049, 393175
+  assign non_zero_info_rom[122] = {
+    2'd2, 6'd33, 6'd34, 27'b000000000111000011000001011, 27'b000000010000000011010011010
+  };  // 230923, 525978
+  assign non_zero_info_rom[123] = {
+    2'd2, 6'd33, 6'd34, 27'b000000000010110011010010100, 27'b000000010100000110101011101
+  };  // 91796, 658781
+  assign non_zero_info_rom[124] = {
+    2'd2, 6'd34, 6'd35, 27'b000000010101011101100110000, 27'b000000000001010000011001101
+  };  // 703280, 41165
+  assign non_zero_info_rom[125] = {
+    2'd2, 6'd34, 6'd35, 27'b000000010001100110000000001, 27'b000000000100111100101111011
+  };  // 576513, 162171
+  assign non_zero_info_rom[126] = {
+    2'd2, 6'd34, 6'd35, 27'b000000001101101110011010010, 27'b000000001000101001000101000
+  };  // 449746, 283176
+  assign non_zero_info_rom[127] = {
+    2'd2, 6'd34, 6'd35, 27'b000000001001110110110100011, 27'b000000001100010101011010101
+  };  // 322979, 404181
+  assign non_zero_info_rom[128] = {
+    2'd2, 6'd34, 6'd35, 27'b000000000101111111001110100, 27'b000000010000000001110000011
+  };  // 196212, 525187
+  assign non_zero_info_rom[129] = {
+    2'd2, 6'd34, 6'd35, 27'b000000000010000111101000101, 27'b000000010011101110000110000
+  };  // 69445, 646192
+  assign non_zero_info_rom[130] = {
+    2'd2, 6'd35, 6'd36, 27'b000000010100001001100011011, 27'b000000000001100001011000000
+  };  // 660251, 49856
+  assign non_zero_info_rom[131] = {
+    2'd2, 6'd35, 6'd36, 27'b000000010000100111111101001, 27'b000000000100111000101110000
+  };  // 544745, 160112
+  assign non_zero_info_rom[132] = {
+    2'd2, 6'd35, 6'd36, 27'b000000001101000110010111000, 27'b000000001000010000000100000
+  };  // 429240, 270368
+  assign non_zero_info_rom[133] = {
+    2'd2, 6'd35, 6'd36, 27'b000000001001100100110000110, 27'b000000001011100111011001111
+  };  // 313734, 380623
+  assign non_zero_info_rom[134] = {
+    2'd2, 6'd35, 6'd36, 27'b000000000110000011001010100, 27'b000000001110111110101111111
+  };  // 198228, 490879
+  assign non_zero_info_rom[135] = {
+    2'd2, 6'd35, 6'd36, 27'b000000000010100001100100011, 27'b000000010010010110000101111
+  };  // 82723, 601135
+  assign non_zero_info_rom[136] = {
+    2'd2, 6'd36, 6'd37, 27'b000000010011110101111110100, 27'b000000000000110111101100001
+  };  // 650228, 28513
+  assign non_zero_info_rom[137] = {
+    2'd2, 6'd36, 6'd37, 27'b000000010000101000011010111, 27'b000000000011111011111001110
+  };  // 544983, 128974
+  assign non_zero_info_rom[138] = {
+    2'd2, 6'd36, 6'd37, 27'b000000001101011010110111010, 27'b000000000111000000000111011
+  };  // 439738, 229435
+  assign non_zero_info_rom[139] = {
+    2'd2, 6'd36, 6'd37, 27'b000000001010001101010011110, 27'b000000001010000100010101001
+  };  // 334494, 329897
+  assign non_zero_info_rom[140] = {
+    2'd2, 6'd36, 6'd37, 27'b000000000110111111110000001, 27'b000000001101001000100010110
+  };  // 229249, 430358
+  assign non_zero_info_rom[141] = {
+    2'd2, 6'd36, 6'd37, 27'b000000000011110010001100100, 27'b000000010000001100110000011
+  };  // 124004, 530819
+  assign non_zero_info_rom[142] = {
+    2'd2, 6'd36, 6'd37, 27'b000000000000100100101001000, 27'b000000010011010000111110000
+  };  // 18760, 631280
+  assign non_zero_info_rom[143] = {
+    2'd2, 6'd37, 6'd38, 27'b000000010001011010000010001, 27'b000000000010010010111010100
+  };  // 570385, 75220
+  assign non_zero_info_rom[144] = {
+    2'd2, 6'd37, 6'd38, 27'b000000001110011110101111010, 27'b000000000101000101101100101
+  };  // 474490, 166757
+  assign non_zero_info_rom[145] = {
+    2'd2, 6'd37, 6'd38, 27'b000000001011100011011100011, 27'b000000000111111000011110110
+  };  // 378595, 258294
+  assign non_zero_info_rom[146] = {
+    2'd2, 6'd37, 6'd38, 27'b000000001000101000001001100, 27'b000000001010101011010000111
+  };  // 282700, 349831
+  assign non_zero_info_rom[147] = {
+    2'd2, 6'd37, 6'd38, 27'b000000000101101100110110101, 27'b000000001101011110000010111
+  };  // 186805, 441367
+  assign non_zero_info_rom[148] = {
+    2'd2, 6'd37, 6'd38, 27'b000000000010110001100011101, 27'b000000010000010000110101000
+  };  // 90909, 532904
+  assign non_zero_info_rom[149] = {
+    2'd2, 6'd38, 6'd39, 27'b000000010010110001011100010, 27'b000000000000001000011110000
+  };  // 615138, 4336
+  assign non_zero_info_rom[150] = {
+    2'd2, 6'd38, 6'd39, 27'b000000010000000110110010010, 27'b000000000010101011010111110
+  };  // 527762, 87742
+  assign non_zero_info_rom[151] = {
+    2'd2, 6'd38, 6'd39, 27'b000000001101011100001000010, 27'b000000000101001110010001011
+  };  // 440386, 171147
+  assign non_zero_info_rom[152] = {
+    2'd2, 6'd38, 6'd39, 27'b000000001010110001011110010, 27'b000000000111110001001011000
+  };  // 353010, 254552
+  assign non_zero_info_rom[153] = {
+    2'd2, 6'd38, 6'd39, 27'b000000001000000110110100001, 27'b000000001010010100000100101
+  };  // 265633, 337957
+  assign non_zero_info_rom[154] = {
+    2'd2, 6'd38, 6'd39, 27'b000000000101011100001010001, 27'b000000001100110110111110010
+  };  // 178257, 421362
+  assign non_zero_info_rom[155] = {
+    2'd2, 6'd38, 6'd39, 27'b000000000010110001100000000, 27'b000000001111011001110111111
+  };  // 90880, 504767
+  assign non_zero_info_rom[156] = {
+    2'd2, 6'd38, 6'd39, 27'b000000000000000110110110000, 27'b000000010001111100110001100
+  };  // 3504, 588172
+  assign non_zero_info_rom[157] = {
+    2'd2, 6'd39, 6'd40, 27'b000000001111101110000010111, 27'b000000000010001110011110100
+  };  // 515095, 72948
+  assign non_zero_info_rom[158] = {
+    2'd2, 6'd39, 6'd40, 27'b000000001101010010100011001, 27'b000000000100100010111010000
+  };  // 435481, 148944
+  assign non_zero_info_rom[159] = {
+    2'd2, 6'd39, 6'd40, 27'b000000001010110111000011011, 27'b000000000110110111010101100
+  };  // 355867, 224940
+  assign non_zero_info_rom[160] = {
+    2'd2, 6'd39, 6'd40, 27'b000000001000011011100011100, 27'b000000001001001011110000111
+  };  // 276252, 300935
+  assign non_zero_info_rom[161] = {
+    2'd2, 6'd39, 6'd40, 27'b000000000110000000000011110, 27'b000000001011100000001100011
+  };  // 196638, 376931
+  assign non_zero_info_rom[162] = {
+    2'd2, 6'd39, 6'd40, 27'b000000000011100100100100000, 27'b000000001101110100100111111
+  };  // 117024, 452927
+  assign non_zero_info_rom[163] = {
+    2'd2, 6'd39, 6'd40, 27'b000000000001001001000100010, 27'b000000010000001001000011010
+  };  // 37410, 528922
+  assign non_zero_info_rom[164] = {
+    2'd2, 6'd40, 6'd41, 27'b000000010000000011101100001, 27'b000000000001000111101100011
+  };  // 526177, 36707
+  assign non_zero_info_rom[165] = {
+    2'd2, 6'd40, 6'd41, 27'b000000001101110110000000011, 27'b000000000011001110111100000
+  };  // 453635, 105952
+  assign non_zero_info_rom[166] = {
+    2'd2, 6'd40, 6'd41, 27'b000000001011101000010100101, 27'b000000000101010110001011101
+  };  // 381093, 175197
+  assign non_zero_info_rom[167] = {
+    2'd2, 6'd40, 6'd41, 27'b000000001001011010101001000, 27'b000000000111011101011011001
+  };  // 308552, 244441
+  assign non_zero_info_rom[168] = {
+    2'd2, 6'd40, 6'd41, 27'b000000000111001100111101010, 27'b000000001001100100101010110
+  };  // 236010, 313686
+  assign non_zero_info_rom[169] = {
+    2'd2, 6'd40, 6'd41, 27'b000000000100111111010001100, 27'b000000001011101011111010011
+  };  // 163468, 382931
+  assign non_zero_info_rom[170] = {
+    2'd2, 6'd40, 6'd41, 27'b000000000010110001100101110, 27'b000000001101110011001001111
+  };  // 90926, 452175
+  assign non_zero_info_rom[171] = {
+    2'd2, 6'd40, 6'd41, 27'b000000000000100011111010001, 27'b000000001111111010011001100
+  };  // 18385, 521420
+  assign non_zero_info_rom[172] = {
+    2'd2, 6'd41, 6'd42, 27'b000000001110111100010010111, 27'b000000000001011011111111111
+  };  // 489623, 47103
+  assign non_zero_info_rom[173] = {
+    2'd2, 6'd41, 6'd42, 27'b000000001100111011001100110, 27'b000000000011010111001110100
+  };  // 423526, 110196
+  assign non_zero_info_rom[174] = {
+    2'd2, 6'd41, 6'd42, 27'b000000001010111010000110100, 27'b000000000101010010011101010
+  };  // 357428, 173290
+  assign non_zero_info_rom[175] = {
+    2'd2, 6'd41, 6'd42, 27'b000000001000111001000000011, 27'b000000000111001101101011111
+  };  // 291331, 236383
+  assign non_zero_info_rom[176] = {
+    2'd2, 6'd41, 6'd42, 27'b000000000110110111111010010, 27'b000000001001001000111010100
+  };  // 225234, 299476
+  assign non_zero_info_rom[177] = {
+    2'd2, 6'd41, 6'd42, 27'b000000000100110110110100000, 27'b000000001011000100001001010
+  };  // 159136, 362570
+  assign non_zero_info_rom[178] = {
+    2'd2, 6'd41, 6'd42, 27'b000000000010110101101101111, 27'b000000001100111111010111111
+  };  // 93039, 425663
+  assign non_zero_info_rom[179] = {
+    2'd2, 6'd41, 6'd42, 27'b000000000000110100100111101, 27'b000000001110111010100110100
+  };  // 26941, 488756
+  assign non_zero_info_rom[180] = {
+    2'd2, 6'd42, 6'd43, 27'b000000001110100111001001011, 27'b000000000001000010100001000
+  };  // 478795, 34056
+  assign non_zero_info_rom[181] = {
+    2'd2, 6'd42, 6'd43, 27'b000000001100110001100001001, 27'b000000000010110010110011001
+  };  // 418569, 91545
+  assign non_zero_info_rom[182] = {
+    2'd2, 6'd42, 6'd43, 27'b000000001010111011111001000, 27'b000000000100100011000101001
+  };  // 358344, 149033
+  assign non_zero_info_rom[183] = {
+    2'd2, 6'd42, 6'd43, 27'b000000001001000110010000110, 27'b000000000110010011010111001
+  };  // 298118, 206521
+  assign non_zero_info_rom[184] = {
+    2'd2, 6'd42, 6'd43, 27'b000000000111010000101000100, 27'b000000001000000011101001010
+  };  // 237892, 264010
+  assign non_zero_info_rom[185] = {
+    2'd2, 6'd42, 6'd43, 27'b000000000101011011000000011, 27'b000000001001110011111011010
+  };  // 177667, 321498
+  assign non_zero_info_rom[186] = {
+    2'd2, 6'd42, 6'd43, 27'b000000000011100101011000001, 27'b000000001011100100001101011
+  };  // 117441, 378987
+  assign non_zero_info_rom[187] = {
+    2'd2, 6'd42, 6'd43, 27'b000000000001101111101111111, 27'b000000001101010100011111011
+  };  // 57215, 436475
+  assign non_zero_info_rom[188] = {
+    2'd2, 6'd43, 6'd44, 27'b000000001110111001110011011, 27'b000000000000000101000111010
+  };  // 488347, 2618
+  assign non_zero_info_rom[189] = {
+    2'd2, 6'd43, 6'd44, 27'b000000001101001110100111111, 27'b000000000001101011011011000
+  };  // 433471, 55000
+  assign non_zero_info_rom[190] = {
+    2'd2, 6'd43, 6'd44, 27'b000000001011100011011100100, 27'b000000000011010001101110101
+  };  // 378596, 107381
+  assign non_zero_info_rom[191] = {
+    2'd2, 6'd43, 6'd44, 27'b000000001001111000010001000, 27'b000000000100111000000010010
+  };  // 323720, 159762
+  assign non_zero_info_rom[192] = {
+    2'd2, 6'd43, 6'd44, 27'b000000001000001101000101101, 27'b000000000110011110010110000
+  };  // 268845, 212144
+  assign non_zero_info_rom[193] = {
+    2'd2, 6'd43, 6'd44, 27'b000000000110100001111010001, 27'b000000001000000100101001101
+  };  // 213969, 264525
+  assign non_zero_info_rom[194] = {
+    2'd2, 6'd43, 6'd44, 27'b000000000100110110101110110, 27'b000000001001101010111101011
+  };  // 159094, 316907
+  assign non_zero_info_rom[195] = {
+    2'd2, 6'd43, 6'd44, 27'b000000000011001011100011010, 27'b000000001011010001010001000
+  };  // 104218, 369288
+  assign non_zero_info_rom[196] = {
+    2'd2, 6'd43, 6'd44, 27'b000000000001100000010111111, 27'b000000001100110111100100101
+  };  // 49343, 421669
+  assign non_zero_info_rom[197] = {
+    2'd2, 6'd44, 6'd45, 27'b000000001110001001101110000, 27'b000000000000001001011001100
+  };  // 463728, 4812
+  assign non_zero_info_rom[198] = {
+    2'd2, 6'd44, 6'd45, 27'b000000001100101000000100000, 27'b000000000001100110100111100
+  };  // 413728, 52540
+  assign non_zero_info_rom[199] = {
+    2'd2, 6'd44, 6'd45, 27'b000000001011000110011001111, 27'b000000000011000011110101100
+  };  // 363727, 100268
+  assign non_zero_info_rom[200] = {
+    2'd2, 6'd44, 6'd45, 27'b000000001001100100101111110, 27'b000000000100100001000011100
+  };  // 313726, 147996
+  assign non_zero_info_rom[201] = {
+    2'd2, 6'd44, 6'd45, 27'b000000001000000011000101110, 27'b000000000101111110010001100
+  };  // 263726, 195724
+  assign non_zero_info_rom[202] = {
+    2'd2, 6'd44, 6'd45, 27'b000000000110100001011011101, 27'b000000000111011011011111100
+  };  // 213725, 243452
+  assign non_zero_info_rom[203] = {
+    2'd2, 6'd44, 6'd45, 27'b000000000100111111110001100, 27'b000000001000111000101101101
+  };  // 163724, 291181
+  assign non_zero_info_rom[204] = {
+    2'd2, 6'd44, 6'd45, 27'b000000000011011110000111100, 27'b000000001010010101111011101
+  };  // 113724, 338909
+  assign non_zero_info_rom[205] = {
+    2'd2, 6'd44, 6'd45, 27'b000000000001111100011101011, 27'b000000001011110011001001101
+  };  // 63723, 386637
+  assign non_zero_info_rom[206] = {
+    2'd2, 6'd44, 6'd45, 27'b000000000000011010110011011, 27'b000000001101010000010111101
+  };  // 13723, 434365
+  assign non_zero_info_rom[207] = {
+    2'd2, 6'd45, 6'd46, 27'b000000001100101001011001000, 27'b000000000000111101101000001
+  };  // 414408, 31553
+  assign non_zero_info_rom[208] = {
+    2'd2, 6'd45, 6'd46, 27'b000000001011010000011010010, 27'b000000000010010010100100001
+  };  // 368850, 75041
+  assign non_zero_info_rom[209] = {
+    2'd2, 6'd45, 6'd46, 27'b000000001001110111011011011, 27'b000000000011100111100000001
+  };  // 323291, 118529
+  assign non_zero_info_rom[210] = {
+    2'd2, 6'd45, 6'd46, 27'b000000001000011110011100100, 27'b000000000100111100011100001
+  };  // 277732, 162017
+  assign non_zero_info_rom[211] = {
+    2'd2, 6'd45, 6'd46, 27'b000000000111000101011101101, 27'b000000000110010001011000001
+  };  // 232173, 205505
+  assign non_zero_info_rom[212] = {
+    2'd2, 6'd45, 6'd46, 27'b000000000101101100011110110, 27'b000000000111100110010100010
+  };  // 186614, 248994
+  assign non_zero_info_rom[213] = {
+    2'd2, 6'd45, 6'd46, 27'b000000000100010011100000000, 27'b000000001000111011010000010
+  };  // 141056, 292482
+  assign non_zero_info_rom[214] = {
+    2'd2, 6'd45, 6'd46, 27'b000000000010111010100001001, 27'b000000001010010000001100010
+  };  // 95497, 335970
+  assign non_zero_info_rom[215] = {
+    2'd2, 6'd45, 6'd46, 27'b000000000001100001100010010, 27'b000000001011100101001000010
+  };  // 49938, 379458
+  assign non_zero_info_rom[216] = {
+    2'd2, 6'd45, 6'd46, 27'b000000000000001000100011011, 27'b000000001100111010000100010
+  };  // 4379, 422946
+  assign non_zero_info_rom[217] = {
+    2'd2, 6'd46, 6'd47, 27'b000000001011111000111100101, 27'b000000000001000101111101000
+  };  // 389605, 35816
+  assign non_zero_info_rom[218] = {
+    2'd2, 6'd46, 6'd47, 27'b000000001010100111110111101, 27'b000000000010010011010110001
+  };  // 348093, 75441
+  assign non_zero_info_rom[219] = {
+    2'd2, 6'd46, 6'd47, 27'b000000001001010110110010110, 27'b000000000011100000101111010
+  };  // 306582, 115066
+  assign non_zero_info_rom[220] = {
+    2'd2, 6'd46, 6'd47, 27'b000000001000000101101101110, 27'b000000000100101110001000011
+  };  // 265070, 154691
+  assign non_zero_info_rom[221] = {
+    2'd2, 6'd46, 6'd47, 27'b000000000110110100101000110, 27'b000000000101111011100001100
+  };  // 223558, 194316
+  assign non_zero_info_rom[222] = {
+    2'd2, 6'd46, 6'd47, 27'b000000000101100011100011111, 27'b000000000111001000111010100
+  };  // 182047, 233940
+  assign non_zero_info_rom[223] = {
+    2'd2, 6'd46, 6'd47, 27'b000000000100010010011110111, 27'b000000001000010110010011101
+  };  // 140535, 273565
+  assign non_zero_info_rom[224] = {
+    2'd2, 6'd46, 6'd47, 27'b000000000011000001011010000, 27'b000000001001100011101100110
+  };  // 99024, 313190
+  assign non_zero_info_rom[225] = {
+    2'd2, 6'd46, 6'd47, 27'b000000000001110000010101000, 27'b000000001010110001000101111
+  };  // 57512, 352815
+  assign non_zero_info_rom[226] = {
+    2'd2, 6'd46, 6'd47, 27'b000000000000011111010000000, 27'b000000001011111110011111000
+  };  // 16000, 392440
+  assign non_zero_info_rom[227] = {
+    2'd2, 6'd47, 6'd48, 27'b000000001011101110111010100, 27'b000000000000101011010101100
+  };  // 384468, 22188
+  assign non_zero_info_rom[228] = {
+    2'd2, 6'd47, 6'd48, 27'b000000001010100101000010100, 27'b000000000001110001110110101
+  };  // 346644, 58293
+  assign non_zero_info_rom[229] = {
+    2'd2, 6'd47, 6'd48, 27'b000000001001011011001010100, 27'b000000000010111000010111110
+  };  // 308820, 94398
+  assign non_zero_info_rom[230] = {
+    2'd2, 6'd47, 6'd48, 27'b000000001000010001010010101, 27'b000000000011111110111000111
+  };  // 270997, 130503
+  assign non_zero_info_rom[231] = {
+    2'd2, 6'd47, 6'd48, 27'b000000000111000111011010101, 27'b000000000101000101011010000
+  };  // 233173, 166608
+  assign non_zero_info_rom[232] = {
+    2'd2, 6'd47, 6'd48, 27'b000000000101111101100010101, 27'b000000000110001011111011000
+  };  // 195349, 202712
+  assign non_zero_info_rom[233] = {
+    2'd2, 6'd47, 6'd48, 27'b000000000100110011101010101, 27'b000000000111010010011100001
+  };  // 157525, 238817
+  assign non_zero_info_rom[234] = {
+    2'd2, 6'd47, 6'd48, 27'b000000000011101001110010101, 27'b000000001000011000111101010
+  };  // 119701, 274922
+  assign non_zero_info_rom[235] = {
+    2'd2, 6'd47, 6'd48, 27'b000000000010011111111010101, 27'b000000001001011111011110011
+  };  // 81877, 311027
+  assign non_zero_info_rom[236] = {
+    2'd2, 6'd47, 6'd48, 27'b000000000001010110000010101, 27'b000000001010100101111111011
+  };  // 44053, 347131
+  assign non_zero_info_rom[237] = {
+    2'd2, 6'd47, 6'd48, 27'b000000000000001100001010101, 27'b000000001011101100100000100
+  };  // 6229, 383236
+  assign non_zero_info_rom[238] = {
+    2'd2, 6'd48, 6'd49, 27'b000000001010111111111001011, 27'b000000000000110101101010111
+  };  // 360395, 27479
+  assign non_zero_info_rom[239] = {
+    2'd2, 6'd48, 6'd49, 27'b000000001001111100100101011, 27'b000000000001110101111011001
+  };  // 325931, 60377
+  assign non_zero_info_rom[240] = {
+    2'd2, 6'd48, 6'd49, 27'b000000001000111001010001011, 27'b000000000010110110001011010
+  };  // 291467, 93274
+  assign non_zero_info_rom[241] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000111110101111101011, 27'b000000000011110110011011100
+  };  // 257003, 126172
+  assign non_zero_info_rom[242] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000110110010101001011, 27'b000000000100110110101011101
+  };  // 222539, 159069
+  assign non_zero_info_rom[243] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000101101111010101100, 27'b000000000101110110111011110
+  };  // 188076, 191966
+  assign non_zero_info_rom[244] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000100101100000001100, 27'b000000000110110111001100000
+  };  // 153612, 224864
+  assign non_zero_info_rom[245] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000011101000101101100, 27'b000000000111110111011100001
+  };  // 119148, 257761
+  assign non_zero_info_rom[246] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000010100101011001100, 27'b000000001000110111101100011
+  };  // 84684, 290659
+  assign non_zero_info_rom[247] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000001100010000101100, 27'b000000001001110111111100100
+  };  // 50220, 323556
+  assign non_zero_info_rom[248] = {
+    2'd2, 6'd48, 6'd49, 27'b000000000000011110110001101, 27'b000000001010111000001100110
+  };  // 15757, 356454
+  assign non_zero_info_rom[249] = {
+    2'd2, 6'd49, 6'd50, 27'b000000001010110100010010000, 27'b000000000000011111110001111
+  };  // 354448, 16271
+  assign non_zero_info_rom[250] = {
+    2'd2, 6'd49, 6'd50, 27'b000000001001110110111100110, 27'b000000000001011010010100110
+  };  // 323046, 46246
+  assign non_zero_info_rom[251] = {
+    2'd2, 6'd49, 6'd50, 27'b000000001000111001100111100, 27'b000000000010010100110111101
+  };  // 291644, 76221
+  assign non_zero_info_rom[252] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000111111100010010010, 27'b000000000011001111011010100
+  };  // 260242, 106196
+  assign non_zero_info_rom[253] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000110111110111101000, 27'b000000000100001001111101011
+  };  // 228840, 136171
+  assign non_zero_info_rom[254] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000110000001100111101, 27'b000000000101000100100000010
+  };  // 197437, 166146
+  assign non_zero_info_rom[255] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000101000100010010011, 27'b000000000101111111000011000
+  };  // 166035, 196120
+  assign non_zero_info_rom[256] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000100000110111101001, 27'b000000000110111001100101111
+  };  // 134633, 226095
+  assign non_zero_info_rom[257] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000011001001100111111, 27'b000000000111110100001000110
+  };  // 103231, 256070
+  assign non_zero_info_rom[258] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000010001100010010101, 27'b000000001000101110101011101
+  };  // 71829, 286045
+  assign non_zero_info_rom[259] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000001001110111101010, 27'b000000001001101001001110100
+  };  // 40426, 316020
+  assign non_zero_info_rom[260] = {
+    2'd2, 6'd49, 6'd50, 27'b000000000000010001101000000, 27'b000000001010100011110001011
+  };  // 9024, 345995
+  assign non_zero_info_rom[261] = {
+    2'd2, 6'd50, 6'd51, 27'b000000001010001100110001011, 27'b000000000000100110000000111
+  };  // 334219, 19463
+  assign non_zero_info_rom[262] = {
+    2'd2, 6'd50, 6'd51, 27'b000000001001010100111000111, 27'b000000000001011011010110111
+  };  // 305607, 46775
+  assign non_zero_info_rom[263] = {
+    2'd2, 6'd50, 6'd51, 27'b000000001000011101000000010, 27'b000000000010010000101101000
+  };  // 276994, 74088
+  assign non_zero_info_rom[264] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000111100101000111110, 27'b000000000011000110000011000
+  };  // 248382, 101400
+  assign non_zero_info_rom[265] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000110101101001111001, 27'b000000000011111011011001000
+  };  // 219769, 128712
+  assign non_zero_info_rom[266] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000101110101010110100, 27'b000000000100110000101111000
+  };  // 191156, 156024
+  assign non_zero_info_rom[267] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000100111101011110000, 27'b000000000101100110000101000
+  };  // 162544, 183336
+  assign non_zero_info_rom[268] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000100000101100101011, 27'b000000000110011011011011000
+  };  // 133931, 210648
+  assign non_zero_info_rom[269] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000011001101101100111, 27'b000000000111010000110001000
+  };  // 105319, 237960
+  assign non_zero_info_rom[270] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000010010101110100010, 27'b000000001000000110000111000
+  };  // 76706, 265272
+  assign non_zero_info_rom[271] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000001011101111011101, 27'b000000001000111011011101001
+  };  // 48093, 292585
+  assign non_zero_info_rom[272] = {
+    2'd2, 6'd50, 6'd51, 27'b000000000000100110000011001, 27'b000000001001110000110011001
+  };  // 19481, 319897
+  assign non_zero_info_rom[273] = {
+    2'd2, 6'd51, 6'd52, 27'b000000001010000100110111100, 27'b000000000000001111100000110
+  };  // 330172, 7942
+  assign non_zero_info_rom[274] = {
+    2'd2, 6'd51, 6'd52, 27'b000000001001010001111100101, 27'b000000000001000000000111100
+  };  // 304101, 32828
+  assign non_zero_info_rom[275] = {
+    2'd2, 6'd51, 6'd52, 27'b000000001000011111000001110, 27'b000000000001110000101110010
+  };  // 278030, 57714
+  assign non_zero_info_rom[276] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000111101100000110111, 27'b000000000010100001010101000
+  };  // 251959, 82600
+  assign non_zero_info_rom[277] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000110111001001100000, 27'b000000000011010001111011110
+  };  // 225888, 107486
+  assign non_zero_info_rom[278] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000110000110010001010, 27'b000000000100000010100010100
+  };  // 199818, 132372
+  assign non_zero_info_rom[279] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000101010011010110011, 27'b000000000100110011001001001
+  };  // 173747, 157257
+  assign non_zero_info_rom[280] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000100100000011011100, 27'b000000000101100011101111111
+  };  // 147676, 182143
+  assign non_zero_info_rom[281] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000011101101100000101, 27'b000000000110010100010110101
+  };  // 121605, 207029
+  assign non_zero_info_rom[282] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000010111010100101111, 27'b000000000111000100111101011
+  };  // 95535, 231915
+  assign non_zero_info_rom[283] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000010000111101011000, 27'b000000000111110101100100001
+  };  // 69464, 256801
+  assign non_zero_info_rom[284] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000001010100110000001, 27'b000000001000100110001010111
+  };  // 43393, 281687
+  assign non_zero_info_rom[285] = {
+    2'd2, 6'd51, 6'd52, 27'b000000000000100001110101010, 27'b000000001001010110110001101
+  };  // 17322, 306573
+  assign non_zero_info_rom[286] = {
+    2'd2, 6'd52, 6'd53, 27'b000000001001100111100000000, 27'b000000000000001110110111001
+  };  // 315136, 7609
+  assign non_zero_info_rom[287] = {
+    2'd2, 6'd52, 6'd53, 27'b000000001000111001000110101, 27'b000000000000111011001001100
+  };  // 291381, 30284
+  assign non_zero_info_rom[288] = {
+    2'd2, 6'd52, 6'd53, 27'b000000001000001010101101011, 27'b000000000001100111011011111
+  };  // 267627, 52959
+  assign non_zero_info_rom[289] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000111011100010100000, 27'b000000000010010011101110010
+  };  // 243872, 75634
+  assign non_zero_info_rom[290] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000110101101111010101, 27'b000000000011000000000000101
+  };  // 220117, 98309
+  assign non_zero_info_rom[291] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000101111111100001010, 27'b000000000011101100010011001
+  };  // 196362, 120985
+  assign non_zero_info_rom[292] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000101010001001000000, 27'b000000000100011000100101100
+  };  // 172608, 143660
+  assign non_zero_info_rom[293] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000100100010101110101, 27'b000000000101000100110111111
+  };  // 148853, 166335
+  assign non_zero_info_rom[294] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000011110100010101010, 27'b000000000101110001001010010
+  };  // 125098, 189010
+  assign non_zero_info_rom[295] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000011000101111011111, 27'b000000000110011101011100101
+  };  // 101343, 211685
+  assign non_zero_info_rom[296] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000010010111100010100, 27'b000000000111001001101111000
+  };  // 77588, 234360
+  assign non_zero_info_rom[297] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000001101001001001010, 27'b000000000111110110000001011
+  };  // 53834, 257035
+  assign non_zero_info_rom[298] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000000111010101111111, 27'b000000001000100010010011110
+  };  // 30079, 279710
+  assign non_zero_info_rom[299] = {
+    2'd2, 6'd52, 6'd53, 27'b000000000000001100010110100, 27'b000000001001001110100110001
+  };  // 6324, 302385
+  assign non_zero_info_rom[300] = {
+    2'd2, 6'd53, 6'd54, 27'b000000001000111011010111100, 27'b000000000000011101100111000
+  };  // 292540, 15160
+  assign non_zero_info_rom[301] = {
+    2'd2, 6'd53, 6'd54, 27'b000000001000010001000101111, 27'b000000000001000101111101101
+  };  // 270895, 35821
+  assign non_zero_info_rom[302] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000111100110110100011, 27'b000000000001101110010100010
+  };  // 249251, 56482
+  assign non_zero_info_rom[303] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000110111100100010110, 27'b000000000010010110101010111
+  };  // 227606, 77143
+  assign non_zero_info_rom[304] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000110010010010001010, 27'b000000000010111111000001011
+  };  // 205962, 97803
+  assign non_zero_info_rom[305] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000101100111111111101, 27'b000000000011100111011000000
+  };  // 184317, 118464
+  assign non_zero_info_rom[306] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000100111101101110001, 27'b000000000100001111101110101
+  };  // 162673, 139125
+  assign non_zero_info_rom[307] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000100010011011100100, 27'b000000000100111000000101010
+  };  // 141028, 159786
+  assign non_zero_info_rom[308] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000011101001001011000, 27'b000000000101100000011011110
+  };  // 119384, 180446
+  assign non_zero_info_rom[309] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000010111110111001011, 27'b000000000110001000110010011
+  };  // 97739, 201107
+  assign non_zero_info_rom[310] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000010010100100111111, 27'b000000000110110001001001000
+  };  // 76095, 221768
+  assign non_zero_info_rom[311] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000001101010010110010, 27'b000000000111011001011111101
+  };  // 54450, 242429
+  assign non_zero_info_rom[312] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000001000000000100110, 27'b000000001000000001110110010
+  };  // 32806, 263090
+  assign non_zero_info_rom[313] = {
+    2'd2, 6'd53, 6'd54, 27'b000000000000010101110011001, 27'b000000001000101010001100110
+  };  // 11161, 283750
+  assign non_zero_info_rom[314] = {
+    2'd2, 6'd54, 6'd55, 27'b000000001000101100010110100, 27'b000000000000010001110011110
+  };  // 284852, 9118
+  assign non_zero_info_rom[315] = {
+    2'd2, 6'd54, 6'd55, 27'b000000001000000101110101010, 27'b000000000000110110100100111
+  };  // 265130, 27943
+  assign non_zero_info_rom[316] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000111011111010100001, 27'b000000000001011011010110001
+  };  // 245409, 46769
+  assign non_zero_info_rom[317] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000110111000110010111, 27'b000000000010000000000111010
+  };  // 225687, 65594
+  assign non_zero_info_rom[318] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000110010010010001101, 27'b000000000010100100111000011
+  };  // 205965, 84419
+  assign non_zero_info_rom[319] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000101101011110000100, 27'b000000000011001001101001101
+  };  // 186244, 103245
+  assign non_zero_info_rom[320] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000101000101001111010, 27'b000000000011101110011010110
+  };  // 166522, 122070
+  assign non_zero_info_rom[321] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000100011110101110000, 27'b000000000100010011001011111
+  };  // 146800, 140895
+  assign non_zero_info_rom[322] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000011111000001100110, 27'b000000000100110111111101001
+  };  // 127078, 159721
+  assign non_zero_info_rom[323] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000011010001101011101, 27'b000000000101011100101110010
+  };  // 107357, 178546
+  assign non_zero_info_rom[324] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000010101011001010011, 27'b000000000110000001011111011
+  };  // 87635, 197371
+  assign non_zero_info_rom[325] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000010000100101001001, 27'b000000000110100110010000101
+  };  // 67913, 216197
+  assign non_zero_info_rom[326] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000001011110001000000, 27'b000000000111001011000001110
+  };  // 48192, 235022
+  assign non_zero_info_rom[327] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000000110111100110110, 27'b000000000111101111110011000
+  };  // 28470, 253848
+  assign non_zero_info_rom[328] = {
+    2'd2, 6'd54, 6'd55, 27'b000000000000010001000101100, 27'b000000001000010100100100001
+  };  // 8748, 272673
+  assign non_zero_info_rom[329] = {
+    2'd2, 6'd55, 6'd56, 27'b000000001000010001010110001, 27'b000000000000010010101001000
+  };  // 271025, 9544
+  assign non_zero_info_rom[330] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000111101110001111111, 27'b000000000000110100001001001
+  };  // 253055, 26697
+  assign non_zero_info_rom[331] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000111001011001001101, 27'b000000000001010101101001010
+  };  // 235085, 43850
+  assign non_zero_info_rom[332] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000110101000000011011, 27'b000000000001110111001001011
+  };  // 217115, 61003
+  assign non_zero_info_rom[333] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000110000100111101010, 27'b000000000010011000101001100
+  };  // 199146, 78156
+  assign non_zero_info_rom[334] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000101100001110111000, 27'b000000000010111010001001101
+  };  // 181176, 95309
+  assign non_zero_info_rom[335] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000100111110110000110, 27'b000000000011011011101001110
+  };  // 163206, 112462
+  assign non_zero_info_rom[336] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000100011011101010100, 27'b000000000011111101001001111
+  };  // 145236, 129615
+  assign non_zero_info_rom[337] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000011111000100100011, 27'b000000000100011110101010000
+  };  // 127267, 146768
+  assign non_zero_info_rom[338] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000011010101011110001, 27'b000000000101000000001010001
+  };  // 109297, 163921
+  assign non_zero_info_rom[339] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000010110010010111111, 27'b000000000101100001101010010
+  };  // 91327, 181074
+  assign non_zero_info_rom[340] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000010001111010001101, 27'b000000000110000011001010011
+  };  // 73357, 198227
+  assign non_zero_info_rom[341] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000001101100001011100, 27'b000000000110100100101010100
+  };  // 55388, 215380
+  assign non_zero_info_rom[342] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000001001001000101010, 27'b000000000111000110001010101
+  };  // 37418, 232533
+  assign non_zero_info_rom[343] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000000100101111111000, 27'b000000000111100111101010110
+  };  // 19448, 249686
+  assign non_zero_info_rom[344] = {
+    2'd2, 6'd55, 6'd56, 27'b000000000000000010111000111, 27'b000000001000001001001010111
+  };  // 1479, 266839
+  assign non_zero_info_rom[345] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000111101110100101001, 27'b000000000000011100000000111
+  };  // 253225, 14343
+  assign non_zero_info_rom[346] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000111001110100110011, 27'b000000000000111010100010100
+  };  // 236851, 29972
+  assign non_zero_info_rom[347] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000110101110100111110, 27'b000000000001011001000100010
+  };  // 220478, 45602
+  assign non_zero_info_rom[348] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000110001110101001000, 27'b000000000001110111100101111
+  };  // 204104, 61231
+  assign non_zero_info_rom[349] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000101101110101010011, 27'b000000000010010110000111100
+  };  // 187731, 76860
+  assign non_zero_info_rom[350] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000101001110101011110, 27'b000000000010110100101001001
+  };  // 171358, 92489
+  assign non_zero_info_rom[351] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000100101110101101000, 27'b000000000011010011001010111
+  };  // 154984, 108119
+  assign non_zero_info_rom[352] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000100001110101110011, 27'b000000000011110001101100100
+  };  // 138611, 123748
+  assign non_zero_info_rom[353] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000011101110101111101, 27'b000000000100010000001110001
+  };  // 122237, 139377
+  assign non_zero_info_rom[354] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000011001110110001000, 27'b000000000100101110101111110
+  };  // 105864, 155006
+  assign non_zero_info_rom[355] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000010101110110010011, 27'b000000000101001101010001011
+  };  // 89491, 170635
+  assign non_zero_info_rom[356] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000010001110110011101, 27'b000000000101101011110011001
+  };  // 73117, 186265
+  assign non_zero_info_rom[357] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000001101110110101000, 27'b000000000110001010010100110
+  };  // 56744, 201894
+  assign non_zero_info_rom[358] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000001001110110110010, 27'b000000000110101000110110011
+  };  // 40370, 217523
+  assign non_zero_info_rom[359] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000000101110110111101, 27'b000000000111000111011000000
+  };  // 23997, 233152
+  assign non_zero_info_rom[360] = {
+    2'd2, 6'd56, 6'd57, 27'b000000000000001110111001000, 27'b000000000111100101111001101
+  };  // 7624, 248781
+  assign non_zero_info_rom[361] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000111100100100010110, 27'b000000000000001110110111010
+  };  // 248086, 7610
+  assign non_zero_info_rom[362] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000111000111011001111, 27'b000000000000101010101011011
+  };  // 233167, 21851
+  assign non_zero_info_rom[363] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000110101010010001000, 27'b000000000001000110011111100
+  };  // 218248, 36092
+  assign non_zero_info_rom[364] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000110001101001000010, 27'b000000000001100010010011100
+  };  // 203330, 50332
+  assign non_zero_info_rom[365] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000101101111111111011, 27'b000000000001111110000111101
+  };  // 188411, 64573
+  assign non_zero_info_rom[366] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000101010010110110100, 27'b000000000010011001111011110
+  };  // 173492, 78814
+  assign non_zero_info_rom[367] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000100110101101101101, 27'b000000000010110101101111111
+  };  // 158573, 93055
+  assign non_zero_info_rom[368] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000100011000100100110, 27'b000000000011010001100100000
+  };  // 143654, 107296
+  assign non_zero_info_rom[369] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000011111011011011111, 27'b000000000011101101011000000
+  };  // 128735, 121536
+  assign non_zero_info_rom[370] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000011011110010011000, 27'b000000000100001001001100001
+  };  // 113816, 135777
+  assign non_zero_info_rom[371] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000011000001001010010, 27'b000000000100100101000000010
+  };  // 98898, 150018
+  assign non_zero_info_rom[372] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000010100100000001011, 27'b000000000101000000110100011
+  };  // 83979, 164259
+  assign non_zero_info_rom[373] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000010000110111000100, 27'b000000000101011100101000100
+  };  // 69060, 178500
+  assign non_zero_info_rom[374] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000001101001101111101, 27'b000000000101111000011100100
+  };  // 54141, 192740
+  assign non_zero_info_rom[375] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000001001100100110110, 27'b000000000110010100010000101
+  };  // 39222, 206981
+  assign non_zero_info_rom[376] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000000101111011101111, 27'b000000000110110000000100110
+  };  // 24303, 221222
+  assign non_zero_info_rom[377] = {
+    2'd2, 6'd57, 6'd58, 27'b000000000000010010010101000, 27'b000000000111001011111000111
+  };  // 9384, 235463
+  assign non_zero_info_rom[378] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000111010011100010010, 27'b000000000000001001011001110
+  };  // 239378, 4814
+  assign non_zero_info_rom[379] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000110111000111111000, 27'b000000000000100010101111101
+  };  // 225784, 17789
+  assign non_zero_info_rom[380] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000110011110011011111, 27'b000000000000111100000101101
+  };  // 212191, 30765
+  assign non_zero_info_rom[381] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000110000011111000101, 27'b000000000001010101011011101
+  };  // 198597, 43741
+  assign non_zero_info_rom[382] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000101101001010101100, 27'b000000000001101110110001100
+  };  // 185004, 56716
+  assign non_zero_info_rom[383] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000101001110110010010, 27'b000000000010001000000111100
+  };  // 171410, 69692
+  assign non_zero_info_rom[384] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000100110100001111001, 27'b000000000010100001011101100
+  };  // 157817, 82668
+  assign non_zero_info_rom[385] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000100011001101011111, 27'b000000000010111010110011100
+  };  // 144223, 95644
+  assign non_zero_info_rom[386] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000011111111001000110, 27'b000000000011010100001001011
+  };  // 130630, 108619
+  assign non_zero_info_rom[387] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000011100100100101100, 27'b000000000011101101011111011
+  };  // 117036, 121595
+  assign non_zero_info_rom[388] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000011001010000010010, 27'b000000000100000110110101011
+  };  // 103442, 134571
+  assign non_zero_info_rom[389] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000010101111011111001, 27'b000000000100100000001011010
+  };  // 89849, 147546
+  assign non_zero_info_rom[390] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000010010100111011111, 27'b000000000100111001100001010
+  };  // 76255, 160522
+  assign non_zero_info_rom[391] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000001111010011000110, 27'b000000000101010010110111010
+  };  // 62662, 173498
+  assign non_zero_info_rom[392] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000001011111110101100, 27'b000000000101101100001101001
+  };  // 49068, 186473
+  assign non_zero_info_rom[393] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000001000101010010011, 27'b000000000110000101100011001
+  };  // 35475, 199449
+  assign non_zero_info_rom[394] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000000101010101111001, 27'b000000000110011110111001001
+  };  // 21881, 212425
+  assign non_zero_info_rom[395] = {
+    2'd2, 6'd58, 6'd59, 27'b000000000000010000001100000, 27'b000000000110111000001111001
+  };  // 8288, 225401
+  assign non_zero_info_rom[396] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000110111110001111101, 27'b000000000000001001000000111
+  };  // 228477, 4615
+  assign non_zero_info_rom[397] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000110100110000011011, 27'b000000000000100000000110110
+  };  // 216091, 16438
+  assign non_zero_info_rom[398] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000110001101110111001, 27'b000000000000110111001100101
+  };  // 203705, 28261
+  assign non_zero_info_rom[399] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000101110101101010111, 27'b000000000001001110010010100
+  };  // 191319, 40084
+  assign non_zero_info_rom[400] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000101011101011110101, 27'b000000000001100101011000011
+  };  // 178933, 51907
+  assign non_zero_info_rom[401] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000101000101010010011, 27'b000000000001111100011110010
+  };  // 166547, 63730
+  assign non_zero_info_rom[402] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000100101101000110001, 27'b000000000010010011100100001
+  };  // 154161, 75553
+  assign non_zero_info_rom[403] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000100010100111001111, 27'b000000000010101010101010000
+  };  // 141775, 87376
+  assign non_zero_info_rom[404] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000011111100101101101, 27'b000000000011000001101111111
+  };  // 129389, 99199
+  assign non_zero_info_rom[405] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000011100100100001100, 27'b000000000011011000110101110
+  };  // 117004, 111022
+  assign non_zero_info_rom[406] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000011001100010101010, 27'b000000000011101111111011101
+  };  // 104618, 122845
+  assign non_zero_info_rom[407] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000010110100001001000, 27'b000000000100000111000001100
+  };  // 92232, 134668
+  assign non_zero_info_rom[408] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000010011011111100110, 27'b000000000100011110000111011
+  };  // 79846, 146491
+  assign non_zero_info_rom[409] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000010000011110000100, 27'b000000000100110101001101010
+  };  // 67460, 158314
+  assign non_zero_info_rom[410] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000001101011100100010, 27'b000000000101001100010011001
+  };  // 55074, 170137
+  assign non_zero_info_rom[411] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000001010011011000000, 27'b000000000101100011011001000
+  };  // 42688, 181960
+  assign non_zero_info_rom[412] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000000111011001011110, 27'b000000000101111010011110111
+  };  // 30302, 193783
+  assign non_zero_info_rom[413] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000000100010111111100, 27'b000000000110010001100100110
+  };  // 17916, 205606
+  assign non_zero_info_rom[414] = {
+    2'd2, 6'd59, 6'd60, 27'b000000000000001010110011010, 27'b000000000110101000101010101
+  };  // 5530, 217429
+  assign non_zero_info_rom[415] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000110100110110001100, 27'b000000000000001011101001011
+  };  // 216460, 5963
+  assign non_zero_info_rom[416] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000110010000101110111, 27'b000000000000100000101100000
+  };  // 205175, 16736
+  assign non_zero_info_rom[417] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000101111010101100001, 27'b000000000000110101101110100
+  };  // 193889, 27508
+  assign non_zero_info_rom[418] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000101100100101001100, 27'b000000000001001010110001001
+  };  // 182604, 38281
+  assign non_zero_info_rom[419] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000101001110100110110, 27'b000000000001011111110011110
+  };  // 171318, 49054
+  assign non_zero_info_rom[420] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000100111000100100000, 27'b000000000001110100110110011
+  };  // 160032, 59827
+  assign non_zero_info_rom[421] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000100100010100001011, 27'b000000000010001001111000111
+  };  // 148747, 70599
+  assign non_zero_info_rom[422] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000100001100011110101, 27'b000000000010011110111011100
+  };  // 137461, 81372
+  assign non_zero_info_rom[423] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000011110110011011111, 27'b000000000010110011111110001
+  };  // 126175, 92145
+  assign non_zero_info_rom[424] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000011100000011001010, 27'b000000000011001001000000101
+  };  // 114890, 102917
+  assign non_zero_info_rom[425] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000011001010010110100, 27'b000000000011011110000011010
+  };  // 103604, 113690
+  assign non_zero_info_rom[426] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000010110100010011110, 27'b000000000011110011000101111
+  };  // 92318, 124463
+  assign non_zero_info_rom[427] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000010011110010001001, 27'b000000000100001000001000100
+  };  // 81033, 135236
+  assign non_zero_info_rom[428] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000010001000001110011, 27'b000000000100011101001011000
+  };  // 69747, 146008
+  assign non_zero_info_rom[429] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000001110010001011101, 27'b000000000100110010001101101
+  };  // 58461, 156781
+  assign non_zero_info_rom[430] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000001011100001001000, 27'b000000000101000111010000010
+  };  // 47176, 167554
+  assign non_zero_info_rom[431] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000001000110000110010, 27'b000000000101011100010010110
+  };  // 35890, 178326
+  assign non_zero_info_rom[432] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000000110000000011101, 27'b000000000101110001010101011
+  };  // 24605, 189099
+  assign non_zero_info_rom[433] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000000011010000000111, 27'b000000000110000110011000000
+  };  // 13319, 199872
+  assign non_zero_info_rom[434] = {
+    2'd2, 6'd60, 6'd61, 27'b000000000000000011111110001, 27'b000000000110011011011010100
+  };  // 2033, 210644
+  assign non_zero_info_rom[435] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000110001110101111011, 27'b000000000000001111101101111
+  };  // 204155, 8047
+  assign non_zero_info_rom[436] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000101111010101010000, 27'b000000000000100010111000111
+  };  // 193872, 17863
+  assign non_zero_info_rom[437] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000101100110100100101, 27'b000000000000110110000011111
+  };  // 183589, 27679
+  assign non_zero_info_rom[438] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000101010010011111010, 27'b000000000001001001001110110
+  };  // 173306, 37494
+  assign non_zero_info_rom[439] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000100111110011001110, 27'b000000000001011100011001110
+  };  // 163022, 47310
+  assign non_zero_info_rom[440] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000100101010010100011, 27'b000000000001101111100100110
+  };  // 152739, 57126
+  assign non_zero_info_rom[441] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000100010110001111000, 27'b000000000010000010101111110
+  };  // 142456, 66942
+  assign non_zero_info_rom[442] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000100000010001001101, 27'b000000000010010101111010101
+  };  // 132173, 76757
+  assign non_zero_info_rom[443] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000011101110000100010, 27'b000000000010101001000101101
+  };  // 121890, 86573
+  assign non_zero_info_rom[444] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000011011001111110111, 27'b000000000010111100010000101
+  };  // 111607, 96389
+  assign non_zero_info_rom[445] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000011000101111001100, 27'b000000000011001111011011100
+  };  // 101324, 106204
+  assign non_zero_info_rom[446] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000010110001110100001, 27'b000000000011100010100110100
+  };  // 91041, 116020
+  assign non_zero_info_rom[447] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000010011101101110110, 27'b000000000011110101110001100
+  };  // 80758, 125836
+  assign non_zero_info_rom[448] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000010001001101001011, 27'b000000000100001000111100100
+  };  // 70475, 135652
+  assign non_zero_info_rom[449] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000001110101100100000, 27'b000000000100011100000111011
+  };  // 60192, 145467
+  assign non_zero_info_rom[450] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000001100001011110101, 27'b000000000100101111010010011
+  };  // 49909, 155283
+  assign non_zero_info_rom[451] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000001001101011001010, 27'b000000000101000010011101011
+  };  // 39626, 165099
+  assign non_zero_info_rom[452] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000000111001010011110, 27'b000000000101010101101000010
+  };  // 29342, 174914
+  assign non_zero_info_rom[453] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000000100101001110011, 27'b000000000101101000110011010
+  };  // 19059, 184730
+  assign non_zero_info_rom[454] = {
+    2'd2, 6'd61, 6'd62, 27'b000000000000010001001001000, 27'b000000000101111011111110010
+  };  // 8776, 194546
+  assign non_zero_info_rom[455] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000110001001101001110, 27'b000000000000000010100011111
+  };  // 201550, 1311
+  assign non_zero_info_rom[456] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000101110111010110101, 27'b000000000000010100000001110
+  };  // 192181, 10254
+  assign non_zero_info_rom[457] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000101100101000011011, 27'b000000000000100101011111110
+  };  // 182811, 19198
+  assign non_zero_info_rom[458] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000101010010110000010, 27'b000000000000110110111101110
+  };  // 173442, 28142
+  assign non_zero_info_rom[459] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000101000000011101000, 27'b000000000001001000011011101
+  };  // 164072, 37085
+  assign non_zero_info_rom[460] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000100101110001001110, 27'b000000000001011001111001101
+  };  // 154702, 46029
+  assign non_zero_info_rom[461] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000100011011110110101, 27'b000000000001101011010111101
+  };  // 145333, 54973
+  assign non_zero_info_rom[462] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000100001001100011011, 27'b000000000001111100110101101
+  };  // 135963, 63917
+  assign non_zero_info_rom[463] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000011110111010000010, 27'b000000000010001110010011100
+  };  // 126594, 72860
+  assign non_zero_info_rom[464] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000011100100111101000, 27'b000000000010011111110001100
+  };  // 117224, 81804
+  assign non_zero_info_rom[465] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000011010010101001110, 27'b000000000010110001001111100
+  };  // 107854, 90748
+  assign non_zero_info_rom[466] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000011000000010110101, 27'b000000000011000010101101100
+  };  // 98485, 99692
+  assign non_zero_info_rom[467] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000010101110000011011, 27'b000000000011010100001011011
+  };  // 89115, 108635
+  assign non_zero_info_rom[468] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000010011011110000010, 27'b000000000011100101101001011
+  };  // 79746, 117579
+  assign non_zero_info_rom[469] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000010001001011101000, 27'b000000000011110111000111011
+  };  // 70376, 126523
+  assign non_zero_info_rom[470] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000001110111001001111, 27'b000000000100001000100101011
+  };  // 61007, 135467
+  assign non_zero_info_rom[471] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000001100100110110101, 27'b000000000100011010000011010
+  };  // 51637, 144410
+  assign non_zero_info_rom[472] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000001010010100011011, 27'b000000000100101011100001010
+  };  // 42267, 153354
+  assign non_zero_info_rom[473] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000001000000010000010, 27'b000000000100111100111111010
+  };  // 32898, 162298
+  assign non_zero_info_rom[474] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000000101101111101000, 27'b000000000101001110011101001
+  };  // 23528, 171241
+  assign non_zero_info_rom[475] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000000011011101001111, 27'b000000000101011111111011001
+  };  // 14159, 180185
+  assign non_zero_info_rom[476] = {
+    2'd2, 6'd62, 6'd63, 27'b000000000000001001010110101, 27'b000000000101110001011001001
+  };  // 4789, 189129
+  assign non_zero_info_rom[477] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000101110010001010111, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 189527
+  assign non_zero_info_rom[478] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000101100001011111101, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 180989
+  assign non_zero_info_rom[479] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000101010000110100100, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 172452
+  assign non_zero_info_rom[480] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000101000000001001011, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 163915
+  assign non_zero_info_rom[481] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000100101111011110010, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 155378
+  assign non_zero_info_rom[482] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000100011110110011000, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 146840
+  assign non_zero_info_rom[483] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000100001110000111111, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 138303
+  assign non_zero_info_rom[484] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000011111101011100110, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 129766
+  assign non_zero_info_rom[485] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000011101100110001101, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 121229
+  assign non_zero_info_rom[486] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000011011100000110011, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 112691
+  assign non_zero_info_rom[487] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000011001011011011010, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 104154
+  assign non_zero_info_rom[488] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000010111010110000001, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 95617
+  assign non_zero_info_rom[489] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000010101010000101000, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 87080
+  assign non_zero_info_rom[490] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000010011001011001111, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 78543
+  assign non_zero_info_rom[491] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000010001000101110101, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 70005
+  assign non_zero_info_rom[492] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000001111000000011100, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 61468
+  assign non_zero_info_rom[493] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000001100111011000011, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 52931
+  assign non_zero_info_rom[494] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000001010110101101010, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 44394
+  assign non_zero_info_rom[495] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000001000110000010000, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 35856
+  assign non_zero_info_rom[496] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000000110101010110111, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 27319
+  assign non_zero_info_rom[497] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000000100100101011110, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 18782
+  assign non_zero_info_rom[498] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000000010100000000101, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 10245
+  assign non_zero_info_rom[499] = {
+    2'd1, 6'd63, 6'bxxxxxx, 27'b000000000000000011010101011, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 1707
+  assign non_zero_info_rom[500] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[501] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[502] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[503] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[504] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[505] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[506] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[507] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[508] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[509] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[510] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[511] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
+  assign non_zero_info_rom[512] = {
+    2'd0, 6'bxxxxxx, 6'bxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx, 27'bxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  };  // 
 endmodule

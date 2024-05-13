@@ -57,8 +57,10 @@ module TB;
                         data_o_partial[j] = data_o[i*O_BW+j];
                     end
                     omem[n*64+i] = data_o_partial;
+                    // $display("n=%d, i=%d, data_o_partial=%b", n, i, data_o_partial);
                 end
                 n <= n+1;
+                // $display("-----");
                 @(negedge clk);
             end
         end
@@ -83,28 +85,32 @@ module TB;
 
         n = 0;
         while (n <= IN_N) begin  // 0行目のデータが採用されない設計になってしまってる
-            // $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en);
+            $display("t_clk=%d, n=%d", t_clk, n); 
             if (t_clk < 1024) begin
                 di_en <= 1;
                 data_i <= imem[n];
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk <= t_clk+1;
                 n <= n+1;
             end
             else if ((t_clk % 1024) < 160) begin
                 di_en <= 1;
                 data_i <= imem[n];
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk = t_clk+1;
                 n <= n+1;
             end
             else if ((t_clk % 1024) >= 160) begin
                 di_en <= 2;
                 data_i <= imem[n];
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk = t_clk+1;
                 n <= n;
             end
             else begin
                 di_en <= 0;
                 data_i <= imem[n];
+                $display("t_clk=%d, n=%d, data_i=%d, di_en=%d", t_clk, n, data_i, di_en); 
                 t_clk = t_clk+1;
                 n <= n;
             end
