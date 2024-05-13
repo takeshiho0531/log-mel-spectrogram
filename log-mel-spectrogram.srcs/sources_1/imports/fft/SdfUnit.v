@@ -142,6 +142,7 @@ assign  bf1_sp_im = bf1_bf ? bf1_y0_im : bf1_mj ? -db1_do_re : db1_do_im;
 
 always @(posedge clock or negedge reset) begin
     if (!reset) begin
+        // $display("reset");
         bf1_sp_en <= 1'b0;
         bf1_count <= {LOG_N{1'b0}};
     end else begin
@@ -199,6 +200,7 @@ assign  bf2_sp_im = bf2_bf ? bf2_y0_im : db2_do_im;
 
 always @(posedge clock or negedge reset) begin
     if (!reset) begin
+        // $display("reset");
         bf2_sp_en <= 1'b0;
         bf2_count <= {LOG_N{1'b0}};
     end else begin
@@ -219,6 +221,7 @@ end
 
 always @(posedge clock or negedge reset) begin
     if (!reset) begin
+        // $display("reset");
         bf2_do_en <= 1'b0;
     end else begin
         bf2_do_en <= bf2_sp_en;
@@ -264,6 +267,7 @@ end
 
 always @(posedge clock or negedge reset) begin
     if (!reset) begin
+        // $display("reset");
         mu_do_en <= 1'b0;
     end else begin
         mu_do_en <= bf2_do_en;
@@ -274,5 +278,21 @@ end
 assign  do_en = (LOG_M == 2) ? bf2_do_en : mu_do_en;
 assign  do_re = (LOG_M == 2) ? bf2_do_re : mu_do_re;
 assign  do_im = (LOG_M == 2) ? bf2_do_im : mu_do_im;
+
+always @(posedge clock) begin
+    // if (bf2_bf) begin
+    //     $display("di_count=%d, bf1_start=%d, bf1_sp_en=%d, bf1_count=%d, bf1_end=%d, bf2_start=%d, bf2_sp_en=%d, bf2_count=%d, bf2_end=%d", di_count, bf1_start, bf1_sp_en, bf1_count, bf1_end, bf2_start, bf2_sp_en, bf2_count, bf2_end);
+    // end
+    // $display("di_count=%d, bf1_start=%d, bf1_sp_en=%d, bf1_count=%d, bf1_end=%d, bf2_start=%d, bf2_sp_en=%d, bf2_count=%d, bf2_end=%d", di_count, bf1_start, bf1_sp_en, bf1_count, bf1_end, bf2_start, bf2_sp_en, bf2_count, bf2_end);
+    // $display("LOG_M=%d, di_count=%d, di_count=%b, bf1_bf=%d, bf2_bf=%d, bf1_count=%b, bf1_count=%d", LOG_M, di_count, di_count, bf1_bf, bf2_bf, bf1_count, bf1_count);
+    // $display("LOG_M=%d, di_count=%d, bf1_bf=%d, bf2_bf=%d, bf1_count=%d, tw_sel=%b, tw_num=%d, tw_addr=%d, mu_en=%b", LOG_M, di_count, bf1_bf, bf2_bf, bf1_count, tw_sel, tw_num, tw_addr, mu_en);
+    // if (LOG_M==2) begin
+    //    $display("LOG_M=%d, mu_en=%b, tw_addr=%d, tw_re=%d, tw_im=%d, mu_a_re=%d, mu_a_im=%d", LOG_M, mu_en, tw_addr, tw_re, tw_im, mu_a_re, mu_a_im); 
+    // end
+    // $display("LOG_M=%d, mu_en=%b, tw_addr=%d, tw_re=%d, tw_im=%d, mu_a_re=%d, mu_a_im=%d", LOG_M, mu_en, tw_addr, tw_re, tw_im, mu_a_re, mu_a_im);
+    // if (bf2_x0_re>=0 | bf2_x0_re<0) begin
+    //     $display("bf2_bf=%d, bf2_x0_re=%d, bf2_x0_im=%d, bf2_x1_re=%d, bf2_x1_im=%d, bf2_y0_re=%d, bf2_y0_im=%d, bf2_y1_re=%d, bf2_y1_im=%d", bf2_bf, bf2_x0_re, bf2_x0_im, bf2_x1_re, bf2_x1_im, bf2_y0_re, bf2_y0_im, bf2_y1_re, bf2_y1_im);
+    // end
+end
 
 endmodule
