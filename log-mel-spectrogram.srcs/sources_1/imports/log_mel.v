@@ -18,7 +18,7 @@ module log_mel_spectrogram #(
   localparam FRAME_LEN = 1024;
   localparam FFT_O_BW = 14;
   localparam POST_FFT_COUNT_O_BW = 14;
-  localparam SQUARED_O_BW = 27;
+  localparam SQUARED_O_BW = 26;
   localparam MEL_O_BW = 30;
   localparam LOG_O_BW = 14;
 
@@ -66,9 +66,12 @@ module log_mel_spectrogram #(
   wire rfft_group1_en;
   wire rfft_group2_en;
 
-  wire signed [SQUARED_O_BW-1:0] power_fft_group0;
-  wire signed [SQUARED_O_BW-1:0] power_fft_group1;
-  wire signed [SQUARED_O_BW-1:0] power_fft_group2;
+  wire signed [SQUARED_O_BW:0] power_fft_group0_signed;
+  wire signed [SQUARED_O_BW:0] power_fft_group1_signed;
+  wire signed [SQUARED_O_BW:0] power_fft_group2_signed;
+  wire [SQUARED_O_BW-1:0] power_fft_group0;
+  wire [SQUARED_O_BW-1:0] power_fft_group1;
+  wire [SQUARED_O_BW-1:0] power_fft_group2;
 
   wire signed [MEL_O_BW*64-1:0] mel_filtered_group0_lo;
   wire signed [MEL_O_BW*64-1:0] mel_filtered_group1_lo;
@@ -225,9 +228,12 @@ module log_mel_spectrogram #(
 
 
 
-  assign power_fft_group0 = post_fft_count_group0_re_lo * post_fft_count_group0_re_lo + post_fft_count_group0_im_lo * post_fft_count_group0_im_lo;
-  assign power_fft_group1 = post_fft_count_group1_re_lo * post_fft_count_group1_re_lo + post_fft_count_group1_im_lo * post_fft_count_group1_im_lo;
-  assign power_fft_group2 = post_fft_count_group2_re_lo * post_fft_count_group2_re_lo + post_fft_count_group2_im_lo * post_fft_count_group2_im_lo;
+  assign power_fft_group0_signed = post_fft_count_group0_re_lo * post_fft_count_group0_re_lo + post_fft_count_group0_im_lo * post_fft_count_group0_im_lo;
+  assign power_fft_group1_signed = post_fft_count_group1_re_lo * post_fft_count_group1_re_lo + post_fft_count_group1_im_lo * post_fft_count_group1_im_lo;
+  assign power_fft_group2_signed = post_fft_count_group2_re_lo * post_fft_count_group2_re_lo + post_fft_count_group2_im_lo * post_fft_count_group2_im_lo;
+  assign power_fft_group0 = power_fft_group0_signed[SQUARED_O_BW-1:0];
+  assign power_fft_group1 = power_fft_group1_signed[SQUARED_O_BW-1:0];
+  assign power_fft_group2 = power_fft_group2_signed[SQUARED_O_BW-1:0];
 
 
 
