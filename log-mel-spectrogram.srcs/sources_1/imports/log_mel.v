@@ -37,59 +37,36 @@ module log_mel_spectrogram #(
 
   wire [1:0] fft_group;
   wire fft_group0_en_li;
-  wire fft_group1_en_li;
-  wire fft_group2_en_li;
   wire fft_group0_en_lo;
-  wire fft_group1_en_lo;
-  wire fft_group2_en_lo;
   wire signed [FFT_O_BW-1:0] fft_group0_re_lo;
   wire signed [FFT_O_BW-1:0] fft_group0_im_lo;
-  wire signed [FFT_O_BW-1:0] fft_group1_re_lo;
-  wire signed [FFT_O_BW-1:0] fft_group1_im_lo;
-  wire signed [FFT_O_BW-1:0] fft_group2_re_lo;
-  wire signed [FFT_O_BW-1:0] fft_group2_im_lo;
+
 
   wire post_fft_count_group0_en_lo;
-  wire post_fft_count_group1_en_lo;
-  wire post_fft_count_group2_en_lo;
+
   wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group0_re_lo;
   wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group0_im_lo;
-  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group1_re_lo;
-  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group1_im_lo;
-  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group2_re_lo;
-  wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group2_im_lo;
+
   wire [9:0] post_fft_count_group0_lo;
-  wire [9:0] post_fft_count_group1_lo;
-  wire [9:0] post_fft_count_group2_lo;
+
 
   wire rfft_group0_en;
   wire rfft_group1_en;
   wire rfft_group2_en;
 
   wire signed [SQUARED_O_BW:0] power_fft_group0_signed;
-  wire signed [SQUARED_O_BW:0] power_fft_group1_signed;
-  wire signed [SQUARED_O_BW:0] power_fft_group2_signed;
   wire [SQUARED_O_BW-1:0] power_fft_group0;
-  wire [SQUARED_O_BW-1:0] power_fft_group1;
-  wire [SQUARED_O_BW-1:0] power_fft_group2;
 
   wire signed [MEL_O_BW*64-1:0] mel_filtered_group0_lo;
-  wire signed [MEL_O_BW*64-1:0] mel_filtered_group1_lo;
-  wire signed [MEL_O_BW*64-1:0] mel_filtered_group2_lo;
 
   wire mel_filter_group0_en_lo;
-  wire mel_filter_group1_en_lo;
-  wire mel_filter_group2_en_lo;
+
   wire is_mel_group0_first_li;
   wire is_mel_group0_last_li;
-  wire is_mel_group1_first_li;
-  wire is_mel_group1_last_li;
-  wire is_mel_group2_first_li;
-  wire is_mel_group2_last_li;
+
 
   wire signed [LOG_O_BW*64-1:0] logged_group0_lo;
-  wire signed [LOG_O_BW*64-1:0] logged_group1_lo;
-  wire signed [LOG_O_BW*64-1:0] logged_group2_lo;
+
 
 
   input_counter #(
@@ -153,29 +130,6 @@ module log_mel_spectrogram #(
       .im_o (fft_group0_im_lo)
   );
 
-  FFT FFT1 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .en_i (fft_group1_en_li),
-      .re_i (hann_data_lo),
-      .im_i (14'b0),
-      .en_o (fft_group1_en_lo),
-      .re_o (fft_group1_re_lo),
-      .im_o (fft_group1_im_lo)
-  );
-
-  FFT FFT2 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .en_i (fft_group2_en_li),
-      .re_i (hann_data_lo),
-      .im_i (14'b0),
-      .en_o (fft_group2_en_lo),
-      .re_o (fft_group2_re_lo),
-      .im_o (fft_group2_im_lo)
-  );
-
-
 
   post_fft_count #(
       .I_BW(FFT_O_BW),
@@ -192,58 +146,18 @@ module log_mel_spectrogram #(
       .post_fft_count_o(post_fft_count_group0_lo)
   );
 
-  post_fft_count #(
-      .I_BW(FFT_O_BW),
-      .O_BW(POST_FFT_COUNT_O_BW)
-  ) count1 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .en_i(fft_group1_en_lo),
-      .re_i(fft_group1_re_lo),
-      .im_i(fft_group1_im_lo),
-      .en_o(post_fft_count_group1_en_lo),
-      .re_o(post_fft_count_group1_re_lo),
-      .im_o(post_fft_count_group1_im_lo),
-      .post_fft_count_o(post_fft_count_group1_lo)
-  );
-
-  post_fft_count #(
-      .I_BW(FFT_O_BW),
-      .O_BW(POST_FFT_COUNT_O_BW)
-  ) count2 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .en_i(fft_group2_en_lo),
-      .re_i(fft_group2_re_lo),
-      .im_i(fft_group2_im_lo),
-      .en_o(post_fft_count_group2_en_lo),
-      .re_o(post_fft_count_group2_re_lo),
-      .im_o(post_fft_count_group2_im_lo),
-      .post_fft_count_o(post_fft_count_group2_lo)
-  );
-
   assign rfft_group0_en = post_fft_count_group0_en_lo & (post_fft_count_group0_lo <= 512);
-  assign rfft_group1_en = post_fft_count_group1_en_lo & (post_fft_count_group1_lo <= 512);
-  assign rfft_group2_en = post_fft_count_group2_en_lo & (post_fft_count_group2_lo <= 512);
 
 
 
   assign power_fft_group0_signed = post_fft_count_group0_re_lo * post_fft_count_group0_re_lo + post_fft_count_group0_im_lo * post_fft_count_group0_im_lo;
-  assign power_fft_group1_signed = post_fft_count_group1_re_lo * post_fft_count_group1_re_lo + post_fft_count_group1_im_lo * post_fft_count_group1_im_lo;
-  assign power_fft_group2_signed = post_fft_count_group2_re_lo * post_fft_count_group2_re_lo + post_fft_count_group2_im_lo * post_fft_count_group2_im_lo;
   assign power_fft_group0 = power_fft_group0_signed[SQUARED_O_BW-1:0];
-  assign power_fft_group1 = power_fft_group1_signed[SQUARED_O_BW-1:0];
-  assign power_fft_group2 = power_fft_group2_signed[SQUARED_O_BW-1:0];
 
 
 
 
   assign is_mel_group0_first_li = (post_fft_count_group0_lo % 513 == 0);
   assign is_mel_group0_last_li = (post_fft_count_group0_lo % 513 == 512);
-  assign is_mel_group1_first_li = (post_fft_count_group1_lo % 513 == 0);
-  assign is_mel_group1_last_li = (post_fft_count_group1_lo % 513 == 512);
-  assign is_mel_group2_first_li = (post_fft_count_group2_lo % 513 == 0);
-  assign is_mel_group2_last_li = (post_fft_count_group2_lo % 513 == 512);
 
   mel_filter #(
       .I_BW(SQUARED_O_BW),
@@ -260,37 +174,6 @@ module log_mel_spectrogram #(
       .en_o(mel_filter_group0_en_lo)
   );
 
-  mel_filter #(
-      .I_BW(SQUARED_O_BW),
-      .O_BW(MEL_O_BW)
-  ) mel1 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .group_idx_i(post_fft_count_group1_lo),
-      .data_i(power_fft_group1),
-      .en_i(rfft_group1_en),
-      .is_first_i(is_mel_group1_first_li),
-      .is_last_i(is_mel_group1_last_li),
-      .data_o(mel_filtered_group1_lo),
-      .en_o(mel_filter_group1_en_lo)
-  );
-
-  mel_filter #(
-      .I_BW(SQUARED_O_BW),
-      .O_BW(MEL_O_BW)
-  ) mel2 (
-      .clk_i(clk_i),
-      .rst_i(rst_i),
-      .group_idx_i(post_fft_count_group2_lo),
-      .data_i(power_fft_group2),
-      .en_i(rfft_group2_en),
-      .is_first_i(is_mel_group2_first_li),
-      .is_last_i(is_mel_group2_last_li),
-      .data_o(mel_filtered_group2_lo),
-      .en_o(mel_filter_group2_en_lo)
-  );
-
-
 
   log #(
       .I_BW(MEL_O_BW),
@@ -300,25 +183,8 @@ module log_mel_spectrogram #(
       .data_o(logged_group0_lo)
   );
 
-  log #(
-      .I_BW(MEL_O_BW),
-      .O_BW(LOG_O_BW)
-  ) log1 (
-      .data_i(mel_filtered_group1_lo),
-      .data_o(logged_group1_lo)
-  );
-
-  log #(
-      .I_BW(MEL_O_BW),
-      .O_BW(LOG_O_BW)
-  ) log2 (
-      .data_i(mel_filtered_group2_lo),
-      .data_o(logged_group2_lo)
-  );
-
-  assign en_o = mel_filter_group0_en_lo | mel_filter_group1_en_lo | mel_filter_group2_en_lo;
-  assign data_o = mel_filter_group0_en_lo ? logged_group0_lo :
-                        mel_filter_group1_en_lo ? logged_group1_lo : logged_group2_lo;
+  assign en_o   = mel_filter_group0_en_lo;
+  assign data_o = mel_filter_group0_en_lo ? logged_group0_lo : 0;
 
 
 endmodule
