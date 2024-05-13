@@ -90,8 +90,8 @@ module log_mel_spectrogram #(
 
 
   input_counter #(
-      .I_BW(INPUT_COUNTER_O_BW),
-      .O_BW(FRAMING_O_BW)
+      .I_BW(I_BW),
+      .O_BW(INPUT_COUNTER_O_BW)
   ) count (
       .clk_i (clk_i),
       .rst_i (rst_i),
