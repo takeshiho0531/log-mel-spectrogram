@@ -10,23 +10,23 @@ module mel_filter #(
     input clk_i,
     input rst_i,
     input [9:0] group_idx_i,  // 0-512
-    input signed [I_BW-1:0] data_i,
+    input [I_BW-1:0] data_i,
     input en_i,
     input is_first_i,
     input is_last_i,
-    output signed [O_BW*64-1:0] data_o,
+    output [O_BW*64-1:0] data_o,
     output reg en_o
 );
   wire [9:0] filter_v_idx_li;  // 0-512
   wire [5:0] non_zero_idx1_lo;
   wire [5:0] non_zero_idx2_lo;
-  wire signed [COEF_BW-1:0] non_zero_coef1_lo;
-  wire signed [COEF_BW-1:0] non_zero_coef2_lo;
-  wire signed [I_BW+COEF_BW-1:0] multiplied1;
-  wire signed [I_BW+COEF_BW-1:0] multiplied2;
-  wire signed [I_BW+COEF_BW-COEF_SHIFT-1:0] multiplied_scaled1;
-  wire signed [I_BW+COEF_BW-COEF_SHIFT-1:0] multiplied_scaled2;
-  reg signed [I_BW+COEF_BW-COEF_SHIFT-1:0] tmp[0:63];
+  wire [COEF_BW-1:0] non_zero_coef1_lo;
+  wire [COEF_BW-1:0] non_zero_coef2_lo;
+  wire [I_BW+COEF_BW-1:0] multiplied1;
+  wire [I_BW+COEF_BW-1:0] multiplied2;
+  wire [I_BW+COEF_BW-COEF_SHIFT-1:0] multiplied_scaled1;
+  wire [I_BW+COEF_BW-COEF_SHIFT-1:0] multiplied_scaled2;
+  reg [I_BW+COEF_BW-COEF_SHIFT-1:0] tmp[0:63];
   integer i;
 
   assign filter_v_idx_li = group_idx_i;

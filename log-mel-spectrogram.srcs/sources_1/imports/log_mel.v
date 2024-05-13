@@ -19,7 +19,7 @@ module log_mel_spectrogram #(
   localparam FFT_O_BW = 14;
   localparam POST_FFT_COUNT_O_BW = 14;
   localparam SQUARED_O_BW = 26;
-  localparam MEL_O_BW = 30;
+  localparam MEL_O_BW = 21;
   localparam LOG_O_BW = 14;
 
   wire signed [INPUT_COUNTER_O_BW-1:0] input_counter_data_lo;
