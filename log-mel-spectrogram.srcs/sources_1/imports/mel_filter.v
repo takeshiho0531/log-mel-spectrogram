@@ -1,8 +1,11 @@
 `timescale 1ns / 1ns
 module mel_filter #(
-    parameter I_BW = 27,  // 2乗は別のモジュール
-    parameter O_BW = 30,
-    parameter COEF_BW = 27
+    parameter I_BW = 26,  // 2乗は別のモジュール
+    parameter O_BW = 21,  /* COEFは26bitだけど、係数の値max0.022で、
+    idxごとの非ゼロの個数のmaxが45なので1超えることがない
+    */
+    parameter COEF_BW = 8,
+    parameter COEF_SHIFT = 13
 ) (
     input clk_i,
     input rst_i,
@@ -14,105 +17,92 @@ module mel_filter #(
     output signed [O_BW*64-1:0] data_o,
     output reg en_o
 );
-  wire [9:0] filter_v;  // 0-512
-  wire [1:0] non_zero_num;
-  wire [5:0] non_zero_idx1;
-  wire [5:0] non_zero_idx2;
-  wire signed [26:0] non_zero_data1;
-  wire signed [26:0] non_zero_data2;
-  wire signed [51:0] multiplied1;
-  wire signed [51:0] multiplied2;
-  wire signed [25:0] scaled1;
-  wire signed [25:0] scaled2;
-  reg signed [29:0] tmp[0:63];
+  wire [9:0] filter_v_idx_li;  // 0-512
+  wire [5:0] non_zero_idx1_lo;
+  wire [5:0] non_zero_idx2_lo;
+  wire signed [COEF_BW-1:0] non_zero_coef1_lo;
+  wire signed [COEF_BW-1:0] non_zero_coef2_lo;
+  wire signed [I_BW+COEF_BW-1:0] multiplied1;
+  wire signed [I_BW+COEF_BW-1:0] multiplied2;
+  wire signed [I_BW+COEF_BW-COEF_SHIFT-1:0] multiplied_scaled1;
+  wire signed [I_BW+COEF_BW-COEF_SHIFT-1:0] multiplied_scaled2;
+  reg signed [I_BW+COEF_BW-COEF_SHIFT-1:0] tmp[0:63];
   integer i;
 
-  assign filter_v = group_idx_i;
+  assign filter_v_idx_li = group_idx_i;
 
   mel_filter_coef coef (
-      .filter_v_i(filter_v),  // 0-512 // i
-      .non_zero_num_o(non_zero_num),  // o
-      .non_zero_idx1_o(non_zero_idx1),  // o
-      .non_zero_idx2_o(non_zero_idx2),  // o
-      .non_zero_data1_o(non_zero_data1),  // o
-      .non_zero_data2_o(non_zero_data2)  // o
+      .filter_v_idx_i  (filter_v_idx_li),    // 0-512 // i
+      .non_zero_idx1_o (non_zero_idx1_lo),   // o
+      .non_zero_idx2_o (non_zero_idx2_lo),   // o
+      .non_zero_coef1_o(non_zero_coef1_lo),  // o
+      .non_zero_coef2_o(non_zero_coef2_lo)   // o
   );
 
-  assign multiplied1 = data_i * non_zero_data1;
-  assign multiplied2 = data_i * non_zero_data2;
-  assign scaled1 = multiplied1 >>> 26;
-  assign scaled2 = multiplied2 >>> 26;
+  assign multiplied1 = data_i * non_zero_coef1_lo;
+  assign multiplied2 = data_i * non_zero_coef2_lo;
+  assign multiplied_scaled1 = multiplied1 >>> COEF_SHIFT;
+  assign multiplied_scaled2 = multiplied2 >>> COEF_SHIFT;
 
   always @(posedge clk_i or negedge rst_i) begin
     if (!rst_i) begin
       for (i = 0; i < 64; i = i + 1) begin
-        tmp[i] <= 30'b000000000000000000000000000000;
+        tmp[i] <= 21'd0;
       end
       en_o <= 0;
     end else begin
       if (en_i & is_first_i) begin
-        if (non_zero_num == 0) begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= 30'b000000000000000000000000000000;
-          end
-          en_o <= 0;
-        end else if (non_zero_num == 1) begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= 30'b000000000000000000000000000000;
-          end
-          tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
-          en_o <= 0;
-        end else if (non_zero_num == 2) begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= 30'b000000000000000000000000000000;
-          end
-          tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
-          tmp[non_zero_idx2] <= tmp[non_zero_idx2] + scaled2;
-          en_o <= 0;
-        end else begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= 30'b000000000000000000000000000000;
-          end
-          en_o <= 0;
+        for (i = 0; i < 64; i = i + 1) begin
+          tmp[i] <= 21'd0;
         end
+
+        if (multiplied_scaled1 >= 0) begin
+          tmp[non_zero_idx1_lo] <= tmp[non_zero_idx1_lo] + multiplied_scaled1;
+        end else begin
+          tmp[non_zero_idx1_lo] <= tmp[non_zero_idx1_lo];
+        end
+        if (multiplied_scaled2 >= 0) begin
+          tmp[non_zero_idx2_lo] <= tmp[non_zero_idx2_lo] + multiplied_scaled2;
+        end else begin
+          tmp[non_zero_idx2_lo] <= tmp[non_zero_idx2_lo];
+        end
+
+        en_o <= 0;
       end else if (en_i & is_last_i) begin
-        if (non_zero_num == 0) begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= tmp[i];
-          end
-          en_o <= 1;
-        end else if (non_zero_num == 1) begin
-          tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
-          en_o <= 1;
-        end else if (non_zero_num == 2) begin
-          tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
-          tmp[non_zero_idx2] <= tmp[non_zero_idx2] + scaled2;
-          en_o <= 1;
-        end else begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= tmp[i];
-          end
-          en_o <= 0;
+        for (i = 0; i < 64; i = i + 1) begin
+          tmp[i] <= tmp[i];
         end
+
+        if (multiplied_scaled1 >= 0) begin
+          tmp[non_zero_idx1_lo] <= tmp[non_zero_idx1_lo] + multiplied_scaled1;
+        end else begin
+          tmp[non_zero_idx1_lo] <= tmp[non_zero_idx1_lo];
+        end
+        if (multiplied_scaled2 >= 0) begin
+          tmp[non_zero_idx2_lo] <= tmp[non_zero_idx2_lo] + multiplied_scaled2;
+        end else begin
+          tmp[non_zero_idx2_lo] <= tmp[non_zero_idx2_lo];
+        end
+
+        en_o <= 1;
       end else if (en_i) begin
-        if (non_zero_num == 0) begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= tmp[i];
-          end
-          en_o <= 0;
-        end else if (non_zero_num == 1) begin
-          tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
-          en_o <= 0;
-        end else if (non_zero_num == 2) begin
-          tmp[non_zero_idx1] <= tmp[non_zero_idx1] + scaled1;
-          tmp[non_zero_idx2] <= tmp[non_zero_idx2] + scaled2;
-          en_o <= 0;
-        end else begin
-          for (i = 0; i < 64; i = i + 1) begin
-            tmp[i] <= tmp[i];
-          end
-          en_o <= 0;
+        for (i = 0; i < 64; i = i + 1) begin
+          tmp[i] <= tmp[i];
         end
+
+        if (multiplied_scaled1 >= 0) begin
+          tmp[non_zero_idx1_lo] <= tmp[non_zero_idx1_lo] + multiplied_scaled1;
+        end else begin
+          tmp[non_zero_idx1_lo] <= tmp[non_zero_idx1_lo];
+        end
+        if (multiplied_scaled2 >= 0) begin
+          tmp[non_zero_idx2_lo] <= tmp[non_zero_idx2_lo] + multiplied_scaled2;
+        end else begin
+          tmp[non_zero_idx2_lo] <= tmp[non_zero_idx2_lo];
+        end
+
+        en_o <= 0;
+
       end else begin
         for (i = 0; i < 64; i = i + 1) begin
           tmp[i] <= tmp[i];
