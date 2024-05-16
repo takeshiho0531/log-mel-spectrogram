@@ -138,13 +138,30 @@ module TB;
   //----------------------------------------------------------------------
   //	Module Instances
   //----------------------------------------------------------------------
+
+  wire input_counter_en_lo;
+  wire framing_en_lo;
+  wire hann_en_lo;
+  wire fft_group0_en_lo;
+  wire post_fft_count_group0_en_lo;
+  wire rfft_group0_en;
+  wire mel_filter_group0_en_lo;
+
   log_mel_spectrogram logmel (
       .clk_i (clk),
       .rst_i (rst),
       .en_i  (di_en),
       .data_i(data_i),
       .en_o  (do_en),
-      .data_o(data_o)
+      .data_o(data_o),
+      .input_counter_en_lo(input_counter_en_lo),
+      .framing_en_lo(framing_en_lo),
+      .hann_en_lo(hann_en_lo),
+      .fft_group0_en_lo(fft_group0_en_lo),
+      .post_fft_count_group0_en_lo(post_fft_count_group0_en_lo),
+      .rfft_group0_en(rfft_group0_en),
+      .mel_filter_group0_en_lo(mel_filter_group0_en_lo)
+
   );
 
   //----------------------------------------------------------------------
@@ -200,7 +217,9 @@ module TB;
     if (!rst) begin
       a <= 0;
     end else begin
-      $display("a=%d, di_en=%d, do_en=%d, data_i=%b, data_o=%b", a, di_en, do_en, data_i, data_o[0]);
+      $display("a=%d, di_en=%d, do_en=%d, input_counter_en_lo=%d,framing_en_lo=%d,hann_en_lo=%d,fft_group0_en_lo=%d,post_fft_count_group0_en_lo=%d,rfft_group0_en=%d,mel_filter_group0_en_lo=%d",
+              a, di_en, do_en,
+              input_counter_en_lo, framing_en_lo, hann_en_lo, fft_group0_en_lo, post_fft_count_group0_en_lo, rfft_group0_en, mel_filter_group0_en_lo);
       a <= a + 1;
     end
   end

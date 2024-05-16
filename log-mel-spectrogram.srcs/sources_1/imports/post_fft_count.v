@@ -32,7 +32,10 @@ module post_fft_count #(
   endfunction
 
   integer count;
-  assign post_fft_count_o = bit_reversaled((count - 1) % 1024);  // zero start
+  assign post_fft_count_o = count > 0? bit_reversaled((count - 1) % 1024):0;  // zero start
+  // always @(posedge clk_i) begin
+  //   $display("count=%d, post_fft_count_o=%d", count, post_fft_count_o);
+  // end
 
   always @(posedge clk_i or negedge rst_i) begin
     if (!rst_i) begin

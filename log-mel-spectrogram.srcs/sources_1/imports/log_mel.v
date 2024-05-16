@@ -8,7 +8,14 @@ module log_mel_spectrogram #(
     input [1:0] en_i,
     input signed [I_BW-1:0] data_i,
     output en_o,
-    output signed [O_BW*64-1:0] data_o
+    output signed [O_BW*64-1:0] data_o,
+    output [2:0] input_counter_en_lo,
+    output framing_en_lo,
+    output hann_en_lo,
+    output fft_group0_en_lo,
+    output post_fft_count_group0_en_lo,
+    output rfft_group0_en,
+    output mel_filter_group0_en_lo
 );
   localparam INPUT_COUNTER_O_BW = 14;
   localparam FRAMING_O_BW = 14;
@@ -24,25 +31,25 @@ module log_mel_spectrogram #(
 
   wire signed [INPUT_COUNTER_O_BW-1:0] input_counter_data_lo;
   wire [$clog2(OUT_FRAMING_TOTAL_DATA)-1:0] input_counter_num_lo;
-  wire [1:0] input_counter_en_lo;
+//   wire [1:0] input_counter_en_lo;
 
   wire [($clog2(OUT_FRAMING_TOTAL_DATA)-1):0] framing_num_lo;
-  wire framing_en_lo;
+//   wire framing_en_lo;
   wire signed [FRAMING_O_BW-1:0] framing_data_lo;
 
   wire signed [HANN_WINDOW_O_BW-1:0] hann_data_lo;
-  wire hann_en_lo;
+//   wire hann_en_lo;
   wire [($clog2(FRAME_LEN)-1):0] hann_group_idx_lo;
   wire [$clog2(OUT_FRAMING_TOTAL_DATA/FRAME_LEN):0] hann_group_num_lo;
 
   wire [1:0] fft_group;
   wire fft_group0_en_li;
-  wire fft_group0_en_lo;
+//   wire fft_group0_en_lo;
   wire signed [FFT_O_BW-1:0] fft_group0_re_lo;
   wire signed [FFT_O_BW-1:0] fft_group0_im_lo;
 
 
-  wire post_fft_count_group0_en_lo;
+//   wire post_fft_count_group0_en_lo;
 
   wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group0_re_lo;
   wire signed [POST_FFT_COUNT_O_BW-1:0] post_fft_count_group0_im_lo;
@@ -50,7 +57,7 @@ module log_mel_spectrogram #(
   wire [9:0] post_fft_count_group0_lo;
 
 
-  wire rfft_group0_en;
+//   wire rfft_group0_en;
   wire rfft_group1_en;
   wire rfft_group2_en;
 
@@ -59,7 +66,7 @@ module log_mel_spectrogram #(
 
   wire signed [MEL_O_BW*64-1:0] mel_filtered_group0_lo;
 
-  wire mel_filter_group0_en_lo;
+//   wire mel_filter_group0_en_lo;
 
   wire is_mel_group0_first_li;
   wire is_mel_group0_last_li;
@@ -153,11 +160,13 @@ module log_mel_spectrogram #(
   assign power_fft_group0_signed = post_fft_count_group0_re_lo * post_fft_count_group0_re_lo + post_fft_count_group0_im_lo * post_fft_count_group0_im_lo;
   assign power_fft_group0 = power_fft_group0_signed[SQUARED_O_BW-1:0];
 
-
+  // always @(posedge clk_i) begin
+  //   $display("post_fft_count_group0_lo=%d", post_fft_count_group0_lo);
+  // end
 
 
   assign is_mel_group0_first_li = (post_fft_count_group0_lo % 513 == 0);
-  assign is_mel_group0_last_li = (post_fft_count_group0_lo % 513 == 512);
+  assign is_mel_group0_last_li = (post_fft_count_group0_lo % 513 == 511);
 
   mel_filter #(
       .I_BW(SQUARED_O_BW),
