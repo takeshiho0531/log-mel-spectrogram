@@ -36,7 +36,6 @@ module log #(
                         antilogarithm[I_BW-20]==1'b1 ? 1 :0;
 
       logb2 = tmp_logb2 + SHIFT_BY_FFT + LSB_I;
-      // $display("antilogarithm=%b, tmp_logb2=%d", antilogarithm, tmp_logb2);
     end
 
   endfunction

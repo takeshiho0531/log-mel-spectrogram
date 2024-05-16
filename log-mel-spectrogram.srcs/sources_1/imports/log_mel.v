@@ -160,11 +160,6 @@ module log_mel_spectrogram #(
   assign power_fft_group0_signed = post_fft_count_group0_re_lo * post_fft_count_group0_re_lo + post_fft_count_group0_im_lo * post_fft_count_group0_im_lo;
   assign power_fft_group0 = power_fft_group0_signed[SQUARED_O_BW-1:0];
 
-  // always @(posedge clk_i) begin
-  //   $display("post_fft_count_group0_lo=%d", post_fft_count_group0_lo);
-  // end
-
-
   assign is_mel_group0_first_li = (post_fft_count_group0_lo % 513 == 0);
   assign is_mel_group0_last_li = (post_fft_count_group0_lo % 513 == 511);
 
