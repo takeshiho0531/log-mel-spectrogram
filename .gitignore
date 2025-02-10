@@ -12,9 +12,6 @@
 *.xpr
 *.lpr
 *.bat
-log-mel-spectrogram.cache/
-.DS_Store 
-log-mel-spectrogram.runs/synth_1/gen_run.xml
-compile.log
-elaborate.log
-log-mel-spectrogram.ip_user_files
+log-mel-spectrogram.sim/
+log-mel-spectrogram.srcs/
+log-mel-spectrogram.ip_user_files/
