@@ -3,8 +3,8 @@
 //----------------------------------------------------------------------
 `timescale 1ns / 1ns
 module DelayBuffer #(
-    parameter DEPTH = 32,
-    parameter WIDTH = 14
+    parameter integer DEPTH = 32,
+    parameter integer WIDTH = 14
 ) (
     input              clock,  //  Master Clock
     input  [WIDTH-1:0] di_re,  //  Data Input (Real)

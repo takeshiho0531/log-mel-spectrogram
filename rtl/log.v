@@ -1,10 +1,10 @@
 `timescale 1ns / 1ns
 module log #(
-    parameter I_BW = 21,
-    parameter O_BW = 14,
-    parameter SHIFT_BY_FFT = 10,
-    parameter LSB_I = -24,
-    parameter LSB_O = -5
+    parameter integer I_BW = 21,
+    parameter integer O_BW = 14,
+    parameter integer SHIFT_BY_FFT = 10,
+    parameter integer LSB_I = -24,
+    parameter integer LSB_O = -5
 ) (
     input [I_BW*64-1:0] data_i,
     output signed [O_BW*64-1:0] data_o

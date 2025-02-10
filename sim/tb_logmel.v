@@ -1,11 +1,11 @@
 `timescale 1ns / 1ns
-module TB;
-  localparam I_BW = 14;
-  localparam O_BW = 14;
-  localparam N = 1024;
-  localparam IN_N = 1024;  // 88*160+1023*1
-  localparam OUT_N = 64;  // 64*89
-  localparam OUT_N_PAIR = OUT_N / 64;
+module tb_logmel;
+  localparam integer I_BW = 14;
+  localparam integer O_BW = 14;
+  localparam integer N = 1024;
+  localparam integer IN_N = 1024;  // 88*160+1023*1
+  localparam integer OUT_N = 64;  // 64*89
+  localparam integer OUT_N_PAIR = OUT_N / 64;
 
   reg clk;
   reg rst;
@@ -14,11 +14,11 @@ module TB;
   wire signed [O_BW*64-1:0] data_o;
   wire do_en;
 
-  reg [I_BW-1:0]	imem[0:IN_N]; // 0行目のデータが採用されない設計になってしまってる
+  reg [I_BW-1:0] imem[0:IN_N]; // 0行目のデータが採用されない設計になってしまってる
   reg [O_BW-1:0] omem[0:OUT_N-1];
 
   //----------------------------------------------------------------------
-  //	Clock and Reset
+  // Clock and Reset
   //----------------------------------------------------------------------
   always begin
     clk = 0;
@@ -36,16 +36,16 @@ module TB;
   end
 
   //----------------------------------------------------------------------
-  //	Functional Blocks
+  // Functional Blocks
   //----------------------------------------------------------------------
 
-  //	Input Control Initialize
+  // Input Control Initialize
   initial begin
     wait (rst == 0);
     di_en = 0;
   end
 
-  //	Output Data Capture
+  // Output Data Capture
   initial begin : OCAP
     integer n;
     integer i;
@@ -71,7 +71,7 @@ module TB;
   end
 
   //----------------------------------------------------------------------
-  //	Tasks
+  // Tasks
   //----------------------------------------------------------------------
   task LoadInputData;
     input [80*8:1] filename;
@@ -136,7 +136,7 @@ module TB;
   endtask
 
   //----------------------------------------------------------------------
-  //	Module Instances
+  // Module Instances
   //----------------------------------------------------------------------
 
   log_mel_spectrogram logmel (
@@ -149,7 +149,7 @@ module TB;
   );
 
   //----------------------------------------------------------------------
-  //	Test Stimuli
+  // Test Stimuli
   //----------------------------------------------------------------------
   initial begin : STIM
     integer k;

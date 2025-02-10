@@ -2,5 +2,5 @@
 commit:
 	@bash commit_changes.sh
 
-reverse:
-	@bash reverse_changes.sh
+to_vivado:
+	@bash to_vivado.sh
